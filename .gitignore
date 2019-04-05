@@ -1,0 +1,13 @@
+# IDE
+.vs
+.vscode
+.idea
+*.iml
+
+# npm/yarn 
+dist
+node_modules
+yarn-error.log
+
+# bin
+*.lnk
