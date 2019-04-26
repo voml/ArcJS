@@ -83,4 +83,34 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
             data: i//TODO:Delete leading Zero
         }
     }
+
+
+    /* Atom: SpecialValue */
+    visitSpecialID(ctx: ANTLR.SpecialIDContext) {
+        let s: any = ctx.text.toLowerCase()
+        switch (true) {
+            case s == 'null': {
+                s = null
+                break
+            }
+            case s == 'true': {
+                s = true
+                break
+            }
+            case s == 'false': {
+                s = false
+                break
+            }
+            default: {
+                console.warn('⚠️  Unknow Value: ' + s + ', return null')
+                s = null
+                break
+            }
+        }
+        //TODO: undef, nan, infinity
+        //console.log('Special: ' + s)
+        return {
+            data: s
+        }
+    }
 }
