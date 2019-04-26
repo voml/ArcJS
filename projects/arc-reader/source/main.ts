@@ -56,4 +56,31 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
             data: s
         }
     }
+
+
+    /* Atom: Integer */
+    visitIntegerLiteral(ctx: ANTLR.IntegerLiteralContext) {
+        const i = new bigDecimal(ctx.text)
+        //console.log('Integer: ' + i.getPrettyValue(4, '_'))
+        return {
+            data: i//TODO:Delete leading Zero
+        }
+    }
+
+
+    /* Atom: Decimal */
+    visitDecimalLiteral(ctx: ANTLR.DecimalLiteralContext) {
+        const i = new bigDecimal(ctx.text.replace('_', ''))
+        //console.log('Decimal: ' + i.getPrettyValue(4, '_'))
+        return {
+            data: i//TODO:Delete leading Zero
+        }
+    }
+    visitDecimalZero(ctx: ANTLR.DecimalZeroContext) {
+        const i = new bigDecimal(ctx.text.replace('_', ''))
+        //console.log('Decimal: ' + i.getPrettyValue(4, '_'))
+        return {
+            data: i//TODO:Delete leading Zero
+        }
+    }
 }
