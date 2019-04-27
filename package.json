@@ -9,8 +9,7 @@
         "web": "yarn workspace @nyar/nyar-vuepress dev",
         "deploy": "bash build/deploy.sh",
         "build:docs": "yarn workspace @nyar/nyar-vuepress build",
-        "lint": "tslint projects/**/*.ts",
-        "lint:fix": "tslint projects/**/*.ts --fix"
+        "lint": "tslint projects/**/*.ts --fix"
     },
     "devDependencies": {
         "antlr4ts-cli": "^0.5.0-alpha.3",

@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@nyar/arc-antlr@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.npm.taobao.org/@nyar/arc-antlr/download/@nyar/arc-antlr-1.0.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40nyar%2Farc-antlr%2Fdownload%2F%40nyar%2Farc-antlr-1.0.6.tgz#d8f1cc8851b77458ac184a9220666ed37626ca07"
-  integrity sha1-2PHMiFG3dFisGEqSIGZu03Ymygc=
+"@nyar/arc-antlr@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npm.taobao.org/@nyar/arc-antlr/download/@nyar/arc-antlr-1.0.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40nyar%2Farc-antlr%2Fdownload%2F%40nyar%2Farc-antlr-1.0.7.tgz#b281d924a3aee8381da7ad760ffbff1dae86dd57"
+  integrity sha1-soHZJKOu6Dgdp612D/v/Ha6G3Vc=
   dependencies:
     antlr4ts "^0.5.0-alpha.3"
 
