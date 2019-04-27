@@ -1,4 +1,4 @@
-import { ARCVisitor } from './antlr'
+import { ARCVisitor, RecordEOSContext } from './antlr'
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import * as ANTLR from './antlr'
 import R from 'ramda'
@@ -15,12 +15,12 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
         return {}
     }
     visitProgram(ctx: ANTLR.ProgramContext) {
-        let element: object[] = []
+        let tasks: object[] = []
         for (let i = 1; i < ctx.childCount; i++) {
-            element.concat(this.visit(ctx.getChild(i - 1)))
+            tasks = tasks.concat(this.visit(ctx.getChild(i - 1)))
         }
         //console.log("Program: " + element)
-        return element
+        return tasks
     }
 
 
@@ -88,7 +88,7 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
 
     /* Atom: Integer */
     visitIntegerLiteral(ctx: ANTLR.IntegerLiteralContext) {
-        const i = new bigDecimal(ctx.text)
+        const i = new bigDecimal(ctx.text.replace('_', ''))
         //console.log('Integer: ' + i.getPrettyValue(4, '_'))
         return {
             data: i//TODO:Delete leading Zero
