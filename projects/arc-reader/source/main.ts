@@ -6,7 +6,7 @@ import bigDecimal from 'js-big-decimal'
 
 
 export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
-    root = { }
+    root = {}
     private insert(path: string[], value: any) {
         R.assocPath(path, value, this.root)
     }
@@ -24,6 +24,19 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
     }
 
 
+    /* Node: Key */
+    visitKey(ctx: ANTLR.KeyContext) {
+        let element: object[] = []
+        for (let i = 0; i < ctx.symbol().length; i++) {
+            const v = this.visit(ctx.symbol(i))
+            //console.log(`Key: ${JSON.stringify(v, null, 4)}`)
+            element = element.concat(v)
+        }
+        //console.log(`Keys: ${JSON.stringify(element, null, 4)}`)
+        return element
+    }
+
+
     /* MixedNode: Symbol */
     visitSymbol(ctx: ANTLR.SymbolContext) {
         const v: any = this.visit(ctx.getChild(0))
@@ -32,9 +45,7 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
             e = ctx.text
         }
         //console.log(`Symbol: ${JSON.stringify(e, null, 4)}`)
-        return {
-            data: [e]
-        }
+        return [e]
     }
 
 
