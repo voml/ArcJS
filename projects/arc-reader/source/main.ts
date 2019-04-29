@@ -23,6 +23,19 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
         return tasks
     }
 
+    
+    /* Statement: Empty */
+    visitEmptyStatement(ctx: ANTLR.EmptyStatementContext) {
+        return {
+            task: 'empty',
+        }
+    }
+    visitRecordStatement(ctx: ANTLR.RecordStatementContext) {
+        const v = this.visit(ctx.getChild(0))
+        //console.log(`AssignRHS: ${JSON.stringify(v, null, 4)}`)
+        return v
+    }
+
 
     /* Statement: Assign */
     visitStringAssign(ctx: ANTLR.StringAssignContext) {
