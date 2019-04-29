@@ -5,7 +5,7 @@ import R from 'ramda'
 import bigDecimal from 'js-big-decimal'
 
 
-export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
+export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
     root = {}
     private insert(path: string[], value: any) {
         R.assocPath(path, value, this.root)
@@ -23,7 +23,7 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
         return tasks
     }
 
-    
+
     /* Statement: Empty */
     visitEmptyStatement(ctx: ANTLR.EmptyStatementContext) {
         return {
@@ -106,6 +106,27 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
         }
         //console.log(`Symbol: ${JSON.stringify(e, null, 4)}`)
         return [e]
+    }
+
+    
+    /* DataType: List*/
+    visitEmptyList(ctx: ANTLR.EmptyListContext) {
+        //console.log(`Symbol: ${JSON.stringify(ctx.text, null, 4)}`)
+        return {
+            data: []
+        }
+    }
+    visitFilledList(ctx: ANTLR.FilledListContext) {
+        let element: object[] = []
+        for (let i = 0; i < ctx.data().length; i++) {
+            const v: any = this.visit(ctx.data(i))
+            console.log(`Data: ${JSON.stringify(v.data, null, 4)}`)
+            element = element.concat(v.data)
+        }
+        //console.log(`List: ${JSON.stringify(element, null, 4)}`)
+        return {
+            data: element
+        }
     }
 
 
