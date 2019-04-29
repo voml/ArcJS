@@ -1,14 +1,21 @@
 import { ARCVisitor, RecordEOSContext } from './antlr'
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import * as ANTLR from './antlr'
-import R from 'ramda'
 import bigDecimal from 'js-big-decimal'
 
 
 export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
-    root = {}
-    private insert(path: string[], value: any) {
-        R.assocPath(path, value, this.root)
+    private notSubmap(_: any): Boolean {
+        switch (true) {
+            case !Array.isArray(_):
+                return true
+            case _[0] == undefined:
+                return true
+            case _[0].task != 'insert':
+                return true
+            default:
+                return false
+        }
     }
     defaultResult() {
         //console.warn('⚠️  Unreachable!')
@@ -108,10 +115,10 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
         return [e]
     }
 
-    
-    /* DataType: List*/
+
+    /* DataType: List */
     visitEmptyList(ctx: ANTLR.EmptyListContext) {
-        //console.log(`Symbol: ${JSON.stringify(ctx.text, null, 4)}`)
+        //console.log('Empty: EmptyList!')
         return {
             data: []
         }
@@ -120,8 +127,8 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
         let element: object[] = []
         for (let i = 0; i < ctx.data().length; i++) {
             const v: any = this.visit(ctx.data(i))
-            console.log(`Data: ${JSON.stringify(v.data, null, 4)}`)
-            element = element.concat(v.data)
+            //console.log(`Data: ${JSON.stringify(v.data, null, 4)}`)
+            element = element.concat([v.data])
         }
         //console.log(`List: ${JSON.stringify(element, null, 4)}`)
         return {
@@ -130,9 +137,30 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     }
 
 
+    /* DataType: Dict */
+    visitEmptyDict(ctx: ANTLR.EmptyDictContext) {
+        //console.log('Empty: EmptyDict!')
+        return {
+            data: {}
+        }
+    }
+    visitFilledDict(ctx: ANTLR.FilledDictContext) {
+        let element: object[] = []
+        for (let i = 0; i < ctx.recordEOS().length; i++) {
+            const v: any = this.visit(ctx.recordEOS(i))
+            //console.log(`Record: ${JSON.stringify(v, null, 4)}`)
+            element = element.concat(v)
+        }
+        //console.log(`Dict: ${JSON.stringify(element, null, 4)}`)
+        return {
+            data: element
+        }
+    }
+
+
     /* Atom: String */
     visitStringEmpty(ctx: ANTLR.StringEmptyContext) {
-        //console.log('String: EmptyString!')
+        //console.log('Empty: EmptyString!')
         return {
             data: ''
         }
