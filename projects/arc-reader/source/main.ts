@@ -24,6 +24,53 @@ export class ObjectVisitor extends AbstractParseTreeVisitor<object> implements A
     }
 
 
+    /* Statement: Assign */
+    visitStringAssign(ctx: ANTLR.StringAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        return {
+            task: 'insert',
+            path: lhs,
+            data: rhs.data
+        }
+    }
+    visitSpecialAssign(ctx: ANTLR.SpecialAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        return {
+            task: 'insert',
+            path: lhs,
+            data: rhs.data
+        }
+    }
+    visitIntegerAssign(ctx: ANTLR.IntegerAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        return {
+            task: 'insert',
+            path: lhs,
+            data: rhs.data
+        }
+    }
+    visitDecimalAssign(ctx: ANTLR.DecimalAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        return {
+            task: 'insert',
+            path: lhs,
+            data: rhs.data
+        }
+    }
+
+
     /* Node: Key */
     visitKey(ctx: ANTLR.KeyContext) {
         let element: object[] = []
