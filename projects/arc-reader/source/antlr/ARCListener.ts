@@ -30,6 +30,7 @@ import { CiteAssignContext } from "./ARCParser";
 import { MacroAssignContext } from "./ARCParser";
 import { EmptyDictContext } from "./ARCParser";
 import { FilledDictContext } from "./ARCParser";
+import { NestedDictContext } from "./ARCParser";
 import { DecimalLiteralContext } from "./ARCParser";
 import { DecimalZeroContext } from "./ARCParser";
 import { DictGroupContext } from "./ARCParser";
@@ -53,6 +54,7 @@ import { ListContext } from "./ARCParser";
 import { DictContext } from "./ARCParser";
 import { Dict_scopeContext } from "./ARCParser";
 import { List_scopeContext } from "./ARCParser";
+import { ScopesContext } from "./ARCParser";
 import { GroupContext } from "./ARCParser";
 
 
@@ -413,6 +415,19 @@ export interface ARCListener extends ParseTreeListener {
 	exitFilledDict?: (ctx: FilledDictContext) => void;
 
 	/**
+	 * Enter a parse tree produced by the `NestedDict`
+	 * labeled alternative in `ARCParser.dict`.
+	 * @param ctx the parse tree
+	 */
+	enterNestedDict?: (ctx: NestedDictContext) => void;
+	/**
+	 * Exit a parse tree produced by the `NestedDict`
+	 * labeled alternative in `ARCParser.dict`.
+	 * @param ctx the parse tree
+	 */
+	exitNestedDict?: (ctx: NestedDictContext) => void;
+
+	/**
 	 * Enter a parse tree produced by the `DecimalLiteral`
 	 * labeled alternative in `ARCParser.decimal`.
 	 * @param ctx the parse tree
@@ -672,6 +687,17 @@ export interface ARCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitList_scope?: (ctx: List_scopeContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `ARCParser.scopes`.
+	 * @param ctx the parse tree
+	 */
+	enterScopes?: (ctx: ScopesContext) => void;
+	/**
+	 * Exit a parse tree produced by `ARCParser.scopes`.
+	 * @param ctx the parse tree
+	 */
+	exitScopes?: (ctx: ScopesContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `ARCParser.group`.

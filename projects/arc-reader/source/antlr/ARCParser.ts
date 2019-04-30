@@ -82,12 +82,13 @@ export class ARCParser extends Parser {
 	public static readonly RULE_dict = 16;
 	public static readonly RULE_dict_scope = 17;
 	public static readonly RULE_list_scope = 18;
-	public static readonly RULE_group = 19;
+	public static readonly RULE_scopes = 19;
+	public static readonly RULE_group = 20;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
 		"program", "statement", "empty", "eos", "recordEOS", "record", "key", 
 		"symbol", "integer", "specialID", "decimal", "string", "macro", "reference", 
-		"data", "list", "dict", "dict_scope", "list_scope", "group",
+		"data", "list", "dict", "dict_scope", "list_scope", "scopes", "group",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
@@ -133,21 +134,21 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 43;
+			this.state = 45;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__12) | (1 << ARCParser.T__14) | (1 << ARCParser.Semicolon) | (1 << ARCParser.Comma) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0)) {
 				{
 				{
-				this.state = 40;
+				this.state = 42;
 				this.statement();
 				}
 				}
-				this.state = 45;
+				this.state = 47;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 46;
+			this.state = 48;
 			this.match(ARCParser.EOF);
 			}
 		}
@@ -172,13 +173,13 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 52;
+			this.state = 54;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case ARCParser.Semicolon:
 			case ARCParser.Comma:
 				{
-				this.state = 48;
+				this.state = 50;
 				this.empty();
 				}
 				break;
@@ -193,19 +194,19 @@ export class ARCParser extends Parser {
 			case ARCParser.StringLiteralBlock:
 			case ARCParser.StringLiteralSingle:
 				{
-				this.state = 49;
+				this.state = 51;
 				this.recordEOS();
 				}
 				break;
 			case ARCParser.T__12:
 				{
-				this.state = 50;
+				this.state = 52;
 				this.dict_scope();
 				}
 				break;
 			case ARCParser.T__14:
 				{
-				this.state = 51;
+				this.state = 53;
 				this.list_scope();
 				}
 				break;
@@ -236,7 +237,7 @@ export class ARCParser extends Parser {
 			_localctx = new EmptyStatementContext(_localctx);
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 54;
+			this.state = 56;
 			this.eos();
 			}
 		}
@@ -262,7 +263,7 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 56;
+			this.state = 58;
 			_la = this._input.LA(1);
 			if (!(_la === ARCParser.Semicolon || _la === ARCParser.Comma)) {
 			this._errHandler.recoverInline(this);
@@ -298,14 +299,14 @@ export class ARCParser extends Parser {
 			_localctx = new RecordStatementContext(_localctx);
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 58;
-			this.record();
 			this.state = 60;
+			this.record();
+			this.state = 62;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 2, this._ctx) ) {
 			case 1:
 				{
-				this.state = 59;
+				this.state = 61;
 				this.eos();
 				}
 				break;
@@ -331,18 +332,18 @@ export class ARCParser extends Parser {
 		let _localctx: RecordContext = new RecordContext(this._ctx, this.state);
 		this.enterRule(_localctx, 10, ARCParser.RULE_record);
 		try {
-			this.state = 94;
+			this.state = 96;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 3, this._ctx) ) {
 			case 1:
 				_localctx = new IntegerAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 62;
-				(_localctx as IntegerAssignContext)._left = this.key();
-				this.state = 63;
-				this.match(ARCParser.Assign);
 				this.state = 64;
+				(_localctx as IntegerAssignContext)._left = this.key();
+				this.state = 65;
+				this.match(ARCParser.Assign);
+				this.state = 66;
 				(_localctx as IntegerAssignContext)._right = this.integer();
 				}
 				break;
@@ -351,11 +352,11 @@ export class ARCParser extends Parser {
 				_localctx = new DecimalAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 66;
-				(_localctx as DecimalAssignContext)._left = this.key();
-				this.state = 67;
-				this.match(ARCParser.Assign);
 				this.state = 68;
+				(_localctx as DecimalAssignContext)._left = this.key();
+				this.state = 69;
+				this.match(ARCParser.Assign);
+				this.state = 70;
 				(_localctx as DecimalAssignContext)._right = this.decimal();
 				}
 				break;
@@ -364,11 +365,11 @@ export class ARCParser extends Parser {
 				_localctx = new SpecialAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 70;
-				(_localctx as SpecialAssignContext)._left = this.key();
-				this.state = 71;
-				this.match(ARCParser.Assign);
 				this.state = 72;
+				(_localctx as SpecialAssignContext)._left = this.key();
+				this.state = 73;
+				this.match(ARCParser.Assign);
+				this.state = 74;
 				(_localctx as SpecialAssignContext)._right = this.specialID();
 				}
 				break;
@@ -377,11 +378,11 @@ export class ARCParser extends Parser {
 				_localctx = new StringAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 74;
-				(_localctx as StringAssignContext)._left = this.key();
-				this.state = 75;
-				this.match(ARCParser.Assign);
 				this.state = 76;
+				(_localctx as StringAssignContext)._left = this.key();
+				this.state = 77;
+				this.match(ARCParser.Assign);
+				this.state = 78;
 				(_localctx as StringAssignContext)._right = this.string();
 				}
 				break;
@@ -390,11 +391,11 @@ export class ARCParser extends Parser {
 				_localctx = new ListAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 78;
-				(_localctx as ListAssignContext)._left = this.key();
-				this.state = 79;
-				this.match(ARCParser.Assign);
 				this.state = 80;
+				(_localctx as ListAssignContext)._left = this.key();
+				this.state = 81;
+				this.match(ARCParser.Assign);
+				this.state = 82;
 				(_localctx as ListAssignContext)._right = this.list();
 				}
 				break;
@@ -403,11 +404,11 @@ export class ARCParser extends Parser {
 				_localctx = new DictAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 82;
-				(_localctx as DictAssignContext)._left = this.key();
-				this.state = 83;
-				this.match(ARCParser.Assign);
 				this.state = 84;
+				(_localctx as DictAssignContext)._left = this.key();
+				this.state = 85;
+				this.match(ARCParser.Assign);
+				this.state = 86;
 				(_localctx as DictAssignContext)._right = this.dict();
 				}
 				break;
@@ -416,11 +417,11 @@ export class ARCParser extends Parser {
 				_localctx = new CiteAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 86;
-				(_localctx as CiteAssignContext)._left = this.key();
-				this.state = 87;
-				this.match(ARCParser.Assign);
 				this.state = 88;
+				(_localctx as CiteAssignContext)._left = this.key();
+				this.state = 89;
+				this.match(ARCParser.Assign);
+				this.state = 90;
 				(_localctx as CiteAssignContext)._right = this.reference();
 				}
 				break;
@@ -429,11 +430,11 @@ export class ARCParser extends Parser {
 				_localctx = new MacroAssignContext(_localctx);
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 90;
-				(_localctx as MacroAssignContext)._left = this.key();
-				this.state = 91;
-				this.match(ARCParser.Assign);
 				this.state = 92;
+				(_localctx as MacroAssignContext)._left = this.key();
+				this.state = 93;
+				this.match(ARCParser.Assign);
+				this.state = 94;
 				(_localctx as MacroAssignContext)._right = this.macro();
 				}
 				break;
@@ -461,21 +462,21 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 96;
+			this.state = 98;
 			this.symbol();
-			this.state = 101;
+			this.state = 103;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === ARCParser.T__0) {
 				{
 				{
-				this.state = 97;
+				this.state = 99;
 				this.match(ARCParser.T__0);
-				this.state = 98;
+				this.state = 100;
 				this.symbol();
 				}
 				}
-				this.state = 103;
+				this.state = 105;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -502,12 +503,12 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 107;
+			this.state = 109;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case ARCParser.Integer:
 				{
-				this.state = 104;
+				this.state = 106;
 				this.match(ARCParser.Integer);
 				}
 				break;
@@ -520,13 +521,13 @@ export class ARCParser extends Parser {
 			case ARCParser.StringLiteralBlock:
 			case ARCParser.StringLiteralSingle:
 				{
-				this.state = 105;
+				this.state = 107;
 				this.string();
 				}
 				break;
 			case ARCParser.Identifier:
 				{
-				this.state = 106;
+				this.state = 108;
 				this.match(ARCParser.Identifier);
 				}
 				break;
@@ -558,17 +559,17 @@ export class ARCParser extends Parser {
 			_localctx = new IntegerLiteralContext(_localctx);
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 110;
+			this.state = 112;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === ARCParser.Sign) {
 				{
-				this.state = 109;
+				this.state = 111;
 				this.match(ARCParser.Sign);
 				}
 			}
 
-			this.state = 112;
+			this.state = 114;
 			this.match(ARCParser.Integer);
 			}
 		}
@@ -594,17 +595,17 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 115;
+			this.state = 117;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === ARCParser.Sign) {
 				{
-				this.state = 114;
+				this.state = 116;
 				this.match(ARCParser.Sign);
 				}
 			}
 
-			this.state = 117;
+			this.state = 119;
 			this.match(ARCParser.Identifier);
 			}
 		}
@@ -628,33 +629,33 @@ export class ARCParser extends Parser {
 		this.enterRule(_localctx, 20, ARCParser.RULE_decimal);
 		let _la: number;
 		try {
-			this.state = 132;
+			this.state = 134;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 11, this._ctx) ) {
 			case 1:
 				_localctx = new DecimalLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 120;
+				this.state = 122;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la === ARCParser.Sign) {
 					{
-					this.state = 119;
+					this.state = 121;
 					this.match(ARCParser.Sign);
 					}
 				}
 
-				this.state = 122;
+				this.state = 124;
 				(_localctx as DecimalLiteralContext)._left = this.match(ARCParser.Integer);
-				this.state = 123;
-				this.match(ARCParser.Dot);
 				this.state = 125;
+				this.match(ARCParser.Dot);
+				this.state = 127;
 				this._errHandler.sync(this);
 				switch ( this.interpreter.adaptivePredict(this._input, 9, this._ctx) ) {
 				case 1:
 					{
-					this.state = 124;
+					this.state = 126;
 					(_localctx as DecimalLiteralContext)._right = this.match(ARCParser.Integer);
 					}
 					break;
@@ -666,19 +667,19 @@ export class ARCParser extends Parser {
 				_localctx = new DecimalZeroContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 128;
+				this.state = 130;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la === ARCParser.Sign) {
 					{
-					this.state = 127;
+					this.state = 129;
 					this.match(ARCParser.Sign);
 					}
 				}
 
-				this.state = 130;
+				this.state = 132;
 				this.match(ARCParser.Dot);
-				this.state = 131;
+				this.state = 133;
 				(_localctx as DecimalZeroContext)._right = this.match(ARCParser.Integer);
 				}
 				break;
@@ -703,14 +704,14 @@ export class ARCParser extends Parser {
 		let _localctx: StringContext = new StringContext(this._ctx, this.state);
 		this.enterRule(_localctx, 22, ARCParser.RULE_string);
 		try {
-			this.state = 146;
+			this.state = 148;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case ARCParser.StringEscapeBlock:
 				_localctx = new StringEscapeBlockContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 134;
+				this.state = 136;
 				this.match(ARCParser.StringEscapeBlock);
 				}
 				break;
@@ -718,7 +719,7 @@ export class ARCParser extends Parser {
 				_localctx = new StringEscapeSingleContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 135;
+				this.state = 137;
 				this.match(ARCParser.StringEscapeSingle);
 				}
 				break;
@@ -726,7 +727,7 @@ export class ARCParser extends Parser {
 				_localctx = new StringLiteralBlockContext(_localctx);
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 136;
+				this.state = 138;
 				this.match(ARCParser.StringLiteralBlock);
 				}
 				break;
@@ -734,7 +735,7 @@ export class ARCParser extends Parser {
 				_localctx = new StringLiteralSingleContext(_localctx);
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 137;
+				this.state = 139;
 				this.match(ARCParser.StringLiteralSingle);
 				}
 				break;
@@ -742,9 +743,9 @@ export class ARCParser extends Parser {
 				_localctx = new StringEmptyContext(_localctx);
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 138;
+				this.state = 140;
 				this.match(ARCParser.T__1);
-				this.state = 139;
+				this.state = 141;
 				this.match(ARCParser.T__1);
 				}
 				break;
@@ -752,9 +753,9 @@ export class ARCParser extends Parser {
 				_localctx = new StringEmptyContext(_localctx);
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 140;
+				this.state = 142;
 				this.match(ARCParser.T__2);
-				this.state = 141;
+				this.state = 143;
 				this.match(ARCParser.T__2);
 				}
 				break;
@@ -762,9 +763,9 @@ export class ARCParser extends Parser {
 				_localctx = new StringEmptyContext(_localctx);
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 142;
+				this.state = 144;
 				this.match(ARCParser.T__3);
-				this.state = 143;
+				this.state = 145;
 				this.match(ARCParser.T__3);
 				}
 				break;
@@ -772,9 +773,9 @@ export class ARCParser extends Parser {
 				_localctx = new StringEmptyContext(_localctx);
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 144;
+				this.state = 146;
 				this.match(ARCParser.T__4);
-				this.state = 145;
+				this.state = 147;
 				this.match(ARCParser.T__4);
 				}
 				break;
@@ -801,18 +802,18 @@ export class ARCParser extends Parser {
 		let _localctx: MacroContext = new MacroContext(this._ctx, this.state);
 		this.enterRule(_localctx, 24, ARCParser.RULE_macro);
 		try {
-			this.state = 158;
+			this.state = 160;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 13, this._ctx) ) {
 			case 1:
 				_localctx = new LiteralMacroContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 148;
-				this.match(ARCParser.T__5);
-				this.state = 149;
-				(_localctx as LiteralMacroContext)._apply = this.match(ARCParser.Identifier);
 				this.state = 150;
+				this.match(ARCParser.T__5);
+				this.state = 151;
+				(_localctx as LiteralMacroContext)._apply = this.match(ARCParser.Identifier);
+				this.state = 152;
 				(_localctx as LiteralMacroContext)._value = this.match(ARCParser.StringLiteralBlock);
 				}
 				break;
@@ -821,11 +822,11 @@ export class ARCParser extends Parser {
 				_localctx = new SimpleMacroContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 151;
-				this.match(ARCParser.T__5);
-				this.state = 152;
-				(_localctx as SimpleMacroContext)._apply = this.match(ARCParser.Identifier);
 				this.state = 153;
+				this.match(ARCParser.T__5);
+				this.state = 154;
+				(_localctx as SimpleMacroContext)._apply = this.match(ARCParser.Identifier);
+				this.state = 155;
 				this.match(ARCParser.MacroEscape);
 				}
 				break;
@@ -834,13 +835,13 @@ export class ARCParser extends Parser {
 				_localctx = new EmptyMacroContext(_localctx);
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 154;
-				this.match(ARCParser.T__5);
-				this.state = 155;
-				(_localctx as EmptyMacroContext)._apply = this.match(ARCParser.Identifier);
 				this.state = 156;
-				this.match(ARCParser.T__6);
+				this.match(ARCParser.T__5);
 				this.state = 157;
+				(_localctx as EmptyMacroContext)._apply = this.match(ARCParser.Identifier);
+				this.state = 158;
+				this.match(ARCParser.T__6);
+				this.state = 159;
 				this.match(ARCParser.T__6);
 				}
 				break;
@@ -867,9 +868,9 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 160;
+			this.state = 162;
 			this.match(ARCParser.T__7);
-			this.state = 161;
+			this.state = 163;
 			this.match(ARCParser.Identifier);
 			}
 		}
@@ -894,54 +895,61 @@ export class ARCParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 170;
+			this.state = 173;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 14, this._ctx) ) {
 			case 1:
 				{
-				this.state = 163;
-				this.match(ARCParser.Integer);
+				this.state = 165;
+				this.integer();
 				}
 				break;
 
 			case 2:
 				{
-				this.state = 164;
+				this.state = 166;
 				this.decimal();
 				}
 				break;
 
 			case 3:
 				{
-				this.state = 165;
-				this.string();
+				this.state = 167;
+				this.specialID();
 				}
 				break;
 
 			case 4:
 				{
-				this.state = 166;
-				this.list();
+				this.state = 168;
+				this.string();
 				}
 				break;
 
 			case 5:
 				{
-				this.state = 167;
-				this.dict();
+				this.state = 169;
+				this.list();
 				}
 				break;
 
 			case 6:
 				{
-				this.state = 168;
-				this.reference();
+				this.state = 170;
+				this.dict();
 				}
 				break;
 
 			case 7:
 				{
-				this.state = 169;
+				this.state = 171;
+				this.reference();
+				}
+				break;
+
+			case 8:
+				{
+				this.state = 172;
 				this.macro();
 				}
 				break;
@@ -968,16 +976,16 @@ export class ARCParser extends Parser {
 		this.enterRule(_localctx, 30, ARCParser.RULE_list);
 		let _la: number;
 		try {
-			this.state = 185;
+			this.state = 188;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 17, this._ctx) ) {
 			case 1:
 				_localctx = new EmptyListContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 172;
+				this.state = 175;
 				this.match(ARCParser.T__8);
-				this.state = 173;
+				this.state = 176;
 				this.match(ARCParser.T__9);
 				}
 				break;
@@ -986,33 +994,33 @@ export class ARCParser extends Parser {
 				_localctx = new FilledListContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 174;
+				this.state = 177;
 				this.match(ARCParser.T__8);
-				this.state = 179;
+				this.state = 182;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				do {
 					{
 					{
-					this.state = 175;
+					this.state = 178;
 					this.data();
-					this.state = 177;
+					this.state = 180;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 					if (_la === ARCParser.Semicolon || _la === ARCParser.Comma) {
 						{
-						this.state = 176;
+						this.state = 179;
 						this.eos();
 						}
 					}
 
 					}
 					}
-					this.state = 181;
+					this.state = 184;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
-				} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__5) | (1 << ARCParser.T__7) | (1 << ARCParser.T__8) | (1 << ARCParser.T__10) | (1 << ARCParser.Dot) | (1 << ARCParser.Integer) | (1 << ARCParser.Sign) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0));
-				this.state = 183;
+				} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__5) | (1 << ARCParser.T__7) | (1 << ARCParser.T__8) | (1 << ARCParser.T__10) | (1 << ARCParser.Dot) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.Sign) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0));
+				this.state = 186;
 				this.match(ARCParser.T__9);
 				}
 				break;
@@ -1038,16 +1046,16 @@ export class ARCParser extends Parser {
 		this.enterRule(_localctx, 32, ARCParser.RULE_dict);
 		let _la: number;
 		try {
-			this.state = 197;
+			this.state = 208;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 19, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 20, this._ctx) ) {
 			case 1:
 				_localctx = new EmptyDictContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 187;
+				this.state = 190;
 				this.match(ARCParser.T__10);
-				this.state = 188;
+				this.state = 191;
 				this.match(ARCParser.T__11);
 				}
 				break;
@@ -1056,23 +1064,48 @@ export class ARCParser extends Parser {
 				_localctx = new FilledDictContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 189;
+				this.state = 192;
 				this.match(ARCParser.T__10);
-				this.state = 191;
+				this.state = 194;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				do {
 					{
 					{
-					this.state = 190;
+					this.state = 193;
 					this.recordEOS();
 					}
 					}
-					this.state = 193;
+					this.state = 196;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0));
-				this.state = 195;
+				this.state = 198;
+				this.match(ARCParser.T__11);
+				}
+				break;
+
+			case 3:
+				_localctx = new NestedDictContext(_localctx);
+				this.enterOuterAlt(_localctx, 3);
+				{
+				this.state = 200;
+				this.match(ARCParser.T__10);
+				this.state = 202;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				do {
+					{
+					{
+					this.state = 201;
+					this.scopes();
+					}
+					}
+					this.state = 204;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				} while (_la === ARCParser.T__12 || _la === ARCParser.T__14);
+				this.state = 206;
 				this.match(ARCParser.T__11);
 				}
 				break;
@@ -1098,20 +1131,20 @@ export class ARCParser extends Parser {
 		this.enterRule(_localctx, 34, ARCParser.RULE_dict_scope);
 		try {
 			let _alt: number;
-			this.state = 211;
+			this.state = 222;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 21, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 22, this._ctx) ) {
 			case 1:
 				_localctx = new FilledDictScopeContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 199;
+				this.state = 210;
 				this.match(ARCParser.T__12);
-				this.state = 200;
+				this.state = 211;
 				(_localctx as FilledDictScopeContext)._header = this.key();
-				this.state = 201;
+				this.state = 212;
 				this.match(ARCParser.T__13);
-				this.state = 203;
+				this.state = 214;
 				this._errHandler.sync(this);
 				_alt = 1;
 				do {
@@ -1119,7 +1152,7 @@ export class ARCParser extends Parser {
 					case 1:
 						{
 						{
-						this.state = 202;
+						this.state = 213;
 						this.recordEOS();
 						}
 						}
@@ -1127,9 +1160,9 @@ export class ARCParser extends Parser {
 					default:
 						throw new NoViableAltException(this);
 					}
-					this.state = 205;
+					this.state = 216;
 					this._errHandler.sync(this);
-					_alt = this.interpreter.adaptivePredict(this._input, 20, this._ctx);
+					_alt = this.interpreter.adaptivePredict(this._input, 21, this._ctx);
 				} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 				}
 				break;
@@ -1138,11 +1171,11 @@ export class ARCParser extends Parser {
 				_localctx = new EmptyDictScopeContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 207;
+				this.state = 218;
 				this.match(ARCParser.T__12);
-				this.state = 208;
+				this.state = 219;
 				(_localctx as EmptyDictScopeContext)._header = this.key();
-				this.state = 209;
+				this.state = 220;
 				this.match(ARCParser.T__13);
 				}
 				break;
@@ -1168,30 +1201,30 @@ export class ARCParser extends Parser {
 		this.enterRule(_localctx, 36, ARCParser.RULE_list_scope);
 		let _la: number;
 		try {
-			this.state = 225;
+			this.state = 236;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 23, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 24, this._ctx) ) {
 			case 1:
 				_localctx = new FilledListScopeContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 213;
+				this.state = 224;
 				this.match(ARCParser.T__14);
-				this.state = 214;
+				this.state = 225;
 				(_localctx as FilledListScopeContext)._header = this.key();
-				this.state = 215;
+				this.state = 226;
 				this.match(ARCParser.T__15);
-				this.state = 217;
+				this.state = 228;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				do {
 					{
 					{
-					this.state = 216;
+					this.state = 227;
 					this.group();
 					}
 					}
-					this.state = 219;
+					this.state = 230;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 				} while (_la === ARCParser.T__16 || _la === ARCParser.T__17);
@@ -1202,11 +1235,11 @@ export class ARCParser extends Parser {
 				_localctx = new EmptyListScopeContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 221;
+				this.state = 232;
 				this.match(ARCParser.T__14);
-				this.state = 222;
+				this.state = 233;
 				(_localctx as EmptyListScopeContext)._header = this.key();
-				this.state = 223;
+				this.state = 234;
 				this.match(ARCParser.T__15);
 				}
 				break;
@@ -1227,21 +1260,62 @@ export class ARCParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
+	public scopes(): ScopesContext {
+		let _localctx: ScopesContext = new ScopesContext(this._ctx, this.state);
+		this.enterRule(_localctx, 38, ARCParser.RULE_scopes);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 240;
+			this._errHandler.sync(this);
+			switch (this._input.LA(1)) {
+			case ARCParser.T__12:
+				{
+				this.state = 238;
+				this.dict_scope();
+				}
+				break;
+			case ARCParser.T__14:
+				{
+				this.state = 239;
+				this.list_scope();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
 	public group(): GroupContext {
 		let _localctx: GroupContext = new GroupContext(this._ctx, this.state);
-		this.enterRule(_localctx, 38, ARCParser.RULE_group);
+		this.enterRule(_localctx, 40, ARCParser.RULE_group);
 		try {
 			let _alt: number;
-			this.state = 235;
+			this.state = 250;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case ARCParser.T__16:
 				_localctx = new DictGroupContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 227;
+				this.state = 242;
 				this.match(ARCParser.T__16);
-				this.state = 229;
+				this.state = 244;
 				this._errHandler.sync(this);
 				_alt = 1;
 				do {
@@ -1249,7 +1323,7 @@ export class ARCParser extends Parser {
 					case 1:
 						{
 						{
-						this.state = 228;
+						this.state = 243;
 						this.recordEOS();
 						}
 						}
@@ -1257,9 +1331,9 @@ export class ARCParser extends Parser {
 					default:
 						throw new NoViableAltException(this);
 					}
-					this.state = 231;
+					this.state = 246;
 					this._errHandler.sync(this);
-					_alt = this.interpreter.adaptivePredict(this._input, 24, this._ctx);
+					_alt = this.interpreter.adaptivePredict(this._input, 26, this._ctx);
 				} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 				}
 				break;
@@ -1267,9 +1341,9 @@ export class ARCParser extends Parser {
 				_localctx = new DataGroupContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 233;
+				this.state = 248;
 				this.match(ARCParser.T__17);
-				this.state = 234;
+				this.state = 249;
 				this.data();
 				}
 				break;
@@ -1293,115 +1367,123 @@ export class ARCParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03%\xF0\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03%\xFF\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
-		"\x13\t\x13\x04\x14\t\x14\x04\x15\t\x15\x03\x02\x07\x02,\n\x02\f\x02\x0E" +
-		"\x02/\v\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x03\x03\x05\x037\n" +
-		"\x03\x03\x04\x03\x04\x03\x05\x03\x05\x03\x06\x03\x06\x05\x06?\n\x06\x03" +
+		"\x13\t\x13\x04\x14\t\x14\x04\x15\t\x15\x04\x16\t\x16\x03\x02\x07\x02." +
+		"\n\x02\f\x02\x0E\x021\v\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x03" +
+		"\x03\x05\x039\n\x03\x03\x04\x03\x04\x03\x05\x03\x05\x03\x06\x03\x06\x05" +
+		"\x06A\n\x06\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03" +
 		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03" +
 		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03" +
-		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03" +
-		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x05\x07a\n\x07\x03\b\x03\b\x03\b" +
-		"\x07\bf\n\b\f\b\x0E\bi\v\b\x03\t\x03\t\x03\t\x05\tn\n\t\x03\n\x05\nq\n" +
-		"\n\x03\n\x03\n\x03\v\x05\vv\n\v\x03\v\x03\v\x03\f\x05\f{\n\f\x03\f\x03" +
-		"\f\x03\f\x05\f\x80\n\f\x03\f\x05\f\x83\n\f\x03\f\x03\f\x05\f\x87\n\f\x03" +
-		"\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05" +
-		"\r\x95\n\r\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03" +
-		"\x0E\x03\x0E\x03\x0E\x05\x0E\xA1\n\x0E\x03\x0F\x03\x0F\x03\x0F\x03\x10" +
-		"\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x05\x10\xAD\n\x10\x03" +
-		"\x11\x03\x11\x03\x11\x03\x11\x03\x11\x05\x11\xB4\n\x11\x06\x11\xB6\n\x11" +
-		"\r\x11\x0E\x11\xB7\x03\x11\x03\x11\x05\x11\xBC\n\x11\x03\x12\x03\x12\x03" +
-		"\x12\x03\x12\x06\x12\xC2\n\x12\r\x12\x0E\x12\xC3\x03\x12\x03\x12\x05\x12" +
-		"\xC8\n\x12\x03\x13\x03\x13\x03\x13\x03\x13\x06\x13\xCE\n\x13\r\x13\x0E" +
-		"\x13\xCF\x03\x13\x03\x13\x03\x13\x03\x13\x05\x13\xD6\n\x13\x03\x14\x03" +
-		"\x14\x03\x14\x03\x14\x06\x14\xDC\n\x14\r\x14\x0E\x14\xDD\x03\x14\x03\x14" +
-		"\x03\x14\x03\x14\x05\x14\xE4\n\x14\x03\x15\x03\x15\x06\x15\xE8\n\x15\r" +
-		"\x15\x0E\x15\xE9\x03\x15\x03\x15\x05\x15\xEE\n\x15\x03\x15\x02\x02\x02" +
-		"\x16\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02" +
-		"\x14\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02" +
-		"(\x02\x02\x03\x03\x02\x15\x16\x02\u010A\x02-\x03\x02\x02\x02\x046\x03" +
-		"\x02\x02\x02\x068\x03\x02\x02\x02\b:\x03\x02\x02\x02\n<\x03\x02\x02\x02" +
-		"\f`\x03\x02\x02\x02\x0Eb\x03\x02\x02\x02\x10m\x03\x02\x02\x02\x12p\x03" +
-		"\x02\x02\x02\x14u\x03\x02\x02\x02\x16\x86\x03\x02\x02\x02\x18\x94\x03" +
-		"\x02\x02\x02\x1A\xA0\x03\x02\x02\x02\x1C\xA2\x03\x02\x02\x02\x1E\xAC\x03" +
-		"\x02\x02\x02 \xBB\x03\x02\x02\x02\"\xC7\x03\x02\x02\x02$\xD5\x03\x02\x02" +
-		"\x02&\xE3\x03\x02\x02\x02(\xED\x03\x02\x02\x02*,\x05\x04\x03\x02+*\x03" +
-		"\x02\x02\x02,/\x03\x02\x02\x02-+\x03\x02\x02\x02-.\x03\x02\x02\x02.0\x03" +
-		"\x02\x02\x02/-\x03\x02\x02\x0201\x07\x02\x02\x031\x03\x03\x02\x02\x02" +
-		"27\x05\x06\x04\x0237\x05\n\x06\x0247\x05$\x13\x0257\x05&\x14\x0262\x03" +
-		"\x02\x02\x0263\x03\x02\x02\x0264\x03\x02\x02\x0265\x03\x02\x02\x027\x05" +
-		"\x03\x02\x02\x0289\x05\b\x05\x029\x07\x03\x02\x02\x02:;\t\x02\x02\x02" +
-		";\t\x03\x02\x02\x02<>\x05\f\x07\x02=?\x05\b\x05\x02>=\x03\x02\x02\x02" +
-		">?\x03\x02\x02\x02?\v\x03\x02\x02\x02@A\x05\x0E\b\x02AB\x07\x17\x02\x02" +
-		"BC\x05\x12\n\x02Ca\x03\x02\x02\x02DE\x05\x0E\b\x02EF\x07\x17\x02\x02F" +
-		"G\x05\x16\f\x02Ga\x03\x02\x02\x02HI\x05\x0E\b\x02IJ\x07\x17\x02\x02JK" +
-		"\x05\x14\v\x02Ka\x03\x02\x02\x02LM\x05\x0E\b\x02MN\x07\x17\x02\x02NO\x05" +
-		"\x18\r\x02Oa\x03\x02\x02\x02PQ\x05\x0E\b\x02QR\x07\x17\x02\x02RS\x05 " +
-		"\x11\x02Sa\x03\x02\x02\x02TU\x05\x0E\b\x02UV\x07\x17\x02\x02VW\x05\"\x12" +
-		"\x02Wa\x03\x02\x02\x02XY\x05\x0E\b\x02YZ\x07\x17\x02\x02Z[\x05\x1C\x0F" +
-		"\x02[a\x03\x02\x02\x02\\]\x05\x0E\b\x02]^\x07\x17\x02\x02^_\x05\x1A\x0E" +
-		"\x02_a\x03\x02\x02\x02`@\x03\x02\x02\x02`D\x03\x02\x02\x02`H\x03\x02\x02" +
-		"\x02`L\x03\x02\x02\x02`P\x03\x02\x02\x02`T\x03\x02\x02\x02`X\x03\x02\x02" +
-		"\x02`\\\x03\x02\x02\x02a\r\x03\x02\x02\x02bg\x05\x10\t\x02cd\x07\x03\x02" +
-		"\x02df\x05\x10\t\x02ec\x03\x02\x02\x02fi\x03\x02\x02\x02ge\x03\x02\x02" +
-		"\x02gh\x03\x02\x02\x02h\x0F\x03\x02\x02\x02ig\x03\x02\x02\x02jn\x07\x1A" +
-		"\x02\x02kn\x05\x18\r\x02ln\x07\x19\x02\x02mj\x03\x02\x02\x02mk\x03\x02" +
-		"\x02\x02ml\x03\x02\x02\x02n\x11\x03\x02\x02\x02oq\x07\x1C\x02\x02po\x03" +
-		"\x02\x02\x02pq\x03\x02\x02\x02qr\x03\x02\x02\x02rs\x07\x1A\x02\x02s\x13" +
-		"\x03\x02\x02\x02tv\x07\x1C\x02\x02ut\x03\x02\x02\x02uv\x03\x02\x02\x02" +
-		"vw\x03\x02\x02\x02wx\x07\x19\x02\x02x\x15\x03\x02\x02\x02y{\x07\x1C\x02" +
-		"\x02zy\x03\x02\x02\x02z{\x03\x02\x02\x02{|\x03\x02\x02\x02|}\x07\x1A\x02" +
-		"\x02}\x7F\x07\x18\x02\x02~\x80\x07\x1A\x02\x02\x7F~\x03\x02\x02\x02\x7F" +
-		"\x80\x03\x02\x02\x02\x80\x87\x03\x02\x02\x02\x81\x83\x07\x1C\x02\x02\x82" +
-		"\x81\x03\x02\x02\x02\x82\x83\x03\x02\x02\x02\x83\x84\x03\x02\x02\x02\x84" +
-		"\x85\x07\x18\x02\x02\x85\x87\x07\x1A\x02\x02\x86z\x03\x02\x02\x02\x86" +
-		"\x82\x03\x02\x02\x02\x87\x17\x03\x02\x02\x02\x88\x95\x07\x1D\x02\x02\x89" +
-		"\x95\x07\x1E\x02\x02\x8A\x95\x07\x1F\x02\x02\x8B\x95\x07 \x02\x02\x8C" +
-		"\x8D\x07\x04\x02\x02\x8D\x95\x07\x04\x02\x02\x8E\x8F\x07\x05\x02\x02\x8F" +
-		"\x95\x07\x05\x02\x02\x90\x91\x07\x06\x02\x02\x91\x95\x07\x06\x02\x02\x92" +
-		"\x93\x07\x07\x02\x02\x93\x95\x07\x07\x02\x02\x94\x88\x03\x02\x02\x02\x94" +
-		"\x89\x03\x02\x02\x02\x94\x8A\x03\x02\x02\x02\x94\x8B\x03\x02\x02\x02\x94" +
-		"\x8C\x03\x02\x02\x02\x94\x8E\x03\x02\x02\x02\x94\x90\x03\x02\x02\x02\x94" +
-		"\x92\x03\x02\x02\x02\x95\x19\x03\x02\x02\x02\x96\x97\x07\b\x02\x02\x97" +
-		"\x98\x07\x19\x02\x02\x98\xA1\x07\x1F\x02\x02\x99\x9A\x07\b\x02\x02\x9A" +
-		"\x9B\x07\x19\x02\x02\x9B\xA1\x07\"\x02\x02\x9C\x9D\x07\b\x02\x02\x9D\x9E" +
-		"\x07\x19\x02\x02\x9E\x9F\x07\t\x02\x02\x9F\xA1\x07\t\x02\x02\xA0\x96\x03" +
-		"\x02\x02\x02\xA0\x99\x03\x02\x02\x02\xA0\x9C\x03\x02\x02\x02\xA1\x1B\x03" +
-		"\x02\x02\x02\xA2\xA3\x07\n\x02\x02\xA3\xA4\x07\x19\x02\x02\xA4\x1D\x03" +
-		"\x02\x02\x02\xA5\xAD\x07\x1A\x02\x02\xA6\xAD\x05\x16\f\x02\xA7\xAD\x05" +
-		"\x18\r\x02\xA8\xAD\x05 \x11\x02\xA9\xAD\x05\"\x12\x02\xAA\xAD\x05\x1C" +
-		"\x0F\x02\xAB\xAD\x05\x1A\x0E\x02\xAC\xA5\x03\x02\x02\x02\xAC\xA6\x03\x02" +
-		"\x02\x02\xAC\xA7\x03\x02\x02\x02\xAC\xA8\x03\x02\x02\x02\xAC\xA9\x03\x02" +
-		"\x02\x02\xAC\xAA\x03\x02\x02\x02\xAC\xAB\x03\x02\x02\x02\xAD\x1F\x03\x02" +
-		"\x02\x02\xAE\xAF\x07\v\x02\x02\xAF\xBC\x07\f\x02\x02\xB0\xB5\x07\v\x02" +
-		"\x02\xB1\xB3\x05\x1E\x10\x02\xB2\xB4\x05\b\x05\x02\xB3\xB2\x03\x02\x02" +
-		"\x02\xB3\xB4\x03\x02\x02\x02\xB4\xB6\x03\x02\x02\x02\xB5\xB1\x03\x02\x02" +
-		"\x02\xB6\xB7\x03\x02\x02\x02\xB7\xB5\x03\x02\x02\x02\xB7\xB8\x03\x02\x02" +
-		"\x02\xB8\xB9\x03\x02\x02\x02\xB9\xBA\x07\f\x02\x02\xBA\xBC\x03\x02\x02" +
-		"\x02\xBB\xAE\x03\x02\x02\x02\xBB\xB0\x03\x02\x02\x02\xBC!\x03\x02\x02" +
-		"\x02\xBD\xBE\x07\r\x02\x02\xBE\xC8\x07\x0E\x02\x02\xBF\xC1\x07\r\x02\x02" +
-		"\xC0\xC2\x05\n\x06\x02\xC1\xC0\x03\x02\x02\x02\xC2\xC3\x03\x02\x02\x02" +
-		"\xC3\xC1\x03\x02\x02\x02\xC3\xC4\x03\x02\x02\x02\xC4\xC5\x03\x02\x02\x02" +
-		"\xC5\xC6\x07\x0E\x02\x02\xC6\xC8\x03\x02\x02\x02\xC7\xBD\x03\x02\x02\x02" +
-		"\xC7\xBF\x03\x02\x02\x02\xC8#\x03\x02\x02\x02\xC9\xCA\x07\x0F\x02\x02" +
-		"\xCA\xCB\x05\x0E\b\x02\xCB\xCD\x07\x10\x02\x02\xCC\xCE\x05\n\x06\x02\xCD" +
-		"\xCC\x03\x02\x02\x02\xCE\xCF\x03\x02\x02\x02\xCF\xCD\x03\x02\x02\x02\xCF" +
-		"\xD0\x03\x02\x02\x02\xD0\xD6\x03\x02\x02\x02\xD1\xD2\x07\x0F\x02\x02\xD2" +
-		"\xD3\x05\x0E\b\x02\xD3\xD4\x07\x10\x02\x02\xD4\xD6\x03\x02\x02\x02\xD5" +
-		"\xC9\x03\x02\x02\x02\xD5\xD1\x03\x02\x02\x02\xD6%\x03\x02\x02\x02\xD7" +
-		"\xD8\x07\x11\x02\x02\xD8\xD9\x05\x0E\b\x02\xD9\xDB\x07\x12\x02\x02\xDA" +
-		"\xDC\x05(\x15\x02\xDB\xDA\x03\x02\x02\x02\xDC\xDD\x03\x02\x02\x02\xDD" +
-		"\xDB\x03\x02\x02\x02\xDD\xDE\x03\x02\x02\x02\xDE\xE4\x03\x02\x02\x02\xDF" +
-		"\xE0\x07\x11\x02\x02\xE0\xE1\x05\x0E\b\x02\xE1\xE2\x07\x12\x02\x02\xE2" +
-		"\xE4\x03\x02\x02\x02\xE3\xD7\x03\x02\x02\x02\xE3\xDF\x03\x02\x02\x02\xE4" +
-		"\'\x03\x02\x02\x02\xE5\xE7\x07\x13\x02\x02\xE6\xE8\x05\n\x06\x02\xE7\xE6" +
-		"\x03\x02\x02\x02\xE8\xE9\x03\x02\x02\x02\xE9\xE7\x03\x02\x02\x02\xE9\xEA" +
-		"\x03\x02\x02\x02\xEA\xEE\x03\x02\x02\x02\xEB\xEC\x07\x14\x02\x02\xEC\xEE" +
-		"\x05\x1E\x10\x02\xED\xE5\x03\x02\x02\x02\xED\xEB\x03\x02\x02\x02\xEE)" +
-		"\x03\x02\x02\x02\x1C-6>`gmpuz\x7F\x82\x86\x94\xA0\xAC\xB3\xB7\xBB\xC3" +
-		"\xC7\xCF\xD5\xDD\xE3\xE9\xED";
+		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x05\x07c\n\x07\x03" +
+		"\b\x03\b\x03\b\x07\bh\n\b\f\b\x0E\bk\v\b\x03\t\x03\t\x03\t\x05\tp\n\t" +
+		"\x03\n\x05\ns\n\n\x03\n\x03\n\x03\v\x05\vx\n\v\x03\v\x03\v\x03\f\x05\f" +
+		"}\n\f\x03\f\x03\f\x03\f\x05\f\x82\n\f\x03\f\x05\f\x85\n\f\x03\f\x03\f" +
+		"\x05\f\x89\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03" +
+		"\r\x03\r\x03\r\x05\r\x97\n\r\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03" +
+		"\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x05\x0E\xA3\n\x0E\x03\x0F\x03\x0F" +
+		"\x03\x0F\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10" +
+		"\x05\x10\xB0\n\x10\x03\x11\x03\x11\x03\x11\x03\x11\x03\x11\x05\x11\xB7" +
+		"\n\x11\x06\x11\xB9\n\x11\r\x11\x0E\x11\xBA\x03\x11\x03\x11\x05\x11\xBF" +
+		"\n\x11\x03\x12\x03\x12\x03\x12\x03\x12\x06\x12\xC5\n\x12\r\x12\x0E\x12" +
+		"\xC6\x03\x12\x03\x12\x03\x12\x03\x12\x06\x12\xCD\n\x12\r\x12\x0E\x12\xCE" +
+		"\x03\x12\x03\x12\x05\x12\xD3\n\x12\x03\x13\x03\x13\x03\x13\x03\x13\x06" +
+		"\x13\xD9\n\x13\r\x13\x0E\x13\xDA\x03\x13\x03\x13\x03\x13\x03\x13\x05\x13" +
+		"\xE1\n\x13\x03\x14\x03\x14\x03\x14\x03\x14\x06\x14\xE7\n\x14\r\x14\x0E" +
+		"\x14\xE8\x03\x14\x03\x14\x03\x14\x03\x14\x05\x14\xEF\n\x14\x03\x15\x03" +
+		"\x15\x05\x15\xF3\n\x15\x03\x16\x03\x16\x06\x16\xF7\n\x16\r\x16\x0E\x16" +
+		"\xF8\x03\x16\x03\x16\x05\x16\xFD\n\x16\x03\x16\x02\x02\x02\x17\x02\x02" +
+		"\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16" +
+		"\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02\x02" +
+		"\x03\x03\x02\x15\x16\x02\u011C\x02/\x03\x02\x02\x02\x048\x03\x02\x02\x02" +
+		"\x06:\x03\x02\x02\x02\b<\x03\x02\x02\x02\n>\x03\x02\x02\x02\fb\x03\x02" +
+		"\x02\x02\x0Ed\x03\x02\x02\x02\x10o\x03\x02\x02\x02\x12r\x03\x02\x02\x02" +
+		"\x14w\x03\x02\x02\x02\x16\x88\x03\x02\x02\x02\x18\x96\x03\x02\x02\x02" +
+		"\x1A\xA2\x03\x02\x02\x02\x1C\xA4\x03\x02\x02\x02\x1E\xAF\x03\x02\x02\x02" +
+		" \xBE\x03\x02\x02\x02\"\xD2\x03\x02\x02\x02$\xE0\x03\x02\x02\x02&\xEE" +
+		"\x03\x02\x02\x02(\xF2\x03\x02\x02\x02*\xFC\x03\x02\x02\x02,.\x05\x04\x03" +
+		"\x02-,\x03\x02\x02\x02.1\x03\x02\x02\x02/-\x03\x02\x02\x02/0\x03\x02\x02" +
+		"\x0202\x03\x02\x02\x021/\x03\x02\x02\x0223\x07\x02\x02\x033\x03\x03\x02" +
+		"\x02\x0249\x05\x06\x04\x0259\x05\n\x06\x0269\x05$\x13\x0279\x05&\x14\x02" +
+		"84\x03\x02\x02\x0285\x03\x02\x02\x0286\x03\x02\x02\x0287\x03\x02\x02\x02" +
+		"9\x05\x03\x02\x02\x02:;\x05\b\x05\x02;\x07\x03\x02\x02\x02<=\t\x02\x02" +
+		"\x02=\t\x03\x02\x02\x02>@\x05\f\x07\x02?A\x05\b\x05\x02@?\x03\x02\x02" +
+		"\x02@A\x03\x02\x02\x02A\v\x03\x02\x02\x02BC\x05\x0E\b\x02CD\x07\x17\x02" +
+		"\x02DE\x05\x12\n\x02Ec\x03\x02\x02\x02FG\x05\x0E\b\x02GH\x07\x17\x02\x02" +
+		"HI\x05\x16\f\x02Ic\x03\x02\x02\x02JK\x05\x0E\b\x02KL\x07\x17\x02\x02L" +
+		"M\x05\x14\v\x02Mc\x03\x02\x02\x02NO\x05\x0E\b\x02OP\x07\x17\x02\x02PQ" +
+		"\x05\x18\r\x02Qc\x03\x02\x02\x02RS\x05\x0E\b\x02ST\x07\x17\x02\x02TU\x05" +
+		" \x11\x02Uc\x03\x02\x02\x02VW\x05\x0E\b\x02WX\x07\x17\x02\x02XY\x05\"" +
+		"\x12\x02Yc\x03\x02\x02\x02Z[\x05\x0E\b\x02[\\\x07\x17\x02\x02\\]\x05\x1C" +
+		"\x0F\x02]c\x03\x02\x02\x02^_\x05\x0E\b\x02_`\x07\x17\x02\x02`a\x05\x1A" +
+		"\x0E\x02ac\x03\x02\x02\x02bB\x03\x02\x02\x02bF\x03\x02\x02\x02bJ\x03\x02" +
+		"\x02\x02bN\x03\x02\x02\x02bR\x03\x02\x02\x02bV\x03\x02\x02\x02bZ\x03\x02" +
+		"\x02\x02b^\x03\x02\x02\x02c\r\x03\x02\x02\x02di\x05\x10\t\x02ef\x07\x03" +
+		"\x02\x02fh\x05\x10\t\x02ge\x03\x02\x02\x02hk\x03\x02\x02\x02ig\x03\x02" +
+		"\x02\x02ij\x03\x02\x02\x02j\x0F\x03\x02\x02\x02ki\x03\x02\x02\x02lp\x07" +
+		"\x1A\x02\x02mp\x05\x18\r\x02np\x07\x19\x02\x02ol\x03\x02\x02\x02om\x03" +
+		"\x02\x02\x02on\x03\x02\x02\x02p\x11\x03\x02\x02\x02qs\x07\x1C\x02\x02" +
+		"rq\x03\x02\x02\x02rs\x03\x02\x02\x02st\x03\x02\x02\x02tu\x07\x1A\x02\x02" +
+		"u\x13\x03\x02\x02\x02vx\x07\x1C\x02\x02wv\x03\x02\x02\x02wx\x03\x02\x02" +
+		"\x02xy\x03\x02\x02\x02yz\x07\x19\x02\x02z\x15\x03\x02\x02\x02{}\x07\x1C" +
+		"\x02\x02|{\x03\x02\x02\x02|}\x03\x02\x02\x02}~\x03\x02\x02\x02~\x7F\x07" +
+		"\x1A\x02\x02\x7F\x81\x07\x18\x02\x02\x80\x82\x07\x1A\x02\x02\x81\x80\x03" +
+		"\x02\x02\x02\x81\x82\x03\x02\x02\x02\x82\x89\x03\x02\x02\x02\x83\x85\x07" +
+		"\x1C\x02\x02\x84\x83\x03\x02\x02\x02\x84\x85\x03\x02\x02\x02\x85\x86\x03" +
+		"\x02\x02\x02\x86\x87\x07\x18\x02\x02\x87\x89\x07\x1A\x02\x02\x88|\x03" +
+		"\x02\x02\x02\x88\x84\x03\x02\x02\x02\x89\x17\x03\x02\x02\x02\x8A\x97\x07" +
+		"\x1D\x02\x02\x8B\x97\x07\x1E\x02\x02\x8C\x97\x07\x1F\x02\x02\x8D\x97\x07" +
+		" \x02\x02\x8E\x8F\x07\x04\x02\x02\x8F\x97\x07\x04\x02\x02\x90\x91\x07" +
+		"\x05\x02\x02\x91\x97\x07\x05\x02\x02\x92\x93\x07\x06\x02\x02\x93\x97\x07" +
+		"\x06\x02\x02\x94\x95\x07\x07\x02\x02\x95\x97\x07\x07\x02\x02\x96\x8A\x03" +
+		"\x02\x02\x02\x96\x8B\x03\x02\x02\x02\x96\x8C\x03\x02\x02\x02\x96\x8D\x03" +
+		"\x02\x02\x02\x96\x8E\x03\x02\x02\x02\x96\x90\x03\x02\x02\x02\x96\x92\x03" +
+		"\x02\x02\x02\x96\x94\x03\x02\x02\x02\x97\x19\x03\x02\x02\x02\x98\x99\x07" +
+		"\b\x02\x02\x99\x9A\x07\x19\x02\x02\x9A\xA3\x07\x1F\x02\x02\x9B\x9C\x07" +
+		"\b\x02\x02\x9C\x9D\x07\x19\x02\x02\x9D\xA3\x07\"\x02\x02\x9E\x9F\x07\b" +
+		"\x02\x02\x9F\xA0\x07\x19\x02\x02\xA0\xA1\x07\t\x02\x02\xA1\xA3\x07\t\x02" +
+		"\x02\xA2\x98\x03\x02\x02\x02\xA2\x9B\x03\x02\x02\x02\xA2\x9E\x03\x02\x02" +
+		"\x02\xA3\x1B\x03\x02\x02\x02\xA4\xA5\x07\n\x02\x02\xA5\xA6\x07\x19\x02" +
+		"\x02\xA6\x1D\x03\x02\x02\x02\xA7\xB0\x05\x12\n\x02\xA8\xB0\x05\x16\f\x02" +
+		"\xA9\xB0\x05\x14\v\x02\xAA\xB0\x05\x18\r\x02\xAB\xB0\x05 \x11\x02\xAC" +
+		"\xB0\x05\"\x12\x02\xAD\xB0\x05\x1C\x0F\x02\xAE\xB0\x05\x1A\x0E\x02\xAF" +
+		"\xA7\x03\x02\x02\x02\xAF\xA8\x03\x02\x02\x02\xAF\xA9\x03\x02\x02\x02\xAF" +
+		"\xAA\x03\x02\x02\x02\xAF\xAB\x03\x02\x02\x02\xAF\xAC\x03\x02\x02\x02\xAF" +
+		"\xAD\x03\x02\x02\x02\xAF\xAE\x03\x02\x02\x02\xB0\x1F\x03\x02\x02\x02\xB1" +
+		"\xB2\x07\v\x02\x02\xB2\xBF\x07\f\x02\x02\xB3\xB8\x07\v\x02\x02\xB4\xB6" +
+		"\x05\x1E\x10\x02\xB5\xB7\x05\b\x05\x02\xB6\xB5\x03\x02\x02\x02\xB6\xB7" +
+		"\x03\x02\x02\x02\xB7\xB9\x03\x02\x02\x02\xB8\xB4\x03\x02\x02\x02\xB9\xBA" +
+		"\x03\x02\x02\x02\xBA\xB8\x03\x02\x02\x02\xBA\xBB\x03\x02\x02\x02\xBB\xBC" +
+		"\x03\x02\x02\x02\xBC\xBD\x07\f\x02\x02\xBD\xBF\x03\x02\x02\x02\xBE\xB1" +
+		"\x03\x02\x02\x02\xBE\xB3\x03\x02\x02\x02\xBF!\x03\x02\x02\x02\xC0\xC1" +
+		"\x07\r\x02\x02\xC1\xD3\x07\x0E\x02\x02\xC2\xC4\x07\r\x02\x02\xC3\xC5\x05" +
+		"\n\x06\x02\xC4\xC3\x03\x02\x02\x02\xC5\xC6\x03\x02\x02\x02\xC6\xC4\x03" +
+		"\x02\x02\x02\xC6\xC7\x03\x02\x02\x02\xC7\xC8\x03\x02\x02\x02\xC8\xC9\x07" +
+		"\x0E\x02\x02\xC9\xD3\x03\x02\x02\x02\xCA\xCC\x07\r\x02\x02\xCB\xCD\x05" +
+		"(\x15\x02\xCC\xCB\x03\x02\x02\x02\xCD\xCE\x03\x02\x02\x02\xCE\xCC\x03" +
+		"\x02\x02\x02\xCE\xCF\x03\x02\x02\x02\xCF\xD0\x03\x02\x02\x02\xD0\xD1\x07" +
+		"\x0E\x02\x02\xD1\xD3\x03\x02\x02\x02\xD2\xC0\x03\x02\x02\x02\xD2\xC2\x03" +
+		"\x02\x02\x02\xD2\xCA\x03\x02\x02\x02\xD3#\x03\x02\x02\x02\xD4\xD5\x07" +
+		"\x0F\x02\x02\xD5\xD6\x05\x0E\b\x02\xD6\xD8\x07\x10\x02\x02\xD7\xD9\x05" +
+		"\n\x06\x02\xD8\xD7\x03\x02\x02\x02\xD9\xDA\x03\x02\x02\x02\xDA\xD8\x03" +
+		"\x02\x02\x02\xDA\xDB\x03\x02\x02\x02\xDB\xE1\x03\x02\x02\x02\xDC\xDD\x07" +
+		"\x0F\x02\x02\xDD\xDE\x05\x0E\b\x02\xDE\xDF\x07\x10\x02\x02\xDF\xE1\x03" +
+		"\x02\x02\x02\xE0\xD4\x03\x02\x02\x02\xE0\xDC\x03\x02\x02\x02\xE1%\x03" +
+		"\x02\x02\x02\xE2\xE3\x07\x11\x02\x02\xE3\xE4\x05\x0E\b\x02\xE4\xE6\x07" +
+		"\x12\x02\x02\xE5\xE7\x05*\x16\x02\xE6\xE5\x03\x02\x02\x02\xE7\xE8\x03" +
+		"\x02\x02\x02\xE8\xE6\x03\x02\x02\x02\xE8\xE9\x03\x02\x02\x02\xE9\xEF\x03" +
+		"\x02\x02\x02\xEA\xEB\x07\x11\x02\x02\xEB\xEC\x05\x0E\b\x02\xEC\xED\x07" +
+		"\x12\x02\x02\xED\xEF\x03\x02\x02\x02\xEE\xE2\x03\x02\x02\x02\xEE\xEA\x03" +
+		"\x02\x02\x02\xEF\'\x03\x02\x02\x02\xF0\xF3\x05$\x13\x02\xF1\xF3\x05&\x14" +
+		"\x02\xF2\xF0\x03\x02\x02\x02\xF2\xF1\x03\x02\x02\x02\xF3)\x03\x02\x02" +
+		"\x02\xF4\xF6\x07\x13\x02\x02\xF5\xF7\x05\n\x06\x02\xF6\xF5\x03\x02\x02" +
+		"\x02\xF7\xF8\x03\x02\x02\x02\xF8\xF6\x03\x02\x02\x02\xF8\xF9\x03\x02\x02" +
+		"\x02\xF9\xFD\x03\x02\x02\x02\xFA\xFB\x07\x14\x02\x02\xFB\xFD\x05\x1E\x10" +
+		"\x02\xFC\xF4\x03\x02\x02\x02\xFC\xFA\x03\x02\x02\x02\xFD+\x03\x02\x02" +
+		"\x02\x1E/8@biorw|\x81\x84\x88\x96\xA2\xAF\xB6\xBA\xBE\xC6\xCE\xD2\xDA" +
+		"\xE0\xE8\xEE\xF2\xF8\xFC";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!ARCParser.__ATN) {
@@ -2401,9 +2483,14 @@ export class ReferenceContext extends ParserRuleContext {
 
 
 export class DataContext extends ParserRuleContext {
-	public Integer(): TerminalNode | undefined { return this.tryGetToken(ARCParser.Integer, 0); }
+	public integer(): IntegerContext | undefined {
+		return this.tryGetRuleContext(0, IntegerContext);
+	}
 	public decimal(): DecimalContext | undefined {
 		return this.tryGetRuleContext(0, DecimalContext);
+	}
+	public specialID(): SpecialIDContext | undefined {
+		return this.tryGetRuleContext(0, SpecialIDContext);
 	}
 	public string(): StringContext | undefined {
 		return this.tryGetRuleContext(0, StringContext);
@@ -2601,6 +2688,41 @@ export class FilledDictContext extends DictContext {
 		}
 	}
 }
+export class NestedDictContext extends DictContext {
+	public scopes(): ScopesContext[];
+	public scopes(i: number): ScopesContext;
+	public scopes(i?: number): ScopesContext | ScopesContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ScopesContext);
+		} else {
+			return this.getRuleContext(i, ScopesContext);
+		}
+	}
+	constructor(ctx: DictContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public enterRule(listener: ARCListener): void {
+		if (listener.enterNestedDict) {
+			listener.enterNestedDict(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: ARCListener): void {
+		if (listener.exitNestedDict) {
+			listener.exitNestedDict(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: ARCVisitor<Result>): Result {
+		if (visitor.visitNestedDict) {
+			return visitor.visitNestedDict(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
 
 
 export class Dict_scopeContext extends ParserRuleContext {
@@ -2758,6 +2880,41 @@ export class EmptyListScopeContext extends List_scopeContext {
 	public accept<Result>(visitor: ARCVisitor<Result>): Result {
 		if (visitor.visitEmptyListScope) {
 			return visitor.visitEmptyListScope(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class ScopesContext extends ParserRuleContext {
+	public dict_scope(): Dict_scopeContext | undefined {
+		return this.tryGetRuleContext(0, Dict_scopeContext);
+	}
+	public list_scope(): List_scopeContext | undefined {
+		return this.tryGetRuleContext(0, List_scopeContext);
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return ARCParser.RULE_scopes; }
+	// @Override
+	public enterRule(listener: ARCListener): void {
+		if (listener.enterScopes) {
+			listener.enterScopes(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: ARCListener): void {
+		if (listener.exitScopes) {
+			listener.exitScopes(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: ARCVisitor<Result>): Result {
+		if (visitor.visitScopes) {
+			return visitor.visitScopes(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
