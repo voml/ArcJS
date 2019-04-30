@@ -89,6 +89,47 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
             data: rhs.data
         }
     }
+    visitListAssign(ctx: ANTLR.ListAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        console.log('AssignLHS: ' + lhs.join('.'))
+        console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        if (rhs.data.every(this.notSubmap)) {
+            return {
+                task: 'insert',
+                path: lhs,
+                data: rhs.data
+            }
+        }
+        else {
+            return {
+                task: 'error',
+                path: lhs,
+                data: rhs.data
+            }
+        }
+    }
+    visitDictAssign(ctx: ANTLR.DictAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        function merge(o: any) {
+            switch (o.task) {
+                case 'empty': {
+                    return {
+                        task: 'empty'
+                    }
+                }
+                case 'insert': {
+                    return {
+                        task: 'insert',
+                        path: lhs.concat(o.path),
+                        data: o.data
+                    }
+                }
+            }
+        }
+        return rhs.data.map(merge)
+    }
 
 
     /* Node: Key */
