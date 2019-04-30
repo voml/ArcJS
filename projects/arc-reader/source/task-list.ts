@@ -5,17 +5,8 @@ import bigDecimal from 'js-big-decimal'
 
 
 export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
-    private notSubmap(_: any): Boolean {
-        switch (true) {
-            case !Array.isArray(_):
-                return true
-            case _[0] == undefined:
-                return true
-            case _[0].task != 'insert':
-                return true
-            default:
-                return false
-        }
+    private atom(_: any) {
+        return [{ task: 'value', data: _ }]
     }
     defaultResult() {
         //console.warn('⚠️  Unreachable!')
@@ -92,22 +83,25 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitListAssign(ctx: ANTLR.ListAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        console.log('AssignLHS: ' + lhs.join('.'))
-        console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
-        if (rhs.data.every(this.notSubmap)) {
-            return {
-                task: 'insert',
-                path: lhs,
-                data: rhs.data
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        function merge(o: any, idx: number) {
+            switch (o.task) {
+                case 'empty': {
+                    return {
+                        task: 'empty'
+                    }
+                }
+                case 'insert': {
+                    return {
+                        task: 'insert',
+                        path: lhs.concat(o.path),
+                        data: o.data
+                    }
+                }
             }
         }
-        else {
-            return {
-                task: 'error',
-                path: lhs,
-                data: rhs.data
-            }
-        }
+        return rhs.data.map(merge)
     }
     visitDictAssign(ctx: ANTLR.DictAssignContext) {
         const lhs: any = this.visit(ctx._left)
@@ -161,6 +155,7 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitEmptyList(ctx: ANTLR.EmptyListContext) {
         //console.log('Empty: EmptyList!')
         return {
+            task: 'value',
             data: []
         }
     }
@@ -169,10 +164,12 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
         for (let i = 0; i < ctx.data().length; i++) {
             const v: any = this.visit(ctx.data(i))
             //console.log(`Data: ${JSON.stringify(v.data, null, 4)}`)
-            element = element.concat([v.data])
+            console.log(`Data: ${JSON.stringify(v, null, 4)}`)
+            element = element.concat([v.map])
         }
-        //console.log(`List: ${JSON.stringify(element, null, 4)}`)
+        console.log(`List: ${JSON.stringify(element, null, 4)}`)
         return {
+            task: 'value',
             data: element
         }
     }
@@ -181,9 +178,7 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     /* DataType: Dict */
     visitEmptyDict(ctx: ANTLR.EmptyDictContext) {
         //console.log('Empty: EmptyDict!')
-        return {
-            data: {}
-        }
+        return this.atom({})
     }
     visitFilledDict(ctx: ANTLR.FilledDictContext) {
         let element: object[] = []
@@ -193,46 +188,34 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
             element = element.concat(v)
         }
         //console.log(`Dict: ${JSON.stringify(element, null, 4)}`)
-        return {
-            data: element
-        }
+        return element
     }
 
 
     /* Atom: String */
     visitStringEmpty(ctx: ANTLR.StringEmptyContext) {
         //console.log('Empty: EmptyString!')
-        return {
-            data: ''
-        }
+        return this.atom('')
     }
     visitStringLiteralSingle(ctx: ANTLR.StringLiteralSingleContext) {
         const s = JSON.stringify(ctx.text).slice(2, -2)
         //console.log('String: ' + s)
-        return {
-            data: s
-        }
+        return this.atom(s)
     }
     visitStringLiteralBlock(ctx: ANTLR.StringLiteralBlockContext) {
         const s = JSON.stringify(ctx.text).slice(4, -4)
         //console.log('String: ' + s)
-        return {
-            data: s
-        }
+        return this.atom(s)
     }
     visitStringEscapeSingle(ctx: ANTLR.StringEscapeSingleContext) {
         const s = ctx.text.slice(1, -1)
         //console.log('String: ' + s)
-        return {
-            data: s
-        }
+        return this.atom(s)
     }
     visitStringEscapeBlock(ctx: ANTLR.StringEscapeBlockContext) {
         const s = ctx.text.slice(3, -3)
         //console.log('String: ' + s)
-        return {
-            data: s
-        }
+        return this.atom(s)
     }
 
 
@@ -240,9 +223,8 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitIntegerLiteral(ctx: ANTLR.IntegerLiteralContext) {
         const i = new bigDecimal(ctx.text.replace('_', ''))
         //console.log('Integer: ' + i.getPrettyValue(4, '_'))
-        return {
-            data: i//TODO:Delete leading Zero
-        }
+        //TODO:Delete leading Zero
+        return this.atom(i)
     }
 
 
@@ -250,16 +232,14 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitDecimalLiteral(ctx: ANTLR.DecimalLiteralContext) {
         const i = new bigDecimal(ctx.text.replace('_', ''))
         //console.log('Decimal: ' + i.getPrettyValue(4, '_'))
-        return {
-            data: i//TODO:Delete leading Zero
-        }
+        //TODO:Delete leading Zero
+        return this.atom(i)
     }
     visitDecimalZero(ctx: ANTLR.DecimalZeroContext) {
         const i = new bigDecimal(ctx.text.replace('_', ''))
         //console.log('Decimal: ' + i.getPrettyValue(4, '_'))
-        return {
-            data: i//TODO:Delete leading Zero
-        }
+        //TODO:Delete leading Zero
+        return this.atom(i)
     }
 
 
@@ -277,14 +257,10 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
         }
         if (!jump.hasOwnProperty(s)) {
             console.warn('⚠️  Unknow Value: ' + s + ', return null')
-            return {
-                data: null
-            }
+            return this.atom(null)
         }
         else {
-            return {
-                data: jump[s]
-            }
+            return this.atom(jump[s])
         }
     }
 }
