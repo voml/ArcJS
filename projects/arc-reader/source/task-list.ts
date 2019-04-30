@@ -266,29 +266,25 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     /* Atom: SpecialValue */
     visitSpecialID(ctx: ANTLR.SpecialIDContext) {
         let s: any = ctx.text.toLowerCase()
-        switch (true) {
-            case s == 'null': {
-                s = null
-                break
-            }
-            case s == 'true': {
-                s = true
-                break
-            }
-            case s == 'false': {
-                s = false
-                break
-            }
-            default: {
-                console.warn('⚠️  Unknow Value: ' + s + ', return null')
-                s = null
-                break
+        //console.log('Special: ' + s)
+        const jump: any = {
+            null: null,
+            true: true,
+            false: false,
+            infinity: Infinity,
+            nan: NaN,
+            undefined: undefined,
+        }
+        if (!jump.hasOwnProperty(s)) {
+            console.warn('⚠️  Unknow Value: ' + s + ', return null')
+            return {
+                data: null
             }
         }
-        //TODO: undef, nan, infinity
-        //console.log('Special: ' + s)
-        return {
-            data: s
+        else {
+            return {
+                data: jump[s]
+            }
         }
     }
 }
