@@ -6,30 +6,26 @@ import { ParseTreeVisitor } from 'antlr4ts/tree/ParseTreeVisitor'
 import { LiteralMacroContext } from './ARCParser'
 import { SimpleMacroContext } from './ARCParser'
 import { EmptyMacroContext } from './ARCParser'
-import { FilledDictScopeContext } from './ARCParser'
-import { EmptyDictScopeContext } from './ARCParser'
+import { ListInheritContext } from './ARCParser'
+import { DictScopeContext } from './ARCParser'
 import { StringEscapeBlockContext } from './ARCParser'
 import { StringEscapeSingleContext } from './ARCParser'
 import { StringLiteralBlockContext } from './ARCParser'
 import { StringLiteralSingleContext } from './ARCParser'
 import { StringEmptyContext } from './ARCParser'
+import { DictInheritContext } from './ARCParser'
 import { IntegerLiteralContext } from './ARCParser'
-import { EmptyListContext } from './ARCParser'
-import { FilledListContext } from './ARCParser'
-import { RecordStatementContext } from './ARCParser'
-import { FilledListScopeContext } from './ARCParser'
-import { EmptyListScopeContext } from './ARCParser'
-import { IntegerAssignContext } from './ARCParser'
-import { DecimalAssignContext } from './ARCParser'
-import { SpecialAssignContext } from './ARCParser'
-import { StringAssignContext } from './ARCParser'
+import { ListEmptyContext } from './ARCParser'
+import { ListStatementContext } from './ARCParser'
+import { EmptyStatementContext } from './ARCParser'
+import { ListScopeContext } from './ARCParser'
+import { AtomAssignContext } from './ARCParser'
 import { ListAssignContext } from './ARCParser'
 import { DictAssignContext } from './ARCParser'
 import { CiteAssignContext } from './ARCParser'
 import { MacroAssignContext } from './ARCParser'
-import { EmptyDictContext } from './ARCParser'
-import { FilledDictContext } from './ARCParser'
-import { NestedDictContext } from './ARCParser'
+import { DictEmptyContext } from './ARCParser'
+import { DictStatementContext } from './ARCParser'
 import { DecimalLiteralContext } from './ARCParser'
 import { DecimalZeroContext } from './ARCParser'
 import { DictGroupContext } from './ARCParser'
@@ -37,22 +33,24 @@ import { DataGroupContext } from './ARCParser'
 import { ProgramContext } from './ARCParser'
 import { StatementContext } from './ARCParser'
 import { RecordContext } from './ARCParser'
-import { RecordEOSContext } from './ARCParser'
+import { EmptyContext } from './ARCParser'
+import { SymbolContext } from './ARCParser'
+import { AtomContext } from './ARCParser'
 import { KeyContext } from './ARCParser'
 import { EosContext } from './ARCParser'
-import { SymbolContext } from './ARCParser'
 import { IntegerContext } from './ARCParser'
 import { SpecialIDContext } from './ARCParser'
 import { DecimalContext } from './ARCParser'
 import { StringContext } from './ARCParser'
 import { MacroContext } from './ARCParser'
-import { ReferenceContext } from './ARCParser'
+import { CiteContext } from './ARCParser'
 import { DataContext } from './ARCParser'
 import { ListContext } from './ARCParser'
 import { DictContext } from './ARCParser'
 import { Dict_scopeContext } from './ARCParser'
+import { Dict_inheritContext } from './ARCParser'
 import { List_scopeContext } from './ARCParser'
-import { ScopesContext } from './ARCParser'
+import { List_inheritContext } from './ARCParser'
 import { GroupContext } from './ARCParser'
 
 
@@ -89,20 +87,20 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitEmptyMacro?: (ctx: EmptyMacroContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `FilledDictScope`
-	 * labeled alternative in `ARCParser.dict_scope`.
+	 * Visit a parse tree produced by the `ListInherit`
+	 * labeled alternative in `ARCParser.list_inherit`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitFilledDictScope?: (ctx: FilledDictScopeContext) => Result
+    visitListInherit?: (ctx: ListInheritContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `EmptyDictScope`
+	 * Visit a parse tree produced by the `DictScope`
 	 * labeled alternative in `ARCParser.dict_scope`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitEmptyDictScope?: (ctx: EmptyDictScopeContext) => Result
+    visitDictScope?: (ctx: DictScopeContext) => Result
 
     /**
 	 * Visit a parse tree produced by the `StringEscapeBlock`
@@ -145,6 +143,14 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitStringEmpty?: (ctx: StringEmptyContext) => Result
 
     /**
+	 * Visit a parse tree produced by the `DictInherit`
+	 * labeled alternative in `ARCParser.dict_inherit`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+    visitDictInherit?: (ctx: DictInheritContext) => Result
+
+    /**
 	 * Visit a parse tree produced by the `IntegerLiteral`
 	 * labeled alternative in `ARCParser.integer`.
 	 * @param ctx the parse tree
@@ -153,76 +159,44 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitIntegerLiteral?: (ctx: IntegerLiteralContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `EmptyList`
+	 * Visit a parse tree produced by the `ListEmpty`
 	 * labeled alternative in `ARCParser.list`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitEmptyList?: (ctx: EmptyListContext) => Result
+    visitListEmpty?: (ctx: ListEmptyContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `FilledList`
+	 * Visit a parse tree produced by the `ListStatement`
 	 * labeled alternative in `ARCParser.list`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitFilledList?: (ctx: FilledListContext) => Result
+    visitListStatement?: (ctx: ListStatementContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `RecordStatement`
-	 * labeled alternative in `ARCParser.recordEOS`.
+	 * Visit a parse tree produced by the `EmptyStatement`
+	 * labeled alternative in `ARCParser.empty`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitRecordStatement?: (ctx: RecordStatementContext) => Result
+    visitEmptyStatement?: (ctx: EmptyStatementContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `FilledListScope`
+	 * Visit a parse tree produced by the `ListScope`
 	 * labeled alternative in `ARCParser.list_scope`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitFilledListScope?: (ctx: FilledListScopeContext) => Result
+    visitListScope?: (ctx: ListScopeContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `EmptyListScope`
-	 * labeled alternative in `ARCParser.list_scope`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-    visitEmptyListScope?: (ctx: EmptyListScopeContext) => Result
-
-    /**
-	 * Visit a parse tree produced by the `IntegerAssign`
+	 * Visit a parse tree produced by the `AtomAssign`
 	 * labeled alternative in `ARCParser.record`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitIntegerAssign?: (ctx: IntegerAssignContext) => Result
-
-    /**
-	 * Visit a parse tree produced by the `DecimalAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-    visitDecimalAssign?: (ctx: DecimalAssignContext) => Result
-
-    /**
-	 * Visit a parse tree produced by the `SpecialAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-    visitSpecialAssign?: (ctx: SpecialAssignContext) => Result
-
-    /**
-	 * Visit a parse tree produced by the `StringAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-    visitStringAssign?: (ctx: StringAssignContext) => Result
+    visitAtomAssign?: (ctx: AtomAssignContext) => Result
 
     /**
 	 * Visit a parse tree produced by the `ListAssign`
@@ -257,28 +231,20 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitMacroAssign?: (ctx: MacroAssignContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `EmptyDict`
+	 * Visit a parse tree produced by the `DictEmpty`
 	 * labeled alternative in `ARCParser.dict`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitEmptyDict?: (ctx: EmptyDictContext) => Result
+    visitDictEmpty?: (ctx: DictEmptyContext) => Result
 
     /**
-	 * Visit a parse tree produced by the `FilledDict`
+	 * Visit a parse tree produced by the `DictStatement`
 	 * labeled alternative in `ARCParser.dict`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitFilledDict?: (ctx: FilledDictContext) => Result
-
-    /**
-	 * Visit a parse tree produced by the `NestedDict`
-	 * labeled alternative in `ARCParser.dict`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-    visitNestedDict?: (ctx: NestedDictContext) => Result
+    visitDictStatement?: (ctx: DictStatementContext) => Result
 
     /**
 	 * Visit a parse tree produced by the `DecimalLiteral`
@@ -334,11 +300,25 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitRecord?: (ctx: RecordContext) => Result
 
     /**
-	 * Visit a parse tree produced by `ARCParser.recordEOS`.
+	 * Visit a parse tree produced by `ARCParser.empty`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitRecordEOS?: (ctx: RecordEOSContext) => Result
+    visitEmpty?: (ctx: EmptyContext) => Result
+
+    /**
+	 * Visit a parse tree produced by `ARCParser.symbol`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+    visitSymbol?: (ctx: SymbolContext) => Result
+
+    /**
+	 * Visit a parse tree produced by `ARCParser.atom`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+    visitAtom?: (ctx: AtomContext) => Result
 
     /**
 	 * Visit a parse tree produced by `ARCParser.key`.
@@ -353,13 +333,6 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
     visitEos?: (ctx: EosContext) => Result
-
-    /**
-	 * Visit a parse tree produced by `ARCParser.symbol`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-    visitSymbol?: (ctx: SymbolContext) => Result
 
     /**
 	 * Visit a parse tree produced by `ARCParser.integer`.
@@ -397,11 +370,11 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitMacro?: (ctx: MacroContext) => Result
 
     /**
-	 * Visit a parse tree produced by `ARCParser.reference`.
+	 * Visit a parse tree produced by `ARCParser.cite`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitReference?: (ctx: ReferenceContext) => Result
+    visitCite?: (ctx: CiteContext) => Result
 
     /**
 	 * Visit a parse tree produced by `ARCParser.data`.
@@ -432,6 +405,13 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitDict_scope?: (ctx: Dict_scopeContext) => Result
 
     /**
+	 * Visit a parse tree produced by `ARCParser.dict_inherit`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+    visitDict_inherit?: (ctx: Dict_inheritContext) => Result
+
+    /**
 	 * Visit a parse tree produced by `ARCParser.list_scope`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -439,11 +419,11 @@ export interface ARCVisitor<Result> extends ParseTreeVisitor<Result> {
     visitList_scope?: (ctx: List_scopeContext) => Result
 
     /**
-	 * Visit a parse tree produced by `ARCParser.scopes`.
+	 * Visit a parse tree produced by `ARCParser.list_inherit`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-    visitScopes?: (ctx: ScopesContext) => Result
+    visitList_inherit?: (ctx: List_inheritContext) => Result
 
     /**
 	 * Visit a parse tree produced by `ARCParser.group`.

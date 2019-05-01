@@ -6,30 +6,26 @@ import { ParseTreeListener } from 'antlr4ts/tree/ParseTreeListener'
 import { LiteralMacroContext } from './ARCParser'
 import { SimpleMacroContext } from './ARCParser'
 import { EmptyMacroContext } from './ARCParser'
-import { FilledDictScopeContext } from './ARCParser'
-import { EmptyDictScopeContext } from './ARCParser'
+import { ListInheritContext } from './ARCParser'
+import { DictScopeContext } from './ARCParser'
 import { StringEscapeBlockContext } from './ARCParser'
 import { StringEscapeSingleContext } from './ARCParser'
 import { StringLiteralBlockContext } from './ARCParser'
 import { StringLiteralSingleContext } from './ARCParser'
 import { StringEmptyContext } from './ARCParser'
+import { DictInheritContext } from './ARCParser'
 import { IntegerLiteralContext } from './ARCParser'
-import { EmptyListContext } from './ARCParser'
-import { FilledListContext } from './ARCParser'
-import { RecordStatementContext } from './ARCParser'
-import { FilledListScopeContext } from './ARCParser'
-import { EmptyListScopeContext } from './ARCParser'
-import { IntegerAssignContext } from './ARCParser'
-import { DecimalAssignContext } from './ARCParser'
-import { SpecialAssignContext } from './ARCParser'
-import { StringAssignContext } from './ARCParser'
+import { ListEmptyContext } from './ARCParser'
+import { ListStatementContext } from './ARCParser'
+import { EmptyStatementContext } from './ARCParser'
+import { ListScopeContext } from './ARCParser'
+import { AtomAssignContext } from './ARCParser'
 import { ListAssignContext } from './ARCParser'
 import { DictAssignContext } from './ARCParser'
 import { CiteAssignContext } from './ARCParser'
 import { MacroAssignContext } from './ARCParser'
-import { EmptyDictContext } from './ARCParser'
-import { FilledDictContext } from './ARCParser'
-import { NestedDictContext } from './ARCParser'
+import { DictEmptyContext } from './ARCParser'
+import { DictStatementContext } from './ARCParser'
 import { DecimalLiteralContext } from './ARCParser'
 import { DecimalZeroContext } from './ARCParser'
 import { DictGroupContext } from './ARCParser'
@@ -37,22 +33,24 @@ import { DataGroupContext } from './ARCParser'
 import { ProgramContext } from './ARCParser'
 import { StatementContext } from './ARCParser'
 import { RecordContext } from './ARCParser'
-import { RecordEOSContext } from './ARCParser'
+import { EmptyContext } from './ARCParser'
+import { SymbolContext } from './ARCParser'
+import { AtomContext } from './ARCParser'
 import { KeyContext } from './ARCParser'
 import { EosContext } from './ARCParser'
-import { SymbolContext } from './ARCParser'
 import { IntegerContext } from './ARCParser'
 import { SpecialIDContext } from './ARCParser'
 import { DecimalContext } from './ARCParser'
 import { StringContext } from './ARCParser'
 import { MacroContext } from './ARCParser'
-import { ReferenceContext } from './ARCParser'
+import { CiteContext } from './ARCParser'
 import { DataContext } from './ARCParser'
 import { ListContext } from './ARCParser'
 import { DictContext } from './ARCParser'
 import { Dict_scopeContext } from './ARCParser'
+import { Dict_inheritContext } from './ARCParser'
 import { List_scopeContext } from './ARCParser'
-import { ScopesContext } from './ARCParser'
+import { List_inheritContext } from './ARCParser'
 import { GroupContext } from './ARCParser'
 
 
@@ -101,30 +99,30 @@ export interface ARCListener extends ParseTreeListener {
     exitEmptyMacro?: (ctx: EmptyMacroContext) => void
 
     /**
-	 * Enter a parse tree produced by the `FilledDictScope`
-	 * labeled alternative in `ARCParser.dict_scope`.
+	 * Enter a parse tree produced by the `ListInherit`
+	 * labeled alternative in `ARCParser.list_inherit`.
 	 * @param ctx the parse tree
 	 */
-    enterFilledDictScope?: (ctx: FilledDictScopeContext) => void
+    enterListInherit?: (ctx: ListInheritContext) => void
     /**
-	 * Exit a parse tree produced by the `FilledDictScope`
-	 * labeled alternative in `ARCParser.dict_scope`.
+	 * Exit a parse tree produced by the `ListInherit`
+	 * labeled alternative in `ARCParser.list_inherit`.
 	 * @param ctx the parse tree
 	 */
-    exitFilledDictScope?: (ctx: FilledDictScopeContext) => void
+    exitListInherit?: (ctx: ListInheritContext) => void
 
     /**
-	 * Enter a parse tree produced by the `EmptyDictScope`
+	 * Enter a parse tree produced by the `DictScope`
 	 * labeled alternative in `ARCParser.dict_scope`.
 	 * @param ctx the parse tree
 	 */
-    enterEmptyDictScope?: (ctx: EmptyDictScopeContext) => void
+    enterDictScope?: (ctx: DictScopeContext) => void
     /**
-	 * Exit a parse tree produced by the `EmptyDictScope`
+	 * Exit a parse tree produced by the `DictScope`
 	 * labeled alternative in `ARCParser.dict_scope`.
 	 * @param ctx the parse tree
 	 */
-    exitEmptyDictScope?: (ctx: EmptyDictScopeContext) => void
+    exitDictScope?: (ctx: DictScopeContext) => void
 
     /**
 	 * Enter a parse tree produced by the `StringEscapeBlock`
@@ -192,6 +190,19 @@ export interface ARCListener extends ParseTreeListener {
     exitStringEmpty?: (ctx: StringEmptyContext) => void
 
     /**
+	 * Enter a parse tree produced by the `DictInherit`
+	 * labeled alternative in `ARCParser.dict_inherit`.
+	 * @param ctx the parse tree
+	 */
+    enterDictInherit?: (ctx: DictInheritContext) => void
+    /**
+	 * Exit a parse tree produced by the `DictInherit`
+	 * labeled alternative in `ARCParser.dict_inherit`.
+	 * @param ctx the parse tree
+	 */
+    exitDictInherit?: (ctx: DictInheritContext) => void
+
+    /**
 	 * Enter a parse tree produced by the `IntegerLiteral`
 	 * labeled alternative in `ARCParser.integer`.
 	 * @param ctx the parse tree
@@ -205,121 +216,69 @@ export interface ARCListener extends ParseTreeListener {
     exitIntegerLiteral?: (ctx: IntegerLiteralContext) => void
 
     /**
-	 * Enter a parse tree produced by the `EmptyList`
+	 * Enter a parse tree produced by the `ListEmpty`
 	 * labeled alternative in `ARCParser.list`.
 	 * @param ctx the parse tree
 	 */
-    enterEmptyList?: (ctx: EmptyListContext) => void
+    enterListEmpty?: (ctx: ListEmptyContext) => void
     /**
-	 * Exit a parse tree produced by the `EmptyList`
+	 * Exit a parse tree produced by the `ListEmpty`
 	 * labeled alternative in `ARCParser.list`.
 	 * @param ctx the parse tree
 	 */
-    exitEmptyList?: (ctx: EmptyListContext) => void
+    exitListEmpty?: (ctx: ListEmptyContext) => void
 
     /**
-	 * Enter a parse tree produced by the `FilledList`
+	 * Enter a parse tree produced by the `ListStatement`
 	 * labeled alternative in `ARCParser.list`.
 	 * @param ctx the parse tree
 	 */
-    enterFilledList?: (ctx: FilledListContext) => void
+    enterListStatement?: (ctx: ListStatementContext) => void
     /**
-	 * Exit a parse tree produced by the `FilledList`
+	 * Exit a parse tree produced by the `ListStatement`
 	 * labeled alternative in `ARCParser.list`.
 	 * @param ctx the parse tree
 	 */
-    exitFilledList?: (ctx: FilledListContext) => void
+    exitListStatement?: (ctx: ListStatementContext) => void
 
     /**
-	 * Enter a parse tree produced by the `RecordStatement`
-	 * labeled alternative in `ARCParser.recordEOS`.
+	 * Enter a parse tree produced by the `EmptyStatement`
+	 * labeled alternative in `ARCParser.empty`.
 	 * @param ctx the parse tree
 	 */
-    enterRecordStatement?: (ctx: RecordStatementContext) => void
+    enterEmptyStatement?: (ctx: EmptyStatementContext) => void
     /**
-	 * Exit a parse tree produced by the `RecordStatement`
-	 * labeled alternative in `ARCParser.recordEOS`.
+	 * Exit a parse tree produced by the `EmptyStatement`
+	 * labeled alternative in `ARCParser.empty`.
 	 * @param ctx the parse tree
 	 */
-    exitRecordStatement?: (ctx: RecordStatementContext) => void
+    exitEmptyStatement?: (ctx: EmptyStatementContext) => void
 
     /**
-	 * Enter a parse tree produced by the `FilledListScope`
+	 * Enter a parse tree produced by the `ListScope`
 	 * labeled alternative in `ARCParser.list_scope`.
 	 * @param ctx the parse tree
 	 */
-    enterFilledListScope?: (ctx: FilledListScopeContext) => void
+    enterListScope?: (ctx: ListScopeContext) => void
     /**
-	 * Exit a parse tree produced by the `FilledListScope`
+	 * Exit a parse tree produced by the `ListScope`
 	 * labeled alternative in `ARCParser.list_scope`.
 	 * @param ctx the parse tree
 	 */
-    exitFilledListScope?: (ctx: FilledListScopeContext) => void
+    exitListScope?: (ctx: ListScopeContext) => void
 
     /**
-	 * Enter a parse tree produced by the `EmptyListScope`
-	 * labeled alternative in `ARCParser.list_scope`.
-	 * @param ctx the parse tree
-	 */
-    enterEmptyListScope?: (ctx: EmptyListScopeContext) => void
-    /**
-	 * Exit a parse tree produced by the `EmptyListScope`
-	 * labeled alternative in `ARCParser.list_scope`.
-	 * @param ctx the parse tree
-	 */
-    exitEmptyListScope?: (ctx: EmptyListScopeContext) => void
-
-    /**
-	 * Enter a parse tree produced by the `IntegerAssign`
+	 * Enter a parse tree produced by the `AtomAssign`
 	 * labeled alternative in `ARCParser.record`.
 	 * @param ctx the parse tree
 	 */
-    enterIntegerAssign?: (ctx: IntegerAssignContext) => void
+    enterAtomAssign?: (ctx: AtomAssignContext) => void
     /**
-	 * Exit a parse tree produced by the `IntegerAssign`
+	 * Exit a parse tree produced by the `AtomAssign`
 	 * labeled alternative in `ARCParser.record`.
 	 * @param ctx the parse tree
 	 */
-    exitIntegerAssign?: (ctx: IntegerAssignContext) => void
-
-    /**
-	 * Enter a parse tree produced by the `DecimalAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 */
-    enterDecimalAssign?: (ctx: DecimalAssignContext) => void
-    /**
-	 * Exit a parse tree produced by the `DecimalAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 */
-    exitDecimalAssign?: (ctx: DecimalAssignContext) => void
-
-    /**
-	 * Enter a parse tree produced by the `SpecialAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 */
-    enterSpecialAssign?: (ctx: SpecialAssignContext) => void
-    /**
-	 * Exit a parse tree produced by the `SpecialAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 */
-    exitSpecialAssign?: (ctx: SpecialAssignContext) => void
-
-    /**
-	 * Enter a parse tree produced by the `StringAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 */
-    enterStringAssign?: (ctx: StringAssignContext) => void
-    /**
-	 * Exit a parse tree produced by the `StringAssign`
-	 * labeled alternative in `ARCParser.record`.
-	 * @param ctx the parse tree
-	 */
-    exitStringAssign?: (ctx: StringAssignContext) => void
+    exitAtomAssign?: (ctx: AtomAssignContext) => void
 
     /**
 	 * Enter a parse tree produced by the `ListAssign`
@@ -374,43 +333,30 @@ export interface ARCListener extends ParseTreeListener {
     exitMacroAssign?: (ctx: MacroAssignContext) => void
 
     /**
-	 * Enter a parse tree produced by the `EmptyDict`
+	 * Enter a parse tree produced by the `DictEmpty`
 	 * labeled alternative in `ARCParser.dict`.
 	 * @param ctx the parse tree
 	 */
-    enterEmptyDict?: (ctx: EmptyDictContext) => void
+    enterDictEmpty?: (ctx: DictEmptyContext) => void
     /**
-	 * Exit a parse tree produced by the `EmptyDict`
+	 * Exit a parse tree produced by the `DictEmpty`
 	 * labeled alternative in `ARCParser.dict`.
 	 * @param ctx the parse tree
 	 */
-    exitEmptyDict?: (ctx: EmptyDictContext) => void
+    exitDictEmpty?: (ctx: DictEmptyContext) => void
 
     /**
-	 * Enter a parse tree produced by the `FilledDict`
+	 * Enter a parse tree produced by the `DictStatement`
 	 * labeled alternative in `ARCParser.dict`.
 	 * @param ctx the parse tree
 	 */
-    enterFilledDict?: (ctx: FilledDictContext) => void
+    enterDictStatement?: (ctx: DictStatementContext) => void
     /**
-	 * Exit a parse tree produced by the `FilledDict`
+	 * Exit a parse tree produced by the `DictStatement`
 	 * labeled alternative in `ARCParser.dict`.
 	 * @param ctx the parse tree
 	 */
-    exitFilledDict?: (ctx: FilledDictContext) => void
-
-    /**
-	 * Enter a parse tree produced by the `NestedDict`
-	 * labeled alternative in `ARCParser.dict`.
-	 * @param ctx the parse tree
-	 */
-    enterNestedDict?: (ctx: NestedDictContext) => void
-    /**
-	 * Exit a parse tree produced by the `NestedDict`
-	 * labeled alternative in `ARCParser.dict`.
-	 * @param ctx the parse tree
-	 */
-    exitNestedDict?: (ctx: NestedDictContext) => void
+    exitDictStatement?: (ctx: DictStatementContext) => void
 
     /**
 	 * Enter a parse tree produced by the `DecimalLiteral`
@@ -498,15 +444,37 @@ export interface ARCListener extends ParseTreeListener {
     exitRecord?: (ctx: RecordContext) => void
 
     /**
-	 * Enter a parse tree produced by `ARCParser.recordEOS`.
+	 * Enter a parse tree produced by `ARCParser.empty`.
 	 * @param ctx the parse tree
 	 */
-    enterRecordEOS?: (ctx: RecordEOSContext) => void
+    enterEmpty?: (ctx: EmptyContext) => void
     /**
-	 * Exit a parse tree produced by `ARCParser.recordEOS`.
+	 * Exit a parse tree produced by `ARCParser.empty`.
 	 * @param ctx the parse tree
 	 */
-    exitRecordEOS?: (ctx: RecordEOSContext) => void
+    exitEmpty?: (ctx: EmptyContext) => void
+
+    /**
+	 * Enter a parse tree produced by `ARCParser.symbol`.
+	 * @param ctx the parse tree
+	 */
+    enterSymbol?: (ctx: SymbolContext) => void
+    /**
+	 * Exit a parse tree produced by `ARCParser.symbol`.
+	 * @param ctx the parse tree
+	 */
+    exitSymbol?: (ctx: SymbolContext) => void
+
+    /**
+	 * Enter a parse tree produced by `ARCParser.atom`.
+	 * @param ctx the parse tree
+	 */
+    enterAtom?: (ctx: AtomContext) => void
+    /**
+	 * Exit a parse tree produced by `ARCParser.atom`.
+	 * @param ctx the parse tree
+	 */
+    exitAtom?: (ctx: AtomContext) => void
 
     /**
 	 * Enter a parse tree produced by `ARCParser.key`.
@@ -529,17 +497,6 @@ export interface ARCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
     exitEos?: (ctx: EosContext) => void
-
-    /**
-	 * Enter a parse tree produced by `ARCParser.symbol`.
-	 * @param ctx the parse tree
-	 */
-    enterSymbol?: (ctx: SymbolContext) => void
-    /**
-	 * Exit a parse tree produced by `ARCParser.symbol`.
-	 * @param ctx the parse tree
-	 */
-    exitSymbol?: (ctx: SymbolContext) => void
 
     /**
 	 * Enter a parse tree produced by `ARCParser.integer`.
@@ -597,15 +554,15 @@ export interface ARCListener extends ParseTreeListener {
     exitMacro?: (ctx: MacroContext) => void
 
     /**
-	 * Enter a parse tree produced by `ARCParser.reference`.
+	 * Enter a parse tree produced by `ARCParser.cite`.
 	 * @param ctx the parse tree
 	 */
-    enterReference?: (ctx: ReferenceContext) => void
+    enterCite?: (ctx: CiteContext) => void
     /**
-	 * Exit a parse tree produced by `ARCParser.reference`.
+	 * Exit a parse tree produced by `ARCParser.cite`.
 	 * @param ctx the parse tree
 	 */
-    exitReference?: (ctx: ReferenceContext) => void
+    exitCite?: (ctx: CiteContext) => void
 
     /**
 	 * Enter a parse tree produced by `ARCParser.data`.
@@ -652,6 +609,17 @@ export interface ARCListener extends ParseTreeListener {
     exitDict_scope?: (ctx: Dict_scopeContext) => void
 
     /**
+	 * Enter a parse tree produced by `ARCParser.dict_inherit`.
+	 * @param ctx the parse tree
+	 */
+    enterDict_inherit?: (ctx: Dict_inheritContext) => void
+    /**
+	 * Exit a parse tree produced by `ARCParser.dict_inherit`.
+	 * @param ctx the parse tree
+	 */
+    exitDict_inherit?: (ctx: Dict_inheritContext) => void
+
+    /**
 	 * Enter a parse tree produced by `ARCParser.list_scope`.
 	 * @param ctx the parse tree
 	 */
@@ -663,15 +631,15 @@ export interface ARCListener extends ParseTreeListener {
     exitList_scope?: (ctx: List_scopeContext) => void
 
     /**
-	 * Enter a parse tree produced by `ARCParser.scopes`.
+	 * Enter a parse tree produced by `ARCParser.list_inherit`.
 	 * @param ctx the parse tree
 	 */
-    enterScopes?: (ctx: ScopesContext) => void
+    enterList_inherit?: (ctx: List_inheritContext) => void
     /**
-	 * Exit a parse tree produced by `ARCParser.scopes`.
+	 * Exit a parse tree produced by `ARCParser.list_inherit`.
 	 * @param ctx the parse tree
 	 */
-    exitScopes?: (ctx: ScopesContext) => void
+    exitList_inherit?: (ctx: List_inheritContext) => void
 
     /**
 	 * Enter a parse tree produced by `ARCParser.group`.

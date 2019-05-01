@@ -46,9 +46,9 @@ export class ARCParser extends Parser {
     public static readonly T__15 = 16
     public static readonly T__16 = 17
     public static readonly T__17 = 18
-    public static readonly Semicolon = 19
-    public static readonly Comma = 20
-    public static readonly Assign = 21
+    public static readonly Assign = 19
+    public static readonly Semicolon = 20
+    public static readonly Comma = 21
     public static readonly Dot = 22
     public static readonly Identifier = 23
     public static readonly Integer = 24
@@ -66,40 +66,43 @@ export class ARCParser extends Parser {
     public static readonly RULE_program = 0
     public static readonly RULE_statement = 1
     public static readonly RULE_record = 2
-    public static readonly RULE_recordEOS = 3
-    public static readonly RULE_key = 4
-    public static readonly RULE_eos = 5
-    public static readonly RULE_symbol = 6
-    public static readonly RULE_integer = 7
-    public static readonly RULE_specialID = 8
-    public static readonly RULE_decimal = 9
-    public static readonly RULE_string = 10
-    public static readonly RULE_macro = 11
-    public static readonly RULE_reference = 12
-    public static readonly RULE_data = 13
-    public static readonly RULE_list = 14
-    public static readonly RULE_dict = 15
-    public static readonly RULE_dict_scope = 16
-    public static readonly RULE_list_scope = 17
-    public static readonly RULE_scopes = 18
-    public static readonly RULE_group = 19
+    public static readonly RULE_empty = 3
+    public static readonly RULE_symbol = 4
+    public static readonly RULE_atom = 5
+    public static readonly RULE_key = 6
+    public static readonly RULE_eos = 7
+    public static readonly RULE_integer = 8
+    public static readonly RULE_specialID = 9
+    public static readonly RULE_decimal = 10
+    public static readonly RULE_string = 11
+    public static readonly RULE_macro = 12
+    public static readonly RULE_cite = 13
+    public static readonly RULE_data = 14
+    public static readonly RULE_list = 15
+    public static readonly RULE_dict = 16
+    public static readonly RULE_dict_scope = 17
+    public static readonly RULE_dict_inherit = 18
+    public static readonly RULE_list_scope = 19
+    public static readonly RULE_list_inherit = 20
+    public static readonly RULE_group = 21
     // tslint:disable:no-trailing-whitespace
     public static readonly ruleNames: string[] = [
-        'program', 'statement', 'record', 'recordEOS', 'key', 'eos', 'symbol', 
-        'integer', 'specialID', 'decimal', 'string', 'macro', 'reference', 'data', 
-        'list', 'dict', 'dict_scope', 'list_scope', 'scopes', 'group',
+        'program', 'statement', 'record', 'empty', 'symbol', 'atom', 'key', 'eos', 
+        'integer', 'specialID', 'decimal', 'string', 'macro', 'cite', 'data', 
+        'list', 'dict', 'dict_scope', 'dict_inherit', 'list_scope', 'list_inherit', 
+        'group',
     ]
 
     private static readonly _LITERAL_NAMES: Array<string | undefined> = [
         undefined, "'/'", "'\"\"\"'", "'''''", "'\"'", "'''", "'@'", "'`'", "'$'", 
         "'['", "']'", "'{'", "'}'", "'('", "')'", "'<'", "'>'", "'*'", "'&'", 
-        "';'", "','", undefined, "'.'", undefined, undefined, "'_'",
+        undefined, "';'", "','", "'.'", undefined, undefined, "'_'",
     ]
     private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
         undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
         undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-        undefined, undefined, undefined, undefined, undefined, 'Semicolon', 'Comma', 
-        'Assign', 'Dot', 'Identifier', 'Integer', 'Underline', 'Sign', 'StringEscapeBlock', 
+        undefined, undefined, undefined, undefined, undefined, 'Assign', 'Semicolon', 
+        'Comma', 'Dot', 'Identifier', 'Integer', 'Underline', 'Sign', 'StringEscapeBlock', 
         'StringEscapeSingle', 'StringLiteralBlock', 'StringLiteralSingle', 'NewLine', 
         'MacroEscape', 'LineComment', 'PartComment', 'WhiteSpace',
     ]
@@ -133,21 +136,21 @@ export class ARCParser extends Parser {
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 43
+            this.state = 47
             this._errHandler.sync(this)
             _la = this._input.LA(1)
-            while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__12) | (1 << ARCParser.T__14) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0)) {
+            while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__12) | (1 << ARCParser.T__14) | (1 << ARCParser.Semicolon) | (1 << ARCParser.Comma) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0)) {
                 {
                 {
-                this.state = 40
+                this.state = 44
                 this.statement()
                 }
                 }
-                this.state = 45
+                this.state = 49
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
             }
-            this.state = 46
+            this.state = 50
             this.match(ARCParser.EOF)
             }
         }
@@ -172,9 +175,16 @@ export class ARCParser extends Parser {
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 51
+            this.state = 56
             this._errHandler.sync(this)
             switch (this._input.LA(1)) {
+            case ARCParser.Semicolon:
+            case ARCParser.Comma:
+                {
+                this.state = 52
+                this.empty()
+                }
+                break
             case ARCParser.T__1:
             case ARCParser.T__2:
             case ARCParser.T__3:
@@ -186,19 +196,19 @@ export class ARCParser extends Parser {
             case ARCParser.StringLiteralBlock:
             case ARCParser.StringLiteralSingle:
                 {
-                this.state = 48
-                this.recordEOS()
+                this.state = 53
+                this.record()
                 }
                 break
             case ARCParser.T__12:
                 {
-                this.state = 49
+                this.state = 54
                 this.dict_scope()
                 }
                 break
             case ARCParser.T__14:
                 {
-                this.state = 50
+                this.state = 55
                 this.list_scope()
                 }
                 break
@@ -226,109 +236,70 @@ export class ARCParser extends Parser {
         let _localctx: RecordContext = new RecordContext(this._ctx, this.state)
         this.enterRule(_localctx, 4, ARCParser.RULE_record)
         try {
-            this.state = 85
+            this.state = 78
             this._errHandler.sync(this)
             switch ( this.interpreter.adaptivePredict(this._input, 2, this._ctx) ) {
             case 1:
-                _localctx = new IntegerAssignContext(_localctx)
+                _localctx = new AtomAssignContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 53;
-                (_localctx as IntegerAssignContext)._left = this.key()
-                this.state = 54
+                this.state = 58;
+                (_localctx as AtomAssignContext)._left = this.key()
+                this.state = 59
                 this.match(ARCParser.Assign)
-                this.state = 55;
-                (_localctx as IntegerAssignContext)._right = this.integer()
+                this.state = 60;
+                (_localctx as AtomAssignContext)._right = this.atom()
                 }
                 break
 
             case 2:
-                _localctx = new DecimalAssignContext(_localctx)
+                _localctx = new ListAssignContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 57;
-                (_localctx as DecimalAssignContext)._left = this.key()
-                this.state = 58
-                this.match(ARCParser.Assign)
-                this.state = 59;
-                (_localctx as DecimalAssignContext)._right = this.decimal()
-                }
-                break
-
-            case 3:
-                _localctx = new SpecialAssignContext(_localctx)
-                this.enterOuterAlt(_localctx, 3)
-                {
-                this.state = 61;
-                (_localctx as SpecialAssignContext)._left = this.key()
-                this.state = 62
-                this.match(ARCParser.Assign)
-                this.state = 63;
-                (_localctx as SpecialAssignContext)._right = this.specialID()
-                }
-                break
-
-            case 4:
-                _localctx = new StringAssignContext(_localctx)
-                this.enterOuterAlt(_localctx, 4)
-                {
-                this.state = 65;
-                (_localctx as StringAssignContext)._left = this.key()
-                this.state = 66
-                this.match(ARCParser.Assign)
-                this.state = 67;
-                (_localctx as StringAssignContext)._right = this.string()
-                }
-                break
-
-            case 5:
-                _localctx = new ListAssignContext(_localctx)
-                this.enterOuterAlt(_localctx, 5)
-                {
-                this.state = 69;
+                this.state = 62;
                 (_localctx as ListAssignContext)._left = this.key()
-                this.state = 70
+                this.state = 63
                 this.match(ARCParser.Assign)
-                this.state = 71;
+                this.state = 64;
                 (_localctx as ListAssignContext)._right = this.list()
                 }
                 break
 
-            case 6:
+            case 3:
                 _localctx = new DictAssignContext(_localctx)
-                this.enterOuterAlt(_localctx, 6)
+                this.enterOuterAlt(_localctx, 3)
                 {
-                this.state = 73;
+                this.state = 66;
                 (_localctx as DictAssignContext)._left = this.key()
-                this.state = 74
+                this.state = 67
                 this.match(ARCParser.Assign)
-                this.state = 75;
+                this.state = 68;
                 (_localctx as DictAssignContext)._right = this.dict()
                 }
                 break
 
-            case 7:
+            case 4:
                 _localctx = new CiteAssignContext(_localctx)
-                this.enterOuterAlt(_localctx, 7)
+                this.enterOuterAlt(_localctx, 4)
                 {
-                this.state = 77;
+                this.state = 70;
                 (_localctx as CiteAssignContext)._left = this.key()
-                this.state = 78
+                this.state = 71
                 this.match(ARCParser.Assign)
-                this.state = 79;
-                (_localctx as CiteAssignContext)._right = this.reference()
+                this.state = 72;
+                (_localctx as CiteAssignContext)._right = this.cite()
                 }
                 break
 
-            case 8:
+            case 5:
                 _localctx = new MacroAssignContext(_localctx)
-                this.enterOuterAlt(_localctx, 8)
+                this.enterOuterAlt(_localctx, 5)
                 {
-                this.state = 81;
+                this.state = 74;
                 (_localctx as MacroAssignContext)._left = this.key()
-                this.state = 82
+                this.state = 75
                 this.match(ARCParser.Assign)
-                this.state = 83;
+                this.state = 76;
                 (_localctx as MacroAssignContext)._right = this.macro()
                 }
                 break
@@ -349,26 +320,123 @@ export class ARCParser extends Parser {
         return _localctx
     }
     // @RuleVersion(0)
-    public recordEOS(): RecordEOSContext {
-        let _localctx: RecordEOSContext = new RecordEOSContext(this._ctx, this.state)
-        this.enterRule(_localctx, 6, ARCParser.RULE_recordEOS)
-        let _la: number
+    public empty(): EmptyContext {
+        let _localctx: EmptyContext = new EmptyContext(this._ctx, this.state)
+        this.enterRule(_localctx, 6, ARCParser.RULE_empty)
         try {
-            _localctx = new RecordStatementContext(_localctx)
+            _localctx = new EmptyStatementContext(_localctx)
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 87
-            this.record()
-            this.state = 89
+            this.state = 80
+            this.eos()
+            }
+        }
+        catch (re) {
+            if (re instanceof RecognitionException) {
+                _localctx.exception = re
+                this._errHandler.reportError(this, re)
+                this._errHandler.recover(this, re)
+            } else {
+                throw re
+            }
+        }
+        finally {
+            this.exitRule()
+        }
+        return _localctx
+    }
+    // @RuleVersion(0)
+    public symbol(): SymbolContext {
+        let _localctx: SymbolContext = new SymbolContext(this._ctx, this.state)
+        this.enterRule(_localctx, 8, ARCParser.RULE_symbol)
+        try {
+            this.enterOuterAlt(_localctx, 1)
+            {
+            this.state = 85
             this._errHandler.sync(this)
-            _la = this._input.LA(1)
-            if (_la === ARCParser.Semicolon || _la === ARCParser.Comma) {
+            switch (this._input.LA(1)) {
+            case ARCParser.Integer:
+                {
+                this.state = 82
+                this.match(ARCParser.Integer)
+                }
+                break
+            case ARCParser.T__1:
+            case ARCParser.T__2:
+            case ARCParser.T__3:
+            case ARCParser.T__4:
+            case ARCParser.StringEscapeBlock:
+            case ARCParser.StringEscapeSingle:
+            case ARCParser.StringLiteralBlock:
+            case ARCParser.StringLiteralSingle:
+                {
+                this.state = 83
+                this.string()
+                }
+                break
+            case ARCParser.Identifier:
+                {
+                this.state = 84
+                this.match(ARCParser.Identifier)
+                }
+                break
+            default:
+                throw new NoViableAltException(this)
+            }
+            }
+        }
+        catch (re) {
+            if (re instanceof RecognitionException) {
+                _localctx.exception = re
+                this._errHandler.reportError(this, re)
+                this._errHandler.recover(this, re)
+            } else {
+                throw re
+            }
+        }
+        finally {
+            this.exitRule()
+        }
+        return _localctx
+    }
+    // @RuleVersion(0)
+    public atom(): AtomContext {
+        let _localctx: AtomContext = new AtomContext(this._ctx, this.state)
+        this.enterRule(_localctx, 10, ARCParser.RULE_atom)
+        try {
+            this.enterOuterAlt(_localctx, 1)
+            {
+            this.state = 91
+            this._errHandler.sync(this)
+            switch ( this.interpreter.adaptivePredict(this._input, 4, this._ctx) ) {
+            case 1:
+                {
+                this.state = 87
+                this.integer()
+                }
+                break
+
+            case 2:
                 {
                 this.state = 88
-                this.eos()
+                this.decimal()
                 }
-            }
+                break
 
+            case 3:
+                {
+                this.state = 89
+                this.specialID()
+                }
+                break
+
+            case 4:
+                {
+                this.state = 90
+                this.string()
+                }
+                break
+            }
             }
         }
         catch (re) {
@@ -388,26 +456,26 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public key(): KeyContext {
         let _localctx: KeyContext = new KeyContext(this._ctx, this.state)
-        this.enterRule(_localctx, 8, ARCParser.RULE_key)
+        this.enterRule(_localctx, 12, ARCParser.RULE_key)
         let _la: number
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 91
+            this.state = 93
             this.symbol()
-            this.state = 96
+            this.state = 98
             this._errHandler.sync(this)
             _la = this._input.LA(1)
             while (_la === ARCParser.T__0) {
                 {
                 {
-                this.state = 92
+                this.state = 94
                 this.match(ARCParser.T__0)
-                this.state = 93
+                this.state = 95
                 this.symbol()
                 }
                 }
-                this.state = 98
+                this.state = 100
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
             }
@@ -430,12 +498,12 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public eos(): EosContext {
         let _localctx: EosContext = new EosContext(this._ctx, this.state)
-        this.enterRule(_localctx, 10, ARCParser.RULE_eos)
+        this.enterRule(_localctx, 14, ARCParser.RULE_eos)
         let _la: number
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 99
+            this.state = 101
             _la = this._input.LA(1)
             if (!(_la === ARCParser.Semicolon || _la === ARCParser.Comma)) {
             this._errHandler.recoverInline(this)
@@ -464,79 +532,25 @@ export class ARCParser extends Parser {
         return _localctx
     }
     // @RuleVersion(0)
-    public symbol(): SymbolContext {
-        let _localctx: SymbolContext = new SymbolContext(this._ctx, this.state)
-        this.enterRule(_localctx, 12, ARCParser.RULE_symbol)
-        try {
-            this.enterOuterAlt(_localctx, 1)
-            {
-            this.state = 104
-            this._errHandler.sync(this)
-            switch (this._input.LA(1)) {
-            case ARCParser.Integer:
-                {
-                this.state = 101
-                this.match(ARCParser.Integer)
-                }
-                break
-            case ARCParser.T__1:
-            case ARCParser.T__2:
-            case ARCParser.T__3:
-            case ARCParser.T__4:
-            case ARCParser.StringEscapeBlock:
-            case ARCParser.StringEscapeSingle:
-            case ARCParser.StringLiteralBlock:
-            case ARCParser.StringLiteralSingle:
-                {
-                this.state = 102
-                this.string()
-                }
-                break
-            case ARCParser.Identifier:
-                {
-                this.state = 103
-                this.match(ARCParser.Identifier)
-                }
-                break
-            default:
-                throw new NoViableAltException(this)
-            }
-            }
-        }
-        catch (re) {
-            if (re instanceof RecognitionException) {
-                _localctx.exception = re
-                this._errHandler.reportError(this, re)
-                this._errHandler.recover(this, re)
-            } else {
-                throw re
-            }
-        }
-        finally {
-            this.exitRule()
-        }
-        return _localctx
-    }
-    // @RuleVersion(0)
     public integer(): IntegerContext {
         let _localctx: IntegerContext = new IntegerContext(this._ctx, this.state)
-        this.enterRule(_localctx, 14, ARCParser.RULE_integer)
+        this.enterRule(_localctx, 16, ARCParser.RULE_integer)
         let _la: number
         try {
             _localctx = new IntegerLiteralContext(_localctx)
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 107
+            this.state = 104
             this._errHandler.sync(this)
             _la = this._input.LA(1)
             if (_la === ARCParser.Sign) {
                 {
-                this.state = 106
+                this.state = 103
                 this.match(ARCParser.Sign)
                 }
             }
 
-            this.state = 109
+            this.state = 106
             this.match(ARCParser.Integer)
             }
         }
@@ -557,22 +571,22 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public specialID(): SpecialIDContext {
         let _localctx: SpecialIDContext = new SpecialIDContext(this._ctx, this.state)
-        this.enterRule(_localctx, 16, ARCParser.RULE_specialID)
+        this.enterRule(_localctx, 18, ARCParser.RULE_specialID)
         let _la: number
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 112
+            this.state = 109
             this._errHandler.sync(this)
             _la = this._input.LA(1)
             if (_la === ARCParser.Sign) {
                 {
-                this.state = 111
+                this.state = 108
                 this.match(ARCParser.Sign)
                 }
             }
 
-            this.state = 114
+            this.state = 111
             this.match(ARCParser.Identifier)
             }
         }
@@ -593,36 +607,36 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public decimal(): DecimalContext {
         let _localctx: DecimalContext = new DecimalContext(this._ctx, this.state)
-        this.enterRule(_localctx, 18, ARCParser.RULE_decimal)
+        this.enterRule(_localctx, 20, ARCParser.RULE_decimal)
         let _la: number
         try {
-            this.state = 129
+            this.state = 126
             this._errHandler.sync(this)
             switch ( this.interpreter.adaptivePredict(this._input, 11, this._ctx) ) {
             case 1:
                 _localctx = new DecimalLiteralContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 117
+                this.state = 114
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
                 if (_la === ARCParser.Sign) {
                     {
-                    this.state = 116
+                    this.state = 113
                     this.match(ARCParser.Sign)
                     }
                 }
 
-                this.state = 119;
+                this.state = 116;
                 (_localctx as DecimalLiteralContext)._left = this.match(ARCParser.Integer)
-                this.state = 120
+                this.state = 117
                 this.match(ARCParser.Dot)
-                this.state = 122
+                this.state = 119
                 this._errHandler.sync(this)
                 switch ( this.interpreter.adaptivePredict(this._input, 9, this._ctx) ) {
                 case 1:
                     {
-                    this.state = 121;
+                    this.state = 118;
                     (_localctx as DecimalLiteralContext)._right = this.match(ARCParser.Integer)
                     }
                     break
@@ -634,19 +648,19 @@ export class ARCParser extends Parser {
                 _localctx = new DecimalZeroContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 125
+                this.state = 122
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
                 if (_la === ARCParser.Sign) {
                     {
-                    this.state = 124
+                    this.state = 121
                     this.match(ARCParser.Sign)
                     }
                 }
 
-                this.state = 127
+                this.state = 124
                 this.match(ARCParser.Dot)
-                this.state = 128;
+                this.state = 125;
                 (_localctx as DecimalZeroContext)._right = this.match(ARCParser.Integer)
                 }
                 break
@@ -669,16 +683,16 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public string(): StringContext {
         let _localctx: StringContext = new StringContext(this._ctx, this.state)
-        this.enterRule(_localctx, 20, ARCParser.RULE_string)
+        this.enterRule(_localctx, 22, ARCParser.RULE_string)
         try {
-            this.state = 143
+            this.state = 140
             this._errHandler.sync(this)
             switch (this._input.LA(1)) {
             case ARCParser.StringEscapeBlock:
                 _localctx = new StringEscapeBlockContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 131
+                this.state = 128
                 this.match(ARCParser.StringEscapeBlock)
                 }
                 break
@@ -686,7 +700,7 @@ export class ARCParser extends Parser {
                 _localctx = new StringEscapeSingleContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 132
+                this.state = 129
                 this.match(ARCParser.StringEscapeSingle)
                 }
                 break
@@ -694,7 +708,7 @@ export class ARCParser extends Parser {
                 _localctx = new StringLiteralBlockContext(_localctx)
                 this.enterOuterAlt(_localctx, 3)
                 {
-                this.state = 133
+                this.state = 130
                 this.match(ARCParser.StringLiteralBlock)
                 }
                 break
@@ -702,7 +716,7 @@ export class ARCParser extends Parser {
                 _localctx = new StringLiteralSingleContext(_localctx)
                 this.enterOuterAlt(_localctx, 4)
                 {
-                this.state = 134
+                this.state = 131
                 this.match(ARCParser.StringLiteralSingle)
                 }
                 break
@@ -710,9 +724,9 @@ export class ARCParser extends Parser {
                 _localctx = new StringEmptyContext(_localctx)
                 this.enterOuterAlt(_localctx, 5)
                 {
-                this.state = 135
+                this.state = 132
                 this.match(ARCParser.T__1)
-                this.state = 136
+                this.state = 133
                 this.match(ARCParser.T__1)
                 }
                 break
@@ -720,9 +734,9 @@ export class ARCParser extends Parser {
                 _localctx = new StringEmptyContext(_localctx)
                 this.enterOuterAlt(_localctx, 6)
                 {
-                this.state = 137
+                this.state = 134
                 this.match(ARCParser.T__2)
-                this.state = 138
+                this.state = 135
                 this.match(ARCParser.T__2)
                 }
                 break
@@ -730,9 +744,9 @@ export class ARCParser extends Parser {
                 _localctx = new StringEmptyContext(_localctx)
                 this.enterOuterAlt(_localctx, 7)
                 {
-                this.state = 139
+                this.state = 136
                 this.match(ARCParser.T__3)
-                this.state = 140
+                this.state = 137
                 this.match(ARCParser.T__3)
                 }
                 break
@@ -740,9 +754,9 @@ export class ARCParser extends Parser {
                 _localctx = new StringEmptyContext(_localctx)
                 this.enterOuterAlt(_localctx, 8)
                 {
-                this.state = 141
+                this.state = 138
                 this.match(ARCParser.T__4)
-                this.state = 142
+                this.state = 139
                 this.match(ARCParser.T__4)
                 }
                 break
@@ -767,20 +781,20 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public macro(): MacroContext {
         let _localctx: MacroContext = new MacroContext(this._ctx, this.state)
-        this.enterRule(_localctx, 22, ARCParser.RULE_macro)
+        this.enterRule(_localctx, 24, ARCParser.RULE_macro)
         try {
-            this.state = 155
+            this.state = 152
             this._errHandler.sync(this)
             switch ( this.interpreter.adaptivePredict(this._input, 13, this._ctx) ) {
             case 1:
                 _localctx = new LiteralMacroContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 145
+                this.state = 142
                 this.match(ARCParser.T__5)
-                this.state = 146;
+                this.state = 143;
                 (_localctx as LiteralMacroContext)._apply = this.match(ARCParser.Identifier)
-                this.state = 147;
+                this.state = 144;
                 (_localctx as LiteralMacroContext)._value = this.match(ARCParser.StringLiteralBlock)
                 }
                 break
@@ -789,11 +803,11 @@ export class ARCParser extends Parser {
                 _localctx = new SimpleMacroContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 148
+                this.state = 145
                 this.match(ARCParser.T__5)
-                this.state = 149;
+                this.state = 146;
                 (_localctx as SimpleMacroContext)._apply = this.match(ARCParser.Identifier)
-                this.state = 150
+                this.state = 147
                 this.match(ARCParser.MacroEscape)
                 }
                 break
@@ -802,13 +816,13 @@ export class ARCParser extends Parser {
                 _localctx = new EmptyMacroContext(_localctx)
                 this.enterOuterAlt(_localctx, 3)
                 {
-                this.state = 151
+                this.state = 148
                 this.match(ARCParser.T__5)
-                this.state = 152;
+                this.state = 149;
                 (_localctx as EmptyMacroContext)._apply = this.match(ARCParser.Identifier)
-                this.state = 153
+                this.state = 150
                 this.match(ARCParser.T__6)
-                this.state = 154
+                this.state = 151
                 this.match(ARCParser.T__6)
                 }
                 break
@@ -829,16 +843,16 @@ export class ARCParser extends Parser {
         return _localctx
     }
     // @RuleVersion(0)
-    public reference(): ReferenceContext {
-        let _localctx: ReferenceContext = new ReferenceContext(this._ctx, this.state)
-        this.enterRule(_localctx, 24, ARCParser.RULE_reference)
+    public cite(): CiteContext {
+        let _localctx: CiteContext = new CiteContext(this._ctx, this.state)
+        this.enterRule(_localctx, 26, ARCParser.RULE_cite)
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 157
+            this.state = 154
             this.match(ARCParser.T__7)
-            this.state = 158
-            this.match(ARCParser.Identifier)
+            this.state = 155
+            this.key()
             }
         }
         catch (re) {
@@ -858,65 +872,65 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public data(): DataContext {
         let _localctx: DataContext = new DataContext(this._ctx, this.state)
-        this.enterRule(_localctx, 26, ARCParser.RULE_data)
+        this.enterRule(_localctx, 28, ARCParser.RULE_data)
         try {
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 168
+            this.state = 165
             this._errHandler.sync(this)
             switch ( this.interpreter.adaptivePredict(this._input, 14, this._ctx) ) {
             case 1:
                 {
-                this.state = 160
+                this.state = 157
                 this.integer()
                 }
                 break
 
             case 2:
                 {
-                this.state = 161
+                this.state = 158
                 this.decimal()
                 }
                 break
 
             case 3:
                 {
-                this.state = 162
+                this.state = 159
                 this.specialID()
                 }
                 break
 
             case 4:
                 {
-                this.state = 163
+                this.state = 160
                 this.string()
                 }
                 break
 
             case 5:
                 {
-                this.state = 164
+                this.state = 161
                 this.list()
                 }
                 break
 
             case 6:
                 {
-                this.state = 165
+                this.state = 162
                 this.dict()
                 }
                 break
 
             case 7:
                 {
-                this.state = 166
-                this.reference()
+                this.state = 163
+                this.cite()
                 }
                 break
 
             case 8:
                 {
-                this.state = 167
+                this.state = 164
                 this.macro()
                 }
                 break
@@ -940,54 +954,68 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public list(): ListContext {
         let _localctx: ListContext = new ListContext(this._ctx, this.state)
-        this.enterRule(_localctx, 28, ARCParser.RULE_list)
+        this.enterRule(_localctx, 30, ARCParser.RULE_list)
         let _la: number
         try {
-            this.state = 183
+            this.state = 186
             this._errHandler.sync(this)
-            switch ( this.interpreter.adaptivePredict(this._input, 17, this._ctx) ) {
+            switch ( this.interpreter.adaptivePredict(this._input, 18, this._ctx) ) {
             case 1:
-                _localctx = new EmptyListContext(_localctx)
+                _localctx = new ListEmptyContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 170
+                this.state = 167
                 this.match(ARCParser.T__8)
                 this.state = 171
+                this._errHandler.sync(this)
+                _la = this._input.LA(1)
+                while (_la === ARCParser.Semicolon || _la === ARCParser.Comma) {
+                    {
+                    {
+                    this.state = 168
+                    this.empty()
+                    }
+                    }
+                    this.state = 173
+                    this._errHandler.sync(this)
+                    _la = this._input.LA(1)
+                }
+                this.state = 174
                 this.match(ARCParser.T__9)
                 }
                 break
 
             case 2:
-                _localctx = new FilledListContext(_localctx)
+                _localctx = new ListStatementContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 172
+                this.state = 175
                 this.match(ARCParser.T__8)
-                this.state = 177
+                this.state = 182
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
-                do {
+                while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__5) | (1 << ARCParser.T__7) | (1 << ARCParser.T__8) | (1 << ARCParser.T__10) | (1 << ARCParser.Dot) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.Sign) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0)) {
                     {
                     {
-                    this.state = 173
+                    this.state = 176
                     this.data()
-                    this.state = 175
+                    this.state = 178
                     this._errHandler.sync(this)
                     _la = this._input.LA(1)
                     if (_la === ARCParser.Semicolon || _la === ARCParser.Comma) {
                         {
-                        this.state = 174
+                        this.state = 177
                         this.eos()
                         }
                     }
 
                     }
                     }
-                    this.state = 179
+                    this.state = 184
                     this._errHandler.sync(this)
                     _la = this._input.LA(1)
-                } while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__5) | (1 << ARCParser.T__7) | (1 << ARCParser.T__8) | (1 << ARCParser.T__10) | (1 << ARCParser.Dot) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.Sign) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0))
-                this.state = 181
+                }
+                this.state = 185
                 this.match(ARCParser.T__9)
                 }
                 break
@@ -1010,69 +1038,58 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public dict(): DictContext {
         let _localctx: DictContext = new DictContext(this._ctx, this.state)
-        this.enterRule(_localctx, 30, ARCParser.RULE_dict)
+        this.enterRule(_localctx, 32, ARCParser.RULE_dict)
         let _la: number
         try {
-            this.state = 203
+            this.state = 204
             this._errHandler.sync(this)
-            switch ( this.interpreter.adaptivePredict(this._input, 20, this._ctx) ) {
+            switch ( this.interpreter.adaptivePredict(this._input, 21, this._ctx) ) {
             case 1:
-                _localctx = new EmptyDictContext(_localctx)
+                _localctx = new DictEmptyContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 185
+                this.state = 188
                 this.match(ARCParser.T__10)
-                this.state = 186
+                this.state = 192
+                this._errHandler.sync(this)
+                _la = this._input.LA(1)
+                while (_la === ARCParser.Semicolon || _la === ARCParser.Comma) {
+                    {
+                    {
+                    this.state = 189
+                    this.empty()
+                    }
+                    }
+                    this.state = 194
+                    this._errHandler.sync(this)
+                    _la = this._input.LA(1)
+                }
+                this.state = 195
                 this.match(ARCParser.T__11)
                 }
                 break
 
             case 2:
-                _localctx = new FilledDictContext(_localctx)
+                _localctx = new DictStatementContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 187
+                this.state = 196
                 this.match(ARCParser.T__10)
-                this.state = 189
+                this.state = 200
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
-                do {
+                while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.T__12) | (1 << ARCParser.T__14) | (1 << ARCParser.Semicolon) | (1 << ARCParser.Comma) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0)) {
                     {
                     {
-                    this.state = 188
-                    this.recordEOS()
+                    this.state = 197
+                    this.statement()
                     }
                     }
-                    this.state = 191
+                    this.state = 202
                     this._errHandler.sync(this)
                     _la = this._input.LA(1)
-                } while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << ARCParser.T__1) | (1 << ARCParser.T__2) | (1 << ARCParser.T__3) | (1 << ARCParser.T__4) | (1 << ARCParser.Identifier) | (1 << ARCParser.Integer) | (1 << ARCParser.StringEscapeBlock) | (1 << ARCParser.StringEscapeSingle) | (1 << ARCParser.StringLiteralBlock) | (1 << ARCParser.StringLiteralSingle))) !== 0))
-                this.state = 193
-                this.match(ARCParser.T__11)
                 }
-                break
-
-            case 3:
-                _localctx = new NestedDictContext(_localctx)
-                this.enterOuterAlt(_localctx, 3)
-                {
-                this.state = 195
-                this.match(ARCParser.T__10)
-                this.state = 197
-                this._errHandler.sync(this)
-                _la = this._input.LA(1)
-                do {
-                    {
-                    {
-                    this.state = 196
-                    this.scopes()
-                    }
-                    }
-                    this.state = 199
-                    this._errHandler.sync(this)
-                    _la = this._input.LA(1)
-                } while (_la === ARCParser.T__12 || _la === ARCParser.T__14)
-                this.state = 201
+                this.state = 203
                 this.match(ARCParser.T__11)
                 }
                 break
@@ -1095,57 +1112,177 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public dict_scope(): Dict_scopeContext {
         let _localctx: Dict_scopeContext = new Dict_scopeContext(this._ctx, this.state)
-        this.enterRule(_localctx, 32, ARCParser.RULE_dict_scope)
+        this.enterRule(_localctx, 34, ARCParser.RULE_dict_scope)
         try {
             let _alt: number
-            this.state = 217
+            _localctx = new DictScopeContext(_localctx)
+            this.enterOuterAlt(_localctx, 1)
+            {
+            this.state = 206
+            this.match(ARCParser.T__12)
+            this.state = 207;
+            (_localctx as DictScopeContext)._header = this.key()
+            this.state = 208
+            this.match(ARCParser.T__13)
+            this.state = 220
             this._errHandler.sync(this)
-            switch ( this.interpreter.adaptivePredict(this._input, 22, this._ctx) ) {
-            case 1:
-                _localctx = new FilledDictScopeContext(_localctx)
-                this.enterOuterAlt(_localctx, 1)
-                {
-                this.state = 205
-                this.match(ARCParser.T__12)
-                this.state = 206;
-                (_localctx as FilledDictScopeContext)._header = this.key()
-                this.state = 207
-                this.match(ARCParser.T__13)
-                this.state = 209
-                this._errHandler.sync(this)
-                _alt = 1
-                do {
-                    switch (_alt) {
-                    case 1:
+            _alt = this.interpreter.adaptivePredict(this._input, 24, this._ctx)
+            while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+                if (_alt === 1) {
+                    {
+                    this.state = 218
+                    this._errHandler.sync(this)
+                    switch (this._input.LA(1)) {
+                    case ARCParser.T__1:
+                    case ARCParser.T__2:
+                    case ARCParser.T__3:
+                    case ARCParser.T__4:
+                    case ARCParser.Identifier:
+                    case ARCParser.Integer:
+                    case ARCParser.StringEscapeBlock:
+                    case ARCParser.StringEscapeSingle:
+                    case ARCParser.StringLiteralBlock:
+                    case ARCParser.StringLiteralSingle:
                         {
+                        this.state = 209
+                        this.record()
+                        }
+                        break
+                    case ARCParser.T__12:
                         {
-                        this.state = 208
-                        this.recordEOS()
+                        this.state = 210
+                        this.dict_inherit()
+                        }
+                        break
+                    case ARCParser.T__14:
+                        {
+                        this.state = 211
+                        this.list_inherit()
+                        this.state = 215
+                        this._errHandler.sync(this)
+                        _alt = this.interpreter.adaptivePredict(this._input, 22, this._ctx)
+                        while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+                            if (_alt === 1) {
+                                {
+                                {
+                                this.state = 212
+                                this.empty()
+                                }
+                                }
+                            }
+                            this.state = 217
+                            this._errHandler.sync(this)
+                            _alt = this.interpreter.adaptivePredict(this._input, 22, this._ctx)
                         }
                         }
                         break
                     default:
                         throw new NoViableAltException(this)
                     }
-                    this.state = 211
+                    }
+                }
+                this.state = 222
+                this._errHandler.sync(this)
+                _alt = this.interpreter.adaptivePredict(this._input, 24, this._ctx)
+            }
+            }
+        }
+        catch (re) {
+            if (re instanceof RecognitionException) {
+                _localctx.exception = re
+                this._errHandler.reportError(this, re)
+                this._errHandler.recover(this, re)
+            } else {
+                throw re
+            }
+        }
+        finally {
+            this.exitRule()
+        }
+        return _localctx
+    }
+    // @RuleVersion(0)
+    public dict_inherit(): Dict_inheritContext {
+        let _localctx: Dict_inheritContext = new Dict_inheritContext(this._ctx, this.state)
+        this.enterRule(_localctx, 36, ARCParser.RULE_dict_inherit)
+        try {
+            let _alt: number
+            _localctx = new DictInheritContext(_localctx)
+            this.enterOuterAlt(_localctx, 1)
+            {
+            this.state = 223
+            this.match(ARCParser.T__12)
+            this.state = 224
+            this.match(ARCParser.T__0)
+            this.state = 225;
+            (_localctx as DictInheritContext)._header = this.key()
+            this.state = 226
+            this.match(ARCParser.T__13)
+            this.state = 236
+            this._errHandler.sync(this)
+            _alt = 1
+            do {
+                switch (_alt) {
+                case 1:
+                    {
+                    this.state = 236
                     this._errHandler.sync(this)
-                    _alt = this.interpreter.adaptivePredict(this._input, 21, this._ctx)
-                } while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER)
+                    switch (this._input.LA(1)) {
+                    case ARCParser.T__1:
+                    case ARCParser.T__2:
+                    case ARCParser.T__3:
+                    case ARCParser.T__4:
+                    case ARCParser.Identifier:
+                    case ARCParser.Integer:
+                    case ARCParser.StringEscapeBlock:
+                    case ARCParser.StringEscapeSingle:
+                    case ARCParser.StringLiteralBlock:
+                    case ARCParser.StringLiteralSingle:
+                        {
+                        this.state = 227
+                        this.record()
+                        }
+                        break
+                    case ARCParser.T__12:
+                        {
+                        this.state = 228
+                        this.dict_inherit()
+                        }
+                        break
+                    case ARCParser.T__14:
+                        {
+                        this.state = 229
+                        this.list_inherit()
+                        this.state = 233
+                        this._errHandler.sync(this)
+                        _alt = this.interpreter.adaptivePredict(this._input, 25, this._ctx)
+                        while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+                            if (_alt === 1) {
+                                {
+                                {
+                                this.state = 230
+                                this.empty()
+                                }
+                                }
+                            }
+                            this.state = 235
+                            this._errHandler.sync(this)
+                            _alt = this.interpreter.adaptivePredict(this._input, 25, this._ctx)
+                        }
+                        }
+                        break
+                    default:
+                        throw new NoViableAltException(this)
+                    }
+                    }
+                    break
+                default:
+                    throw new NoViableAltException(this)
                 }
-                break
-
-            case 2:
-                _localctx = new EmptyDictScopeContext(_localctx)
-                this.enterOuterAlt(_localctx, 2)
-                {
-                this.state = 213
-                this.match(ARCParser.T__12)
-                this.state = 214;
-                (_localctx as EmptyDictScopeContext)._header = this.key()
-                this.state = 215
-                this.match(ARCParser.T__13)
-                }
-                break
+                this.state = 238
+                this._errHandler.sync(this)
+                _alt = this.interpreter.adaptivePredict(this._input, 27, this._ctx)
+            } while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER)
             }
         }
         catch (re) {
@@ -1165,51 +1302,49 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public list_scope(): List_scopeContext {
         let _localctx: List_scopeContext = new List_scopeContext(this._ctx, this.state)
-        this.enterRule(_localctx, 34, ARCParser.RULE_list_scope)
+        this.enterRule(_localctx, 38, ARCParser.RULE_list_scope)
         let _la: number
         try {
-            this.state = 231
+            let _alt: number
+            _localctx = new ListScopeContext(_localctx)
+            this.enterOuterAlt(_localctx, 1)
+            {
+            this.state = 240
+            this.match(ARCParser.T__14)
+            this.state = 241;
+            (_localctx as ListScopeContext)._header = this.key()
+            this.state = 242
+            this.match(ARCParser.T__15)
+            this.state = 250
             this._errHandler.sync(this)
-            switch ( this.interpreter.adaptivePredict(this._input, 24, this._ctx) ) {
-            case 1:
-                _localctx = new FilledListScopeContext(_localctx)
-                this.enterOuterAlt(_localctx, 1)
+            _la = this._input.LA(1)
+            do {
                 {
-                this.state = 219
-                this.match(ARCParser.T__14)
-                this.state = 220;
-                (_localctx as FilledListScopeContext)._header = this.key()
-                this.state = 221
-                this.match(ARCParser.T__15)
-                this.state = 223
+                {
+                this.state = 243
+                this.group()
+                this.state = 247
+                this._errHandler.sync(this)
+                _alt = this.interpreter.adaptivePredict(this._input, 28, this._ctx)
+                while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+                    if (_alt === 1) {
+                        {
+                        {
+                        this.state = 244
+                        this.empty()
+                        }
+                        }
+                    }
+                    this.state = 249
+                    this._errHandler.sync(this)
+                    _alt = this.interpreter.adaptivePredict(this._input, 28, this._ctx)
+                }
+                }
+                }
+                this.state = 252
                 this._errHandler.sync(this)
                 _la = this._input.LA(1)
-                do {
-                    {
-                    {
-                    this.state = 222
-                    this.group()
-                    }
-                    }
-                    this.state = 225
-                    this._errHandler.sync(this)
-                    _la = this._input.LA(1)
-                } while (_la === ARCParser.T__16 || _la === ARCParser.T__17)
-                }
-                break
-
-            case 2:
-                _localctx = new EmptyListScopeContext(_localctx)
-                this.enterOuterAlt(_localctx, 2)
-                {
-                this.state = 227
-                this.match(ARCParser.T__14)
-                this.state = 228;
-                (_localctx as EmptyListScopeContext)._header = this.key()
-                this.state = 229
-                this.match(ARCParser.T__15)
-                }
-                break
+            } while (_la === ARCParser.T__16 || _la === ARCParser.T__17)
             }
         }
         catch (re) {
@@ -1227,30 +1362,53 @@ export class ARCParser extends Parser {
         return _localctx
     }
     // @RuleVersion(0)
-    public scopes(): ScopesContext {
-        let _localctx: ScopesContext = new ScopesContext(this._ctx, this.state)
-        this.enterRule(_localctx, 36, ARCParser.RULE_scopes)
+    public list_inherit(): List_inheritContext {
+        let _localctx: List_inheritContext = new List_inheritContext(this._ctx, this.state)
+        this.enterRule(_localctx, 40, ARCParser.RULE_list_inherit)
+        let _la: number
         try {
+            let _alt: number
+            _localctx = new ListInheritContext(_localctx)
             this.enterOuterAlt(_localctx, 1)
             {
-            this.state = 235
+            this.state = 254
+            this.match(ARCParser.T__14)
+            this.state = 255
+            this.match(ARCParser.T__0)
+            this.state = 256;
+            (_localctx as ListInheritContext)._header = this.key()
+            this.state = 257
+            this.match(ARCParser.T__15)
+            this.state = 265
             this._errHandler.sync(this)
-            switch (this._input.LA(1)) {
-            case ARCParser.T__12:
+            _la = this._input.LA(1)
+            do {
                 {
-                this.state = 233
-                this.dict_scope()
-                }
-                break
-            case ARCParser.T__14:
                 {
-                this.state = 234
-                this.list_scope()
+                this.state = 258
+                this.group()
+                this.state = 262
+                this._errHandler.sync(this)
+                _alt = this.interpreter.adaptivePredict(this._input, 30, this._ctx)
+                while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+                    if (_alt === 1) {
+                        {
+                        {
+                        this.state = 259
+                        this.empty()
+                        }
+                        }
+                    }
+                    this.state = 264
+                    this._errHandler.sync(this)
+                    _alt = this.interpreter.adaptivePredict(this._input, 30, this._ctx)
                 }
-                break
-            default:
-                throw new NoViableAltException(this)
-            }
+                }
+                }
+                this.state = 267
+                this._errHandler.sync(this)
+                _la = this._input.LA(1)
+            } while (_la === ARCParser.T__16 || _la === ARCParser.T__17)
             }
         }
         catch (re) {
@@ -1270,19 +1428,19 @@ export class ARCParser extends Parser {
     // @RuleVersion(0)
     public group(): GroupContext {
         let _localctx: GroupContext = new GroupContext(this._ctx, this.state)
-        this.enterRule(_localctx, 38, ARCParser.RULE_group)
+        this.enterRule(_localctx, 42, ARCParser.RULE_group)
         try {
             let _alt: number
-            this.state = 245
+            this.state = 283
             this._errHandler.sync(this)
             switch (this._input.LA(1)) {
             case ARCParser.T__16:
                 _localctx = new DictGroupContext(_localctx)
                 this.enterOuterAlt(_localctx, 1)
                 {
-                this.state = 237
+                this.state = 269
                 this.match(ARCParser.T__16)
-                this.state = 239
+                this.state = 277
                 this._errHandler.sync(this)
                 _alt = 1
                 do {
@@ -1290,17 +1448,33 @@ export class ARCParser extends Parser {
                     case 1:
                         {
                         {
-                        this.state = 238
-                        this.recordEOS()
+                        this.state = 270
+                        this.record()
+                        this.state = 274
+                        this._errHandler.sync(this)
+                        _alt = this.interpreter.adaptivePredict(this._input, 32, this._ctx)
+                        while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+                            if (_alt === 1) {
+                                {
+                                {
+                                this.state = 271
+                                this.empty()
+                                }
+                                }
+                            }
+                            this.state = 276
+                            this._errHandler.sync(this)
+                            _alt = this.interpreter.adaptivePredict(this._input, 32, this._ctx)
+                        }
                         }
                         }
                         break
                     default:
                         throw new NoViableAltException(this)
                     }
-                    this.state = 241
+                    this.state = 279
                     this._errHandler.sync(this)
-                    _alt = this.interpreter.adaptivePredict(this._input, 26, this._ctx)
+                    _alt = this.interpreter.adaptivePredict(this._input, 33, this._ctx)
                 } while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER)
                 }
                 break
@@ -1308,9 +1482,9 @@ export class ARCParser extends Parser {
                 _localctx = new DataGroupContext(_localctx)
                 this.enterOuterAlt(_localctx, 2)
                 {
-                this.state = 243
+                this.state = 281
                 this.match(ARCParser.T__17)
-                this.state = 244
+                this.state = 282
                 this.data()
                 }
                 break
@@ -1334,120 +1508,142 @@ export class ARCParser extends Parser {
     }
 
     public static readonly _serializedATN: string =
-        '\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03%\xFA\x04\x02' +
+        '\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03%\u0120\x04\x02' +
         '\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07' +
         '\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04' +
         '\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04' +
-        '\x13\t\x13\x04\x14\t\x14\x04\x15\t\x15\x03\x02\x07\x02,\n\x02\f\x02\x0E' +
-        '\x02/\v\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x05\x036\n\x03\x03' +
-        '\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03' +
-        '\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03' +
-        '\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03' +
-        '\x04\x03\x04\x03\x04\x03\x04\x03\x04\x05\x04X\n\x04\x03\x05\x03\x05\x05' +
-        '\x05\\\n\x05\x03\x06\x03\x06\x03\x06\x07\x06a\n\x06\f\x06\x0E\x06d\v\x06' +
-        '\x03\x07\x03\x07\x03\b\x03\b\x03\b\x05\bk\n\b\x03\t\x05\tn\n\t\x03\t\x03' +
-        '\t\x03\n\x05\ns\n\n\x03\n\x03\n\x03\v\x05\vx\n\v\x03\v\x03\v\x03\v\x05' +
-        '\v}\n\v\x03\v\x05\v\x80\n\v\x03\v\x03\v\x05\v\x84\n\v\x03\f\x03\f\x03' +
-        '\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x05\f\x92\n\f' +
-        '\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05\r\x9E' +
-        '\n\r\x03\x0E\x03\x0E\x03\x0E\x03\x0F\x03\x0F\x03\x0F\x03\x0F\x03\x0F\x03' +
-        '\x0F\x03\x0F\x03\x0F\x05\x0F\xAB\n\x0F\x03\x10\x03\x10\x03\x10\x03\x10' +
-        '\x03\x10\x05\x10\xB2\n\x10\x06\x10\xB4\n\x10\r\x10\x0E\x10\xB5\x03\x10' +
-        '\x03\x10\x05\x10\xBA\n\x10\x03\x11\x03\x11\x03\x11\x03\x11\x06\x11\xC0' +
-        '\n\x11\r\x11\x0E\x11\xC1\x03\x11\x03\x11\x03\x11\x03\x11\x06\x11\xC8\n' +
-        '\x11\r\x11\x0E\x11\xC9\x03\x11\x03\x11\x05\x11\xCE\n\x11\x03\x12\x03\x12' +
-        '\x03\x12\x03\x12\x06\x12\xD4\n\x12\r\x12\x0E\x12\xD5\x03\x12\x03\x12\x03' +
-        '\x12\x03\x12\x05\x12\xDC\n\x12\x03\x13\x03\x13\x03\x13\x03\x13\x06\x13' +
-        '\xE2\n\x13\r\x13\x0E\x13\xE3\x03\x13\x03\x13\x03\x13\x03\x13\x05\x13\xEA' +
-        '\n\x13\x03\x14\x03\x14\x05\x14\xEE\n\x14\x03\x15\x03\x15\x06\x15\xF2\n' +
-        '\x15\r\x15\x0E\x15\xF3\x03\x15\x03\x15\x05\x15\xF8\n\x15\x03\x15\x02\x02' +
-        '\x02\x16\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12' +
-        '\x02\x14\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02 \x02"\x02$\x02&' +
-        '\x02(\x02\x02\x03\x03\x02\x15\x16\x02\u0117\x02-\x03\x02\x02\x02\x045' +
-        '\x03\x02\x02\x02\x06W\x03\x02\x02\x02\bY\x03\x02\x02\x02\n]\x03\x02\x02' +
-        '\x02\fe\x03\x02\x02\x02\x0Ej\x03\x02\x02\x02\x10m\x03\x02\x02\x02\x12' +
-        'r\x03\x02\x02\x02\x14\x83\x03\x02\x02\x02\x16\x91\x03\x02\x02\x02\x18' +
-        '\x9D\x03\x02\x02\x02\x1A\x9F\x03\x02\x02\x02\x1C\xAA\x03\x02\x02\x02\x1E' +
-        '\xB9\x03\x02\x02\x02 \xCD\x03\x02\x02\x02"\xDB\x03\x02\x02\x02$\xE9\x03' +
-        '\x02\x02\x02&\xED\x03\x02\x02\x02(\xF7\x03\x02\x02\x02*,\x05\x04\x03\x02' +
-        '+*\x03\x02\x02\x02,/\x03\x02\x02\x02-+\x03\x02\x02\x02-.\x03\x02\x02\x02' +
-        '.0\x03\x02\x02\x02/-\x03\x02\x02\x0201\x07\x02\x02\x031\x03\x03\x02\x02' +
-        '\x0226\x05\b\x05\x0236\x05"\x12\x0246\x05$\x13\x0252\x03\x02\x02\x02' +
-        '53\x03\x02\x02\x0254\x03\x02\x02\x026\x05\x03\x02\x02\x0278\x05\n\x06' +
-        '\x0289\x07\x17\x02\x029:\x05\x10\t\x02:X\x03\x02\x02\x02;<\x05\n\x06\x02' +
-        '<=\x07\x17\x02\x02=>\x05\x14\v\x02>X\x03\x02\x02\x02?@\x05\n\x06\x02@' +
-        'A\x07\x17\x02\x02AB\x05\x12\n\x02BX\x03\x02\x02\x02CD\x05\n\x06\x02DE' +
-        '\x07\x17\x02\x02EF\x05\x16\f\x02FX\x03\x02\x02\x02GH\x05\n\x06\x02HI\x07' +
-        '\x17\x02\x02IJ\x05\x1E\x10\x02JX\x03\x02\x02\x02KL\x05\n\x06\x02LM\x07' +
-        '\x17\x02\x02MN\x05 \x11\x02NX\x03\x02\x02\x02OP\x05\n\x06\x02PQ\x07\x17' +
-        '\x02\x02QR\x05\x1A\x0E\x02RX\x03\x02\x02\x02ST\x05\n\x06\x02TU\x07\x17' +
-        '\x02\x02UV\x05\x18\r\x02VX\x03\x02\x02\x02W7\x03\x02\x02\x02W;\x03\x02' +
-        '\x02\x02W?\x03\x02\x02\x02WC\x03\x02\x02\x02WG\x03\x02\x02\x02WK\x03\x02' +
-        '\x02\x02WO\x03\x02\x02\x02WS\x03\x02\x02\x02X\x07\x03\x02\x02\x02Y[\x05' +
-        '\x06\x04\x02Z\\\x05\f\x07\x02[Z\x03\x02\x02\x02[\\\x03\x02\x02\x02\\\t' +
-        '\x03\x02\x02\x02]b\x05\x0E\b\x02^_\x07\x03\x02\x02_a\x05\x0E\b\x02`^\x03' +
-        '\x02\x02\x02ad\x03\x02\x02\x02b`\x03\x02\x02\x02bc\x03\x02\x02\x02c\v' +
-        '\x03\x02\x02\x02db\x03\x02\x02\x02ef\t\x02\x02\x02f\r\x03\x02\x02\x02' +
-        'gk\x07\x1A\x02\x02hk\x05\x16\f\x02ik\x07\x19\x02\x02jg\x03\x02\x02\x02' +
-        'jh\x03\x02\x02\x02ji\x03\x02\x02\x02k\x0F\x03\x02\x02\x02ln\x07\x1C\x02' +
-        '\x02ml\x03\x02\x02\x02mn\x03\x02\x02\x02no\x03\x02\x02\x02op\x07\x1A\x02' +
-        '\x02p\x11\x03\x02\x02\x02qs\x07\x1C\x02\x02rq\x03\x02\x02\x02rs\x03\x02' +
-        '\x02\x02st\x03\x02\x02\x02tu\x07\x19\x02\x02u\x13\x03\x02\x02\x02vx\x07' +
-        '\x1C\x02\x02wv\x03\x02\x02\x02wx\x03\x02\x02\x02xy\x03\x02\x02\x02yz\x07' +
-        '\x1A\x02\x02z|\x07\x18\x02\x02{}\x07\x1A\x02\x02|{\x03\x02\x02\x02|}\x03' +
-        '\x02\x02\x02}\x84\x03\x02\x02\x02~\x80\x07\x1C\x02\x02\x7F~\x03\x02\x02' +
-        '\x02\x7F\x80\x03\x02\x02\x02\x80\x81\x03\x02\x02\x02\x81\x82\x07\x18\x02' +
-        '\x02\x82\x84\x07\x1A\x02\x02\x83w\x03\x02\x02\x02\x83\x7F\x03\x02\x02' +
-        '\x02\x84\x15\x03\x02\x02\x02\x85\x92\x07\x1D\x02\x02\x86\x92\x07\x1E\x02' +
-        '\x02\x87\x92\x07\x1F\x02\x02\x88\x92\x07 \x02\x02\x89\x8A\x07\x04\x02' +
-        '\x02\x8A\x92\x07\x04\x02\x02\x8B\x8C\x07\x05\x02\x02\x8C\x92\x07\x05\x02' +
-        '\x02\x8D\x8E\x07\x06\x02\x02\x8E\x92\x07\x06\x02\x02\x8F\x90\x07\x07\x02' +
-        '\x02\x90\x92\x07\x07\x02\x02\x91\x85\x03\x02\x02\x02\x91\x86\x03\x02\x02' +
-        '\x02\x91\x87\x03\x02\x02\x02\x91\x88\x03\x02\x02\x02\x91\x89\x03\x02\x02' +
-        '\x02\x91\x8B\x03\x02\x02\x02\x91\x8D\x03\x02\x02\x02\x91\x8F\x03\x02\x02' +
-        '\x02\x92\x17\x03\x02\x02\x02\x93\x94\x07\b\x02\x02\x94\x95\x07\x19\x02' +
-        '\x02\x95\x9E\x07\x1F\x02\x02\x96\x97\x07\b\x02\x02\x97\x98\x07\x19\x02' +
-        '\x02\x98\x9E\x07"\x02\x02\x99\x9A\x07\b\x02\x02\x9A\x9B\x07\x19\x02\x02' +
-        '\x9B\x9C\x07\t\x02\x02\x9C\x9E\x07\t\x02\x02\x9D\x93\x03\x02\x02\x02\x9D' +
-        '\x96\x03\x02\x02\x02\x9D\x99\x03\x02\x02\x02\x9E\x19\x03\x02\x02\x02\x9F' +
-        '\xA0\x07\n\x02\x02\xA0\xA1\x07\x19\x02\x02\xA1\x1B\x03\x02\x02\x02\xA2' +
-        '\xAB\x05\x10\t\x02\xA3\xAB\x05\x14\v\x02\xA4\xAB\x05\x12\n\x02\xA5\xAB' +
-        '\x05\x16\f\x02\xA6\xAB\x05\x1E\x10\x02\xA7\xAB\x05 \x11\x02\xA8\xAB\x05' +
-        '\x1A\x0E\x02\xA9\xAB\x05\x18\r\x02\xAA\xA2\x03\x02\x02\x02\xAA\xA3\x03' +
-        '\x02\x02\x02\xAA\xA4\x03\x02\x02\x02\xAA\xA5\x03\x02\x02\x02\xAA\xA6\x03' +
-        '\x02\x02\x02\xAA\xA7\x03\x02\x02\x02\xAA\xA8\x03\x02\x02\x02\xAA\xA9\x03' +
-        '\x02\x02\x02\xAB\x1D\x03\x02\x02\x02\xAC\xAD\x07\v\x02\x02\xAD\xBA\x07' +
-        '\f\x02\x02\xAE\xB3\x07\v\x02\x02\xAF\xB1\x05\x1C\x0F\x02\xB0\xB2\x05\f' +
-        '\x07\x02\xB1\xB0\x03\x02\x02\x02\xB1\xB2\x03\x02\x02\x02\xB2\xB4\x03\x02' +
-        '\x02\x02\xB3\xAF\x03\x02\x02\x02\xB4\xB5\x03\x02\x02\x02\xB5\xB3\x03\x02' +
-        '\x02\x02\xB5\xB6\x03\x02\x02\x02\xB6\xB7\x03\x02\x02\x02\xB7\xB8\x07\f' +
-        '\x02\x02\xB8\xBA\x03\x02\x02\x02\xB9\xAC\x03\x02\x02\x02\xB9\xAE\x03\x02' +
-        '\x02\x02\xBA\x1F\x03\x02\x02\x02\xBB\xBC\x07\r\x02\x02\xBC\xCE\x07\x0E' +
-        '\x02\x02\xBD\xBF\x07\r\x02\x02\xBE\xC0\x05\b\x05\x02\xBF\xBE\x03\x02\x02' +
-        '\x02\xC0\xC1\x03\x02\x02\x02\xC1\xBF\x03\x02\x02\x02\xC1\xC2\x03\x02\x02' +
-        '\x02\xC2\xC3\x03\x02\x02\x02\xC3\xC4\x07\x0E\x02\x02\xC4\xCE\x03\x02\x02' +
-        '\x02\xC5\xC7\x07\r\x02\x02\xC6\xC8\x05&\x14\x02\xC7\xC6\x03\x02\x02\x02' +
-        '\xC8\xC9\x03\x02\x02\x02\xC9\xC7\x03\x02\x02\x02\xC9\xCA\x03\x02\x02\x02' +
-        '\xCA\xCB\x03\x02\x02\x02\xCB\xCC\x07\x0E\x02\x02\xCC\xCE\x03\x02\x02\x02' +
-        '\xCD\xBB\x03\x02\x02\x02\xCD\xBD\x03\x02\x02\x02\xCD\xC5\x03\x02\x02\x02' +
-        '\xCE!\x03\x02\x02\x02\xCF\xD0\x07\x0F\x02\x02\xD0\xD1\x05\n\x06\x02\xD1' +
-        '\xD3\x07\x10\x02\x02\xD2\xD4\x05\b\x05\x02\xD3\xD2\x03\x02\x02\x02\xD4' +
-        '\xD5\x03\x02\x02\x02\xD5\xD3\x03\x02\x02\x02\xD5\xD6\x03\x02\x02\x02\xD6' +
-        '\xDC\x03\x02\x02\x02\xD7\xD8\x07\x0F\x02\x02\xD8\xD9\x05\n\x06\x02\xD9' +
-        '\xDA\x07\x10\x02\x02\xDA\xDC\x03\x02\x02\x02\xDB\xCF\x03\x02\x02\x02\xDB' +
-        '\xD7\x03\x02\x02\x02\xDC#\x03\x02\x02\x02\xDD\xDE\x07\x11\x02\x02\xDE' +
-        '\xDF\x05\n\x06\x02\xDF\xE1\x07\x12\x02\x02\xE0\xE2\x05(\x15\x02\xE1\xE0' +
-        '\x03\x02\x02\x02\xE2\xE3\x03\x02\x02\x02\xE3\xE1\x03\x02\x02\x02\xE3\xE4' +
-        '\x03\x02\x02\x02\xE4\xEA\x03\x02\x02\x02\xE5\xE6\x07\x11\x02\x02\xE6\xE7' +
-        '\x05\n\x06\x02\xE7\xE8\x07\x12\x02\x02\xE8\xEA\x03\x02\x02\x02\xE9\xDD' +
-        '\x03\x02\x02\x02\xE9\xE5\x03\x02\x02\x02\xEA%\x03\x02\x02\x02\xEB\xEE' +
-        '\x05"\x12\x02\xEC\xEE\x05$\x13\x02\xED\xEB\x03\x02\x02\x02\xED\xEC\x03' +
-        "\x02\x02\x02\xEE\'\x03\x02\x02\x02\xEF\xF1\x07\x13\x02\x02\xF0\xF2\x05" +
-        '\b\x05\x02\xF1\xF0\x03\x02\x02\x02\xF2\xF3\x03\x02\x02\x02\xF3\xF1\x03' +
-        '\x02\x02\x02\xF3\xF4\x03\x02\x02\x02\xF4\xF8\x03\x02\x02\x02\xF5\xF6\x07' +
-        '\x14\x02\x02\xF6\xF8\x05\x1C\x0F\x02\xF7\xEF\x03\x02\x02\x02\xF7\xF5\x03' +
-        '\x02\x02\x02\xF8)\x03\x02\x02\x02\x1E-5W[bjmrw|\x7F\x83\x91\x9D\xAA\xB1' +
-        '\xB5\xB9\xC1\xC9\xCD\xD5\xDB\xE3\xE9\xED\xF3\xF7'
+        '\x13\t\x13\x04\x14\t\x14\x04\x15\t\x15\x04\x16\t\x16\x04\x17\t\x17\x03' +
+        '\x02\x07\x020\n\x02\f\x02\x0E\x023\v\x02\x03\x02\x03\x02\x03\x03\x03\x03' +
+        '\x03\x03\x03\x03\x05\x03;\n\x03\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04' +
+        '\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04' +
+        '\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x05\x04Q\n\x04\x03\x05' +
+        '\x03\x05\x03\x06\x03\x06\x03\x06\x05\x06X\n\x06\x03\x07\x03\x07\x03\x07' +
+        '\x03\x07\x05\x07^\n\x07\x03\b\x03\b\x03\b\x07\bc\n\b\f\b\x0E\bf\v\b\x03' +
+        '\t\x03\t\x03\n\x05\nk\n\n\x03\n\x03\n\x03\v\x05\vp\n\v\x03\v\x03\v\x03' +
+        '\f\x05\fu\n\f\x03\f\x03\f\x03\f\x05\fz\n\f\x03\f\x05\f}\n\f\x03\f\x03' +
+        '\f\x05\f\x81\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r' +
+        '\x03\r\x03\r\x03\r\x05\r\x8F\n\r\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E' +
+        '\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x05\x0E\x9B\n\x0E\x03\x0F\x03' +
+        '\x0F\x03\x0F\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03' +
+        '\x10\x05\x10\xA8\n\x10\x03\x11\x03\x11\x07\x11\xAC\n\x11\f\x11\x0E\x11' +
+        '\xAF\v\x11\x03\x11\x03\x11\x03\x11\x03\x11\x05\x11\xB5\n\x11\x07\x11\xB7' +
+        '\n\x11\f\x11\x0E\x11\xBA\v\x11\x03\x11\x05\x11\xBD\n\x11\x03\x12\x03\x12' +
+        '\x07\x12\xC1\n\x12\f\x12\x0E\x12\xC4\v\x12\x03\x12\x03\x12\x03\x12\x07' +
+        '\x12\xC9\n\x12\f\x12\x0E\x12\xCC\v\x12\x03\x12\x05\x12\xCF\n\x12\x03\x13' +
+        '\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x03\x13\x07\x13\xD8\n\x13\f\x13' +
+        '\x0E\x13\xDB\v\x13\x07\x13\xDD\n\x13\f\x13\x0E\x13\xE0\v\x13\x03\x14\x03' +
+        '\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x07\x14\xEA\n\x14' +
+        '\f\x14\x0E\x14\xED\v\x14\x06\x14\xEF\n\x14\r\x14\x0E\x14\xF0\x03\x15\x03' +
+        '\x15\x03\x15\x03\x15\x03\x15\x07\x15\xF8\n\x15\f\x15\x0E\x15\xFB\v\x15' +
+        '\x06\x15\xFD\n\x15\r\x15\x0E\x15\xFE\x03\x16\x03\x16\x03\x16\x03\x16\x03' +
+        '\x16\x03\x16\x07\x16\u0107\n\x16\f\x16\x0E\x16\u010A\v\x16\x06\x16\u010C' +
+        '\n\x16\r\x16\x0E\x16\u010D\x03\x17\x03\x17\x03\x17\x07\x17\u0113\n\x17' +
+        '\f\x17\x0E\x17\u0116\v\x17\x06\x17\u0118\n\x17\r\x17\x0E\x17\u0119\x03' +
+        '\x17\x03\x17\x05\x17\u011E\n\x17\x03\x17\x02\x02\x02\x18\x02\x02\x04\x02' +
+        '\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18' +
+        '\x02\x1A\x02\x1C\x02\x1E\x02 \x02"\x02$\x02&\x02(\x02*\x02,\x02\x02\x03' +
+        '\x03\x02\x16\x17\x02\u0143\x021\x03\x02\x02\x02\x04:\x03\x02\x02\x02\x06' +
+        'P\x03\x02\x02\x02\bR\x03\x02\x02\x02\nW\x03\x02\x02\x02\f]\x03\x02\x02' +
+        '\x02\x0E_\x03\x02\x02\x02\x10g\x03\x02\x02\x02\x12j\x03\x02\x02\x02\x14' +
+        'o\x03\x02\x02\x02\x16\x80\x03\x02\x02\x02\x18\x8E\x03\x02\x02\x02\x1A' +
+        '\x9A\x03\x02\x02\x02\x1C\x9C\x03\x02\x02\x02\x1E\xA7\x03\x02\x02\x02 ' +
+        '\xBC\x03\x02\x02\x02"\xCE\x03\x02\x02\x02$\xD0\x03\x02\x02\x02&\xE1\x03' +
+        '\x02\x02\x02(\xF2\x03\x02\x02\x02*\u0100\x03\x02\x02\x02,\u011D\x03\x02' +
+        '\x02\x02.0\x05\x04\x03\x02/.\x03\x02\x02\x0203\x03\x02\x02\x021/\x03\x02' +
+        '\x02\x0212\x03\x02\x02\x0224\x03\x02\x02\x0231\x03\x02\x02\x0245\x07\x02' +
+        '\x02\x035\x03\x03\x02\x02\x026;\x05\b\x05\x027;\x05\x06\x04\x028;\x05' +
+        '$\x13\x029;\x05(\x15\x02:6\x03\x02\x02\x02:7\x03\x02\x02\x02:8\x03\x02' +
+        '\x02\x02:9\x03\x02\x02\x02;\x05\x03\x02\x02\x02<=\x05\x0E\b\x02=>\x07' +
+        '\x15\x02\x02>?\x05\f\x07\x02?Q\x03\x02\x02\x02@A\x05\x0E\b\x02AB\x07\x15' +
+        '\x02\x02BC\x05 \x11\x02CQ\x03\x02\x02\x02DE\x05\x0E\b\x02EF\x07\x15\x02' +
+        '\x02FG\x05"\x12\x02GQ\x03\x02\x02\x02HI\x05\x0E\b\x02IJ\x07\x15\x02\x02' +
+        'JK\x05\x1C\x0F\x02KQ\x03\x02\x02\x02LM\x05\x0E\b\x02MN\x07\x15\x02\x02' +
+        'NO\x05\x1A\x0E\x02OQ\x03\x02\x02\x02P<\x03\x02\x02\x02P@\x03\x02\x02\x02' +
+        'PD\x03\x02\x02\x02PH\x03\x02\x02\x02PL\x03\x02\x02\x02Q\x07\x03\x02\x02' +
+        '\x02RS\x05\x10\t\x02S\t\x03\x02\x02\x02TX\x07\x1A\x02\x02UX\x05\x18\r' +
+        '\x02VX\x07\x19\x02\x02WT\x03\x02\x02\x02WU\x03\x02\x02\x02WV\x03\x02\x02' +
+        '\x02X\v\x03\x02\x02\x02Y^\x05\x12\n\x02Z^\x05\x16\f\x02[^\x05\x14\v\x02' +
+        '\\^\x05\x18\r\x02]Y\x03\x02\x02\x02]Z\x03\x02\x02\x02][\x03\x02\x02\x02' +
+        ']\\\x03\x02\x02\x02^\r\x03\x02\x02\x02_d\x05\n\x06\x02`a\x07\x03\x02\x02' +
+        'ac\x05\n\x06\x02b`\x03\x02\x02\x02cf\x03\x02\x02\x02db\x03\x02\x02\x02' +
+        'de\x03\x02\x02\x02e\x0F\x03\x02\x02\x02fd\x03\x02\x02\x02gh\t\x02\x02' +
+        '\x02h\x11\x03\x02\x02\x02ik\x07\x1C\x02\x02ji\x03\x02\x02\x02jk\x03\x02' +
+        '\x02\x02kl\x03\x02\x02\x02lm\x07\x1A\x02\x02m\x13\x03\x02\x02\x02np\x07' +
+        '\x1C\x02\x02on\x03\x02\x02\x02op\x03\x02\x02\x02pq\x03\x02\x02\x02qr\x07' +
+        '\x19\x02\x02r\x15\x03\x02\x02\x02su\x07\x1C\x02\x02ts\x03\x02\x02\x02' +
+        'tu\x03\x02\x02\x02uv\x03\x02\x02\x02vw\x07\x1A\x02\x02wy\x07\x18\x02\x02' +
+        'xz\x07\x1A\x02\x02yx\x03\x02\x02\x02yz\x03\x02\x02\x02z\x81\x03\x02\x02' +
+        '\x02{}\x07\x1C\x02\x02|{\x03\x02\x02\x02|}\x03\x02\x02\x02}~\x03\x02\x02' +
+        '\x02~\x7F\x07\x18\x02\x02\x7F\x81\x07\x1A\x02\x02\x80t\x03\x02\x02\x02' +
+        '\x80|\x03\x02\x02\x02\x81\x17\x03\x02\x02\x02\x82\x8F\x07\x1D\x02\x02' +
+        '\x83\x8F\x07\x1E\x02\x02\x84\x8F\x07\x1F\x02\x02\x85\x8F\x07 \x02\x02' +
+        '\x86\x87\x07\x04\x02\x02\x87\x8F\x07\x04\x02\x02\x88\x89\x07\x05\x02\x02' +
+        '\x89\x8F\x07\x05\x02\x02\x8A\x8B\x07\x06\x02\x02\x8B\x8F\x07\x06\x02\x02' +
+        '\x8C\x8D\x07\x07\x02\x02\x8D\x8F\x07\x07\x02\x02\x8E\x82\x03\x02\x02\x02' +
+        '\x8E\x83\x03\x02\x02\x02\x8E\x84\x03\x02\x02\x02\x8E\x85\x03\x02\x02\x02' +
+        '\x8E\x86\x03\x02\x02\x02\x8E\x88\x03\x02\x02\x02\x8E\x8A\x03\x02\x02\x02' +
+        '\x8E\x8C\x03\x02\x02\x02\x8F\x19\x03\x02\x02\x02\x90\x91\x07\b\x02\x02' +
+        '\x91\x92\x07\x19\x02\x02\x92\x9B\x07\x1F\x02\x02\x93\x94\x07\b\x02\x02' +
+        '\x94\x95\x07\x19\x02\x02\x95\x9B\x07"\x02\x02\x96\x97\x07\b\x02\x02\x97' +
+        '\x98\x07\x19\x02\x02\x98\x99\x07\t\x02\x02\x99\x9B\x07\t\x02\x02\x9A\x90' +
+        '\x03\x02\x02\x02\x9A\x93\x03\x02\x02\x02\x9A\x96\x03\x02\x02\x02\x9B\x1B' +
+        '\x03\x02\x02\x02\x9C\x9D\x07\n\x02\x02\x9D\x9E\x05\x0E\b\x02\x9E\x1D\x03' +
+        '\x02\x02\x02\x9F\xA8\x05\x12\n\x02\xA0\xA8\x05\x16\f\x02\xA1\xA8\x05\x14' +
+        '\v\x02\xA2\xA8\x05\x18\r\x02\xA3\xA8\x05 \x11\x02\xA4\xA8\x05"\x12\x02' +
+        '\xA5\xA8\x05\x1C\x0F\x02\xA6\xA8\x05\x1A\x0E\x02\xA7\x9F\x03\x02\x02\x02' +
+        '\xA7\xA0\x03\x02\x02\x02\xA7\xA1\x03\x02\x02\x02\xA7\xA2\x03\x02\x02\x02' +
+        '\xA7\xA3\x03\x02\x02\x02\xA7\xA4\x03\x02\x02\x02\xA7\xA5\x03\x02\x02\x02' +
+        '\xA7\xA6\x03\x02\x02\x02\xA8\x1F\x03\x02\x02\x02\xA9\xAD\x07\v\x02\x02' +
+        '\xAA\xAC\x05\b\x05\x02\xAB\xAA\x03\x02\x02\x02\xAC\xAF\x03\x02\x02\x02' +
+        '\xAD\xAB\x03\x02\x02\x02\xAD\xAE\x03\x02\x02\x02\xAE\xB0\x03\x02\x02\x02' +
+        '\xAF\xAD\x03\x02\x02\x02\xB0\xBD\x07\f\x02\x02\xB1\xB8\x07\v\x02\x02\xB2' +
+        '\xB4\x05\x1E\x10\x02\xB3\xB5\x05\x10\t\x02\xB4\xB3\x03\x02\x02\x02\xB4' +
+        '\xB5\x03\x02\x02\x02\xB5\xB7\x03\x02\x02\x02\xB6\xB2\x03\x02\x02\x02\xB7' +
+        '\xBA\x03\x02\x02\x02\xB8\xB6\x03\x02\x02\x02\xB8\xB9\x03\x02\x02\x02\xB9' +
+        '\xBB\x03\x02\x02\x02\xBA\xB8\x03\x02\x02\x02\xBB\xBD\x07\f\x02\x02\xBC' +
+        '\xA9\x03\x02\x02\x02\xBC\xB1\x03\x02\x02\x02\xBD!\x03\x02\x02\x02\xBE' +
+        '\xC2\x07\r\x02\x02\xBF\xC1\x05\b\x05\x02\xC0\xBF\x03\x02\x02\x02\xC1\xC4' +
+        '\x03\x02\x02\x02\xC2\xC0\x03\x02\x02\x02\xC2\xC3\x03\x02\x02\x02\xC3\xC5' +
+        '\x03\x02\x02\x02\xC4\xC2\x03\x02\x02\x02\xC5\xCF\x07\x0E\x02\x02\xC6\xCA' +
+        '\x07\r\x02\x02\xC7\xC9\x05\x04\x03\x02\xC8\xC7\x03\x02\x02\x02\xC9\xCC' +
+        '\x03\x02\x02\x02\xCA\xC8\x03\x02\x02\x02\xCA\xCB\x03\x02\x02\x02\xCB\xCD' +
+        '\x03\x02\x02\x02\xCC\xCA\x03\x02\x02\x02\xCD\xCF\x07\x0E\x02\x02\xCE\xBE' +
+        '\x03\x02\x02\x02\xCE\xC6\x03\x02\x02\x02\xCF#\x03\x02\x02\x02\xD0\xD1' +
+        '\x07\x0F\x02\x02\xD1\xD2\x05\x0E\b\x02\xD2\xDE\x07\x10\x02\x02\xD3\xDD' +
+        '\x05\x06\x04\x02\xD4\xDD\x05&\x14\x02\xD5\xD9\x05*\x16\x02\xD6\xD8\x05' +
+        '\b\x05\x02\xD7\xD6\x03\x02\x02\x02\xD8\xDB\x03\x02\x02\x02\xD9\xD7\x03' +
+        '\x02\x02\x02\xD9\xDA\x03\x02\x02\x02\xDA\xDD\x03\x02\x02\x02\xDB\xD9\x03' +
+        '\x02\x02\x02\xDC\xD3\x03\x02\x02\x02\xDC\xD4\x03\x02\x02\x02\xDC\xD5\x03' +
+        '\x02\x02\x02\xDD\xE0\x03\x02\x02\x02\xDE\xDC\x03\x02\x02\x02\xDE\xDF\x03' +
+        '\x02\x02\x02\xDF%\x03\x02\x02\x02\xE0\xDE\x03\x02\x02\x02\xE1\xE2\x07' +
+        '\x0F\x02\x02\xE2\xE3\x07\x03\x02\x02\xE3\xE4\x05\x0E\b\x02\xE4\xEE\x07' +
+        '\x10\x02\x02\xE5\xEF\x05\x06\x04\x02\xE6\xEF\x05&\x14\x02\xE7\xEB\x05' +
+        '*\x16\x02\xE8\xEA\x05\b\x05\x02\xE9\xE8\x03\x02\x02\x02\xEA\xED\x03\x02' +
+        '\x02\x02\xEB\xE9\x03\x02\x02\x02\xEB\xEC\x03\x02\x02\x02\xEC\xEF\x03\x02' +
+        '\x02\x02\xED\xEB\x03\x02\x02\x02\xEE\xE5\x03\x02\x02\x02\xEE\xE6\x03\x02' +
+        '\x02\x02\xEE\xE7\x03\x02\x02\x02\xEF\xF0\x03\x02\x02\x02\xF0\xEE\x03\x02' +
+        "\x02\x02\xF0\xF1\x03\x02\x02\x02\xF1\'\x03\x02\x02\x02\xF2\xF3\x07\x11" +
+        '\x02\x02\xF3\xF4\x05\x0E\b\x02\xF4\xFC\x07\x12\x02\x02\xF5\xF9\x05,\x17' +
+        '\x02\xF6\xF8\x05\b\x05\x02\xF7\xF6\x03\x02\x02\x02\xF8\xFB\x03\x02\x02' +
+        '\x02\xF9\xF7\x03\x02\x02\x02\xF9\xFA\x03\x02\x02\x02\xFA\xFD\x03\x02\x02' +
+        '\x02\xFB\xF9\x03\x02\x02\x02\xFC\xF5\x03\x02\x02\x02\xFD\xFE\x03\x02\x02' +
+        '\x02\xFE\xFC\x03\x02\x02\x02\xFE\xFF\x03\x02\x02\x02\xFF)\x03\x02\x02' +
+        '\x02\u0100\u0101\x07\x11\x02\x02\u0101\u0102\x07\x03\x02\x02\u0102\u0103' +
+        '\x05\x0E\b\x02\u0103\u010B\x07\x12\x02\x02\u0104\u0108\x05,\x17\x02\u0105' +
+        '\u0107\x05\b\x05\x02\u0106\u0105\x03\x02\x02\x02\u0107\u010A\x03\x02\x02' +
+        '\x02\u0108\u0106\x03\x02\x02\x02\u0108\u0109\x03\x02\x02\x02\u0109\u010C' +
+        '\x03\x02\x02\x02\u010A\u0108\x03\x02\x02\x02\u010B\u0104\x03\x02\x02\x02' +
+        '\u010C\u010D\x03\x02\x02\x02\u010D\u010B\x03\x02\x02\x02\u010D\u010E\x03' +
+        '\x02\x02\x02\u010E+\x03\x02\x02\x02\u010F\u0117\x07\x13\x02\x02\u0110' +
+        '\u0114\x05\x06\x04\x02\u0111\u0113\x05\b\x05\x02\u0112\u0111\x03\x02\x02' +
+        '\x02\u0113\u0116\x03\x02\x02\x02\u0114\u0112\x03\x02\x02\x02\u0114\u0115' +
+        '\x03\x02\x02\x02\u0115\u0118\x03\x02\x02\x02\u0116\u0114\x03\x02\x02\x02' +
+        '\u0117\u0110\x03\x02\x02\x02\u0118\u0119\x03\x02\x02\x02\u0119\u0117\x03' +
+        '\x02\x02\x02\u0119\u011A\x03\x02\x02\x02\u011A\u011E\x03\x02\x02\x02\u011B' +
+        '\u011C\x07\x14\x02\x02\u011C\u011E\x05\x1E\x10\x02\u011D\u010F\x03\x02' +
+        '\x02\x02\u011D\u011B\x03\x02\x02\x02\u011E-\x03\x02\x02\x02%1:PW]djot' +
+        'y|\x80\x8E\x9A\xA7\xAD\xB4\xB8\xBC\xC2\xCA\xCE\xD9\xDC\xDE\xEB\xEE\xF0' +
+        '\xF9\xFE\u0108\u010D\u0114\u0119\u011D'
     public static __ATN: ATN
     public static get _ATN(): ATN {
         if (!ARCParser.__ATN) {
@@ -1499,8 +1695,11 @@ export class ProgramContext extends ParserRuleContext {
 
 
 export class StatementContext extends ParserRuleContext {
-    public recordEOS(): RecordEOSContext | undefined {
-        return this.tryGetRuleContext(0, RecordEOSContext)
+    public empty(): EmptyContext | undefined {
+        return this.tryGetRuleContext(0, EmptyContext)
+    }
+    public record(): RecordContext | undefined {
+        return this.tryGetRuleContext(0, RecordContext)
     }
     public dict_scope(): Dict_scopeContext | undefined {
         return this.tryGetRuleContext(0, Dict_scopeContext)
@@ -1546,15 +1745,15 @@ export class RecordContext extends ParserRuleContext {
         super.copyFrom(ctx)
     }
 }
-export class IntegerAssignContext extends RecordContext {
+export class AtomAssignContext extends RecordContext {
     public _left: KeyContext
-    public _right: IntegerContext
+    public _right: AtomContext
     public Assign(): TerminalNode { return this.getToken(ARCParser.Assign, 0) }
     public key(): KeyContext {
         return this.getRuleContext(0, KeyContext)
     }
-    public integer(): IntegerContext {
-        return this.getRuleContext(0, IntegerContext)
+    public atom(): AtomContext {
+        return this.getRuleContext(0, AtomContext)
     }
     constructor(ctx: RecordContext) {
         super(ctx.parent, ctx.invokingState)
@@ -1562,125 +1761,20 @@ export class IntegerAssignContext extends RecordContext {
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterIntegerAssign) {
-            listener.enterIntegerAssign(this)
+        if (listener.enterAtomAssign) {
+            listener.enterAtomAssign(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitIntegerAssign) {
-            listener.exitIntegerAssign(this)
+        if (listener.exitAtomAssign) {
+            listener.exitAtomAssign(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitIntegerAssign) {
-            return visitor.visitIntegerAssign(this)
-        } else {
-            return visitor.visitChildren(this)
-        }
-    }
-}
-export class DecimalAssignContext extends RecordContext {
-    public _left: KeyContext
-    public _right: DecimalContext
-    public Assign(): TerminalNode { return this.getToken(ARCParser.Assign, 0) }
-    public key(): KeyContext {
-        return this.getRuleContext(0, KeyContext)
-    }
-    public decimal(): DecimalContext {
-        return this.getRuleContext(0, DecimalContext)
-    }
-    constructor(ctx: RecordContext) {
-        super(ctx.parent, ctx.invokingState)
-        this.copyFrom(ctx)
-    }
-    // @Override
-    public enterRule(listener: ARCListener): void {
-        if (listener.enterDecimalAssign) {
-            listener.enterDecimalAssign(this)
-        }
-    }
-    // @Override
-    public exitRule(listener: ARCListener): void {
-        if (listener.exitDecimalAssign) {
-            listener.exitDecimalAssign(this)
-        }
-    }
-    // @Override
-    public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitDecimalAssign) {
-            return visitor.visitDecimalAssign(this)
-        } else {
-            return visitor.visitChildren(this)
-        }
-    }
-}
-export class SpecialAssignContext extends RecordContext {
-    public _left: KeyContext
-    public _right: SpecialIDContext
-    public Assign(): TerminalNode { return this.getToken(ARCParser.Assign, 0) }
-    public key(): KeyContext {
-        return this.getRuleContext(0, KeyContext)
-    }
-    public specialID(): SpecialIDContext {
-        return this.getRuleContext(0, SpecialIDContext)
-    }
-    constructor(ctx: RecordContext) {
-        super(ctx.parent, ctx.invokingState)
-        this.copyFrom(ctx)
-    }
-    // @Override
-    public enterRule(listener: ARCListener): void {
-        if (listener.enterSpecialAssign) {
-            listener.enterSpecialAssign(this)
-        }
-    }
-    // @Override
-    public exitRule(listener: ARCListener): void {
-        if (listener.exitSpecialAssign) {
-            listener.exitSpecialAssign(this)
-        }
-    }
-    // @Override
-    public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitSpecialAssign) {
-            return visitor.visitSpecialAssign(this)
-        } else {
-            return visitor.visitChildren(this)
-        }
-    }
-}
-export class StringAssignContext extends RecordContext {
-    public _left: KeyContext
-    public _right: StringContext
-    public Assign(): TerminalNode { return this.getToken(ARCParser.Assign, 0) }
-    public key(): KeyContext {
-        return this.getRuleContext(0, KeyContext)
-    }
-    public string(): StringContext {
-        return this.getRuleContext(0, StringContext)
-    }
-    constructor(ctx: RecordContext) {
-        super(ctx.parent, ctx.invokingState)
-        this.copyFrom(ctx)
-    }
-    // @Override
-    public enterRule(listener: ARCListener): void {
-        if (listener.enterStringAssign) {
-            listener.enterStringAssign(this)
-        }
-    }
-    // @Override
-    public exitRule(listener: ARCListener): void {
-        if (listener.exitStringAssign) {
-            listener.exitStringAssign(this)
-        }
-    }
-    // @Override
-    public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitStringAssign) {
-            return visitor.visitStringAssign(this)
+        if (visitor.visitAtomAssign) {
+            return visitor.visitAtomAssign(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -1758,13 +1852,13 @@ export class DictAssignContext extends RecordContext {
 }
 export class CiteAssignContext extends RecordContext {
     public _left: KeyContext
-    public _right: ReferenceContext
+    public _right: CiteContext
     public Assign(): TerminalNode { return this.getToken(ARCParser.Assign, 0) }
     public key(): KeyContext {
         return this.getRuleContext(0, KeyContext)
     }
-    public reference(): ReferenceContext {
-        return this.getRuleContext(0, ReferenceContext)
+    public cite(): CiteContext {
+        return this.getRuleContext(0, CiteContext)
     }
     constructor(ctx: RecordContext) {
         super(ctx.parent, ctx.invokingState)
@@ -1828,43 +1922,115 @@ export class MacroAssignContext extends RecordContext {
 }
 
 
-export class RecordEOSContext extends ParserRuleContext {
+export class EmptyContext extends ParserRuleContext {
     constructor(parent: ParserRuleContext | undefined, invokingState: number) {
         super(parent, invokingState)
     }
     // @Override
-    public get ruleIndex(): number { return ARCParser.RULE_recordEOS }
-    public copyFrom(ctx: RecordEOSContext): void {
+    public get ruleIndex(): number { return ARCParser.RULE_empty }
+    public copyFrom(ctx: EmptyContext): void {
         super.copyFrom(ctx)
     }
 }
-export class RecordStatementContext extends RecordEOSContext {
-    public record(): RecordContext {
-        return this.getRuleContext(0, RecordContext)
+export class EmptyStatementContext extends EmptyContext {
+    public eos(): EosContext {
+        return this.getRuleContext(0, EosContext)
     }
-    public eos(): EosContext | undefined {
-        return this.tryGetRuleContext(0, EosContext)
-    }
-    constructor(ctx: RecordEOSContext) {
+    constructor(ctx: EmptyContext) {
         super(ctx.parent, ctx.invokingState)
         this.copyFrom(ctx)
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterRecordStatement) {
-            listener.enterRecordStatement(this)
+        if (listener.enterEmptyStatement) {
+            listener.enterEmptyStatement(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitRecordStatement) {
-            listener.exitRecordStatement(this)
+        if (listener.exitEmptyStatement) {
+            listener.exitEmptyStatement(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitRecordStatement) {
-            return visitor.visitRecordStatement(this)
+        if (visitor.visitEmptyStatement) {
+            return visitor.visitEmptyStatement(this)
+        } else {
+            return visitor.visitChildren(this)
+        }
+    }
+}
+
+
+export class SymbolContext extends ParserRuleContext {
+    public Integer(): TerminalNode | undefined { return this.tryGetToken(ARCParser.Integer, 0) }
+    public string(): StringContext | undefined {
+        return this.tryGetRuleContext(0, StringContext)
+    }
+    public Identifier(): TerminalNode | undefined { return this.tryGetToken(ARCParser.Identifier, 0) }
+    constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+        super(parent, invokingState)
+    }
+    // @Override
+    public get ruleIndex(): number { return ARCParser.RULE_symbol }
+    // @Override
+    public enterRule(listener: ARCListener): void {
+        if (listener.enterSymbol) {
+            listener.enterSymbol(this)
+        }
+    }
+    // @Override
+    public exitRule(listener: ARCListener): void {
+        if (listener.exitSymbol) {
+            listener.exitSymbol(this)
+        }
+    }
+    // @Override
+    public accept<Result>(visitor: ARCVisitor<Result>): Result {
+        if (visitor.visitSymbol) {
+            return visitor.visitSymbol(this)
+        } else {
+            return visitor.visitChildren(this)
+        }
+    }
+}
+
+
+export class AtomContext extends ParserRuleContext {
+    public integer(): IntegerContext | undefined {
+        return this.tryGetRuleContext(0, IntegerContext)
+    }
+    public decimal(): DecimalContext | undefined {
+        return this.tryGetRuleContext(0, DecimalContext)
+    }
+    public specialID(): SpecialIDContext | undefined {
+        return this.tryGetRuleContext(0, SpecialIDContext)
+    }
+    public string(): StringContext | undefined {
+        return this.tryGetRuleContext(0, StringContext)
+    }
+    constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+        super(parent, invokingState)
+    }
+    // @Override
+    public get ruleIndex(): number { return ARCParser.RULE_atom }
+    // @Override
+    public enterRule(listener: ARCListener): void {
+        if (listener.enterAtom) {
+            listener.enterAtom(this)
+        }
+    }
+    // @Override
+    public exitRule(listener: ARCListener): void {
+        if (listener.exitAtom) {
+            listener.exitAtom(this)
+        }
+    }
+    // @Override
+    public accept<Result>(visitor: ARCVisitor<Result>): Result {
+        if (visitor.visitAtom) {
+            return visitor.visitAtom(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -1934,40 +2100,6 @@ export class EosContext extends ParserRuleContext {
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
         if (visitor.visitEos) {
             return visitor.visitEos(this)
-        } else {
-            return visitor.visitChildren(this)
-        }
-    }
-}
-
-
-export class SymbolContext extends ParserRuleContext {
-    public Integer(): TerminalNode | undefined { return this.tryGetToken(ARCParser.Integer, 0) }
-    public string(): StringContext | undefined {
-        return this.tryGetRuleContext(0, StringContext)
-    }
-    public Identifier(): TerminalNode | undefined { return this.tryGetToken(ARCParser.Identifier, 0) }
-    constructor(parent: ParserRuleContext | undefined, invokingState: number) {
-        super(parent, invokingState)
-    }
-    // @Override
-    public get ruleIndex(): number { return ARCParser.RULE_symbol }
-    // @Override
-    public enterRule(listener: ARCListener): void {
-        if (listener.enterSymbol) {
-            listener.enterSymbol(this)
-        }
-    }
-    // @Override
-    public exitRule(listener: ARCListener): void {
-        if (listener.exitSymbol) {
-            listener.exitSymbol(this)
-        }
-    }
-    // @Override
-    public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitSymbol) {
-            return visitor.visitSymbol(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2372,29 +2504,31 @@ export class EmptyMacroContext extends MacroContext {
 }
 
 
-export class ReferenceContext extends ParserRuleContext {
-    public Identifier(): TerminalNode { return this.getToken(ARCParser.Identifier, 0) }
+export class CiteContext extends ParserRuleContext {
+    public key(): KeyContext {
+        return this.getRuleContext(0, KeyContext)
+    }
     constructor(parent: ParserRuleContext | undefined, invokingState: number) {
         super(parent, invokingState)
     }
     // @Override
-    public get ruleIndex(): number { return ARCParser.RULE_reference }
+    public get ruleIndex(): number { return ARCParser.RULE_cite }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterReference) {
-            listener.enterReference(this)
+        if (listener.enterCite) {
+            listener.enterCite(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitReference) {
-            listener.exitReference(this)
+        if (listener.exitCite) {
+            listener.exitCite(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitReference) {
-            return visitor.visitReference(this)
+        if (visitor.visitCite) {
+            return visitor.visitCite(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2421,8 +2555,8 @@ export class DataContext extends ParserRuleContext {
     public dict(): DictContext | undefined {
         return this.tryGetRuleContext(0, DictContext)
     }
-    public reference(): ReferenceContext | undefined {
-        return this.tryGetRuleContext(0, ReferenceContext)
+    public cite(): CiteContext | undefined {
+        return this.tryGetRuleContext(0, CiteContext)
     }
     public macro(): MacroContext | undefined {
         return this.tryGetRuleContext(0, MacroContext)
@@ -2465,33 +2599,42 @@ export class ListContext extends ParserRuleContext {
         super.copyFrom(ctx)
     }
 }
-export class EmptyListContext extends ListContext {
+export class ListEmptyContext extends ListContext {
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
+        } else {
+            return this.getRuleContext(i, EmptyContext)
+        }
+    }
     constructor(ctx: ListContext) {
         super(ctx.parent, ctx.invokingState)
         this.copyFrom(ctx)
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterEmptyList) {
-            listener.enterEmptyList(this)
+        if (listener.enterListEmpty) {
+            listener.enterListEmpty(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitEmptyList) {
-            listener.exitEmptyList(this)
+        if (listener.exitListEmpty) {
+            listener.exitListEmpty(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitEmptyList) {
-            return visitor.visitEmptyList(this)
+        if (visitor.visitListEmpty) {
+            return visitor.visitListEmpty(this)
         } else {
             return visitor.visitChildren(this)
         }
     }
 }
-export class FilledListContext extends ListContext {
+export class ListStatementContext extends ListContext {
     public data(): DataContext[]
     public data(i: number): DataContext
     public data(i?: number): DataContext | DataContext[] {
@@ -2516,20 +2659,20 @@ export class FilledListContext extends ListContext {
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterFilledList) {
-            listener.enterFilledList(this)
+        if (listener.enterListStatement) {
+            listener.enterListStatement(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitFilledList) {
-            listener.exitFilledList(this)
+        if (listener.exitListStatement) {
+            listener.exitListStatement(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitFilledList) {
-            return visitor.visitFilledList(this)
+        if (visitor.visitListStatement) {
+            return visitor.visitListStatement(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2547,40 +2690,49 @@ export class DictContext extends ParserRuleContext {
         super.copyFrom(ctx)
     }
 }
-export class EmptyDictContext extends DictContext {
+export class DictEmptyContext extends DictContext {
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
+        } else {
+            return this.getRuleContext(i, EmptyContext)
+        }
+    }
     constructor(ctx: DictContext) {
         super(ctx.parent, ctx.invokingState)
         this.copyFrom(ctx)
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterEmptyDict) {
-            listener.enterEmptyDict(this)
+        if (listener.enterDictEmpty) {
+            listener.enterDictEmpty(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitEmptyDict) {
-            listener.exitEmptyDict(this)
+        if (listener.exitDictEmpty) {
+            listener.exitDictEmpty(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitEmptyDict) {
-            return visitor.visitEmptyDict(this)
+        if (visitor.visitDictEmpty) {
+            return visitor.visitDictEmpty(this)
         } else {
             return visitor.visitChildren(this)
         }
     }
 }
-export class FilledDictContext extends DictContext {
-    public recordEOS(): RecordEOSContext[]
-    public recordEOS(i: number): RecordEOSContext
-    public recordEOS(i?: number): RecordEOSContext | RecordEOSContext[] {
+export class DictStatementContext extends DictContext {
+    public statement(): StatementContext[]
+    public statement(i: number): StatementContext
+    public statement(i?: number): StatementContext | StatementContext[] {
         if (i === undefined) {
-            return this.getRuleContexts(RecordEOSContext)
+            return this.getRuleContexts(StatementContext)
         } else {
-            return this.getRuleContext(i, RecordEOSContext)
+            return this.getRuleContext(i, StatementContext)
         }
     }
     constructor(ctx: DictContext) {
@@ -2589,55 +2741,20 @@ export class FilledDictContext extends DictContext {
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterFilledDict) {
-            listener.enterFilledDict(this)
+        if (listener.enterDictStatement) {
+            listener.enterDictStatement(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitFilledDict) {
-            listener.exitFilledDict(this)
+        if (listener.exitDictStatement) {
+            listener.exitDictStatement(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitFilledDict) {
-            return visitor.visitFilledDict(this)
-        } else {
-            return visitor.visitChildren(this)
-        }
-    }
-}
-export class NestedDictContext extends DictContext {
-    public scopes(): ScopesContext[]
-    public scopes(i: number): ScopesContext
-    public scopes(i?: number): ScopesContext | ScopesContext[] {
-        if (i === undefined) {
-            return this.getRuleContexts(ScopesContext)
-        } else {
-            return this.getRuleContext(i, ScopesContext)
-        }
-    }
-    constructor(ctx: DictContext) {
-        super(ctx.parent, ctx.invokingState)
-        this.copyFrom(ctx)
-    }
-    // @Override
-    public enterRule(listener: ARCListener): void {
-        if (listener.enterNestedDict) {
-            listener.enterNestedDict(this)
-        }
-    }
-    // @Override
-    public exitRule(listener: ARCListener): void {
-        if (listener.exitNestedDict) {
-            listener.exitNestedDict(this)
-        }
-    }
-    // @Override
-    public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitNestedDict) {
-            return visitor.visitNestedDict(this)
+        if (visitor.visitDictStatement) {
+            return visitor.visitDictStatement(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2655,18 +2772,45 @@ export class Dict_scopeContext extends ParserRuleContext {
         super.copyFrom(ctx)
     }
 }
-export class FilledDictScopeContext extends Dict_scopeContext {
+export class DictScopeContext extends Dict_scopeContext {
     public _header: KeyContext
     public key(): KeyContext {
         return this.getRuleContext(0, KeyContext)
     }
-    public recordEOS(): RecordEOSContext[]
-    public recordEOS(i: number): RecordEOSContext
-    public recordEOS(i?: number): RecordEOSContext | RecordEOSContext[] {
+    public record(): RecordContext[]
+    public record(i: number): RecordContext
+    public record(i?: number): RecordContext | RecordContext[] {
         if (i === undefined) {
-            return this.getRuleContexts(RecordEOSContext)
+            return this.getRuleContexts(RecordContext)
         } else {
-            return this.getRuleContext(i, RecordEOSContext)
+            return this.getRuleContext(i, RecordContext)
+        }
+    }
+    public dict_inherit(): Dict_inheritContext[]
+    public dict_inherit(i: number): Dict_inheritContext
+    public dict_inherit(i?: number): Dict_inheritContext | Dict_inheritContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(Dict_inheritContext)
+        } else {
+            return this.getRuleContext(i, Dict_inheritContext)
+        }
+    }
+    public list_inherit(): List_inheritContext[]
+    public list_inherit(i: number): List_inheritContext
+    public list_inherit(i?: number): List_inheritContext | List_inheritContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(List_inheritContext)
+        } else {
+            return this.getRuleContext(i, List_inheritContext)
+        }
+    }
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
+        } else {
+            return this.getRuleContext(i, EmptyContext)
         }
     }
     constructor(ctx: Dict_scopeContext) {
@@ -2675,50 +2819,98 @@ export class FilledDictScopeContext extends Dict_scopeContext {
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterFilledDictScope) {
-            listener.enterFilledDictScope(this)
+        if (listener.enterDictScope) {
+            listener.enterDictScope(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitFilledDictScope) {
-            listener.exitFilledDictScope(this)
+        if (listener.exitDictScope) {
+            listener.exitDictScope(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitFilledDictScope) {
-            return visitor.visitFilledDictScope(this)
+        if (visitor.visitDictScope) {
+            return visitor.visitDictScope(this)
         } else {
             return visitor.visitChildren(this)
         }
     }
 }
-export class EmptyDictScopeContext extends Dict_scopeContext {
+
+
+export class Dict_inheritContext extends ParserRuleContext {
+    constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+        super(parent, invokingState)
+    }
+    // @Override
+    public get ruleIndex(): number { return ARCParser.RULE_dict_inherit }
+    public copyFrom(ctx: Dict_inheritContext): void {
+        super.copyFrom(ctx)
+    }
+}
+export class DictInheritContext extends Dict_inheritContext {
     public _header: KeyContext
     public key(): KeyContext {
         return this.getRuleContext(0, KeyContext)
     }
-    constructor(ctx: Dict_scopeContext) {
+    public record(): RecordContext[]
+    public record(i: number): RecordContext
+    public record(i?: number): RecordContext | RecordContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(RecordContext)
+        } else {
+            return this.getRuleContext(i, RecordContext)
+        }
+    }
+    public dict_inherit(): Dict_inheritContext[]
+    public dict_inherit(i: number): Dict_inheritContext
+    public dict_inherit(i?: number): Dict_inheritContext | Dict_inheritContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(Dict_inheritContext)
+        } else {
+            return this.getRuleContext(i, Dict_inheritContext)
+        }
+    }
+    public list_inherit(): List_inheritContext[]
+    public list_inherit(i: number): List_inheritContext
+    public list_inherit(i?: number): List_inheritContext | List_inheritContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(List_inheritContext)
+        } else {
+            return this.getRuleContext(i, List_inheritContext)
+        }
+    }
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
+        } else {
+            return this.getRuleContext(i, EmptyContext)
+        }
+    }
+    constructor(ctx: Dict_inheritContext) {
         super(ctx.parent, ctx.invokingState)
         this.copyFrom(ctx)
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterEmptyDictScope) {
-            listener.enterEmptyDictScope(this)
+        if (listener.enterDictInherit) {
+            listener.enterDictInherit(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitEmptyDictScope) {
-            listener.exitEmptyDictScope(this)
+        if (listener.exitDictInherit) {
+            listener.exitDictInherit(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitEmptyDictScope) {
-            return visitor.visitEmptyDictScope(this)
+        if (visitor.visitDictInherit) {
+            return visitor.visitDictInherit(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2736,7 +2928,7 @@ export class List_scopeContext extends ParserRuleContext {
         super.copyFrom(ctx)
     }
 }
-export class FilledListScopeContext extends List_scopeContext {
+export class ListScopeContext extends List_scopeContext {
     public _header: KeyContext
     public key(): KeyContext {
         return this.getRuleContext(0, KeyContext)
@@ -2750,35 +2942,14 @@ export class FilledListScopeContext extends List_scopeContext {
             return this.getRuleContext(i, GroupContext)
         }
     }
-    constructor(ctx: List_scopeContext) {
-        super(ctx.parent, ctx.invokingState)
-        this.copyFrom(ctx)
-    }
-    // @Override
-    public enterRule(listener: ARCListener): void {
-        if (listener.enterFilledListScope) {
-            listener.enterFilledListScope(this)
-        }
-    }
-    // @Override
-    public exitRule(listener: ARCListener): void {
-        if (listener.exitFilledListScope) {
-            listener.exitFilledListScope(this)
-        }
-    }
-    // @Override
-    public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitFilledListScope) {
-            return visitor.visitFilledListScope(this)
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
         } else {
-            return visitor.visitChildren(this)
+            return this.getRuleContext(i, EmptyContext)
         }
-    }
-}
-export class EmptyListScopeContext extends List_scopeContext {
-    public _header: KeyContext
-    public key(): KeyContext {
-        return this.getRuleContext(0, KeyContext)
     }
     constructor(ctx: List_scopeContext) {
         super(ctx.parent, ctx.invokingState)
@@ -2786,20 +2957,20 @@ export class EmptyListScopeContext extends List_scopeContext {
     }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterEmptyListScope) {
-            listener.enterEmptyListScope(this)
+        if (listener.enterListScope) {
+            listener.enterListScope(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitEmptyListScope) {
-            listener.exitEmptyListScope(this)
+        if (listener.exitListScope) {
+            listener.exitListScope(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitEmptyListScope) {
-            return visitor.visitEmptyListScope(this)
+        if (visitor.visitListScope) {
+            return visitor.visitListScope(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2807,34 +2978,59 @@ export class EmptyListScopeContext extends List_scopeContext {
 }
 
 
-export class ScopesContext extends ParserRuleContext {
-    public dict_scope(): Dict_scopeContext | undefined {
-        return this.tryGetRuleContext(0, Dict_scopeContext)
-    }
-    public list_scope(): List_scopeContext | undefined {
-        return this.tryGetRuleContext(0, List_scopeContext)
-    }
+export class List_inheritContext extends ParserRuleContext {
     constructor(parent: ParserRuleContext | undefined, invokingState: number) {
         super(parent, invokingState)
     }
     // @Override
-    public get ruleIndex(): number { return ARCParser.RULE_scopes }
+    public get ruleIndex(): number { return ARCParser.RULE_list_inherit }
+    public copyFrom(ctx: List_inheritContext): void {
+        super.copyFrom(ctx)
+    }
+}
+export class ListInheritContext extends List_inheritContext {
+    public _header: KeyContext
+    public key(): KeyContext {
+        return this.getRuleContext(0, KeyContext)
+    }
+    public group(): GroupContext[]
+    public group(i: number): GroupContext
+    public group(i?: number): GroupContext | GroupContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(GroupContext)
+        } else {
+            return this.getRuleContext(i, GroupContext)
+        }
+    }
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
+        } else {
+            return this.getRuleContext(i, EmptyContext)
+        }
+    }
+    constructor(ctx: List_inheritContext) {
+        super(ctx.parent, ctx.invokingState)
+        this.copyFrom(ctx)
+    }
     // @Override
     public enterRule(listener: ARCListener): void {
-        if (listener.enterScopes) {
-            listener.enterScopes(this)
+        if (listener.enterListInherit) {
+            listener.enterListInherit(this)
         }
     }
     // @Override
     public exitRule(listener: ARCListener): void {
-        if (listener.exitScopes) {
-            listener.exitScopes(this)
+        if (listener.exitListInherit) {
+            listener.exitListInherit(this)
         }
     }
     // @Override
     public accept<Result>(visitor: ARCVisitor<Result>): Result {
-        if (visitor.visitScopes) {
-            return visitor.visitScopes(this)
+        if (visitor.visitListInherit) {
+            return visitor.visitListInherit(this)
         } else {
             return visitor.visitChildren(this)
         }
@@ -2853,13 +3049,22 @@ export class GroupContext extends ParserRuleContext {
     }
 }
 export class DictGroupContext extends GroupContext {
-    public recordEOS(): RecordEOSContext[]
-    public recordEOS(i: number): RecordEOSContext
-    public recordEOS(i?: number): RecordEOSContext | RecordEOSContext[] {
+    public record(): RecordContext[]
+    public record(i: number): RecordContext
+    public record(i?: number): RecordContext | RecordContext[] {
         if (i === undefined) {
-            return this.getRuleContexts(RecordEOSContext)
+            return this.getRuleContexts(RecordContext)
         } else {
-            return this.getRuleContext(i, RecordEOSContext)
+            return this.getRuleContext(i, RecordContext)
+        }
+    }
+    public empty(): EmptyContext[]
+    public empty(i: number): EmptyContext
+    public empty(i?: number): EmptyContext | EmptyContext[] {
+        if (i === undefined) {
+            return this.getRuleContexts(EmptyContext)
+        } else {
+            return this.getRuleContext(i, EmptyContext)
         }
     }
     constructor(ctx: GroupContext) {
