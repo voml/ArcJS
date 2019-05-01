@@ -1,7 +1,6 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import bigDecimal from 'js-big-decimal'
 import * as ANTLR from './antlr'
-import empty from 'ramda/es/empty'
 
 interface stack {
     type: string,
