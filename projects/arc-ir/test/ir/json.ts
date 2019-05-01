@@ -4,7 +4,7 @@ module.exports = [
         path: [
             'name'
         ],
-        data: '@nyar/arc-reader'
+        data: '@nyar/arc-ir'
     },
     {
         type: 'record',
@@ -39,9 +39,17 @@ module.exports = [
         type: 'record',
         path: [
             'scripts',
-            'test'
+            'ir'
         ],
-        data: 'ts-node ./test/test.ts'
+        data: 'ts-node ./test/arc-ir.ts'
+    },
+    {
+        type: 'record',
+        path: [
+            'scripts',
+            'json'
+        ],
+        data: 'ts-node ./test/ir-json.ts'
     },
     {
         type: 'record',
@@ -65,7 +73,7 @@ module.exports = [
             'dependencies',
             '@nyar/arc-antlr'
         ],
-        data: '^1.0.12'
+        data: '^1.0.16'
     },
     {
         type: 'record',

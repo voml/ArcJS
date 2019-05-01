@@ -1,4 +1,4 @@
-import { TaskListVisitor } from '../source/task-list'
+import { TaskListVisitor } from '../source/main'
 import { ArcInputStream } from '../source/lib'
 import { readFileSync, writeFileSync } from 'fs'
 const Visitor = new TaskListVisitor()
@@ -19,11 +19,10 @@ function testFile(name: string) {
 
 
 testString(`
-d=[
-    [{a:4}]
-    [1,2]
-    [{b:3}]
-]
+(a)
+(/b)
+c = true
+d= false
 `)
 
 

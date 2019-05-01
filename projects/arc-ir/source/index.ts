@@ -1,4 +1,4 @@
-import { TaskListVisitor } from './task-list'
+import { TaskListVisitor } from './main'
 import { ArcInputStream } from './lib'
 import R from 'ramda'
 interface record {
@@ -19,17 +19,12 @@ function addNode(raw: object, task: record) {
     const path = task.path.map(minus)
     return R.assocPath(path, task.data, raw)
 }
+export function ArcIR(raw: string) {
+    const tree = ArcInputStream(raw)
+    return Visitor.visitProgram(tree)
+}
 export function ArcParser(raw: string) {
     const tree = ArcInputStream(raw)
     const tasks: any = Visitor.visitProgram(tree)
     return tasks.reduce(addNode, {})
 }
-
-const ans = ArcParser(`
-d=[
-    [{a:4}]
-    [1,2]
-    [{b:3}]
-]
-`)
-console.log(JSON.stringify(ans, null, 4))

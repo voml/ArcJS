@@ -1,6 +1,6 @@
 {
-    "name": "@nyar/arc-ir",
-    "version": "0.2.3",
+    "name": "@nyar/arc-format",
+    "version": "0.1.0",
     "main": "dist/index.js",
     "license": "MPL-2.0",
     "scripts": {

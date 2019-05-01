@@ -2,12 +2,6 @@ import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor
 import bigDecimal from 'js-big-decimal'
 import * as ANTLR from './antlr'
 
-interface stack {
-    type: string,
-    path: any[],
-    data: any,
-}
-
 export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements ANTLR.ARCVisitor<object> {
     private atom(_: any) {
         return { type: 'value', path: [], data: _ }
@@ -33,7 +27,7 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitAtomAssign(ctx: ANTLR.AtomAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log('AssignLHS: ' + lhs.join('/'))
         //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
         return {
             type: 'record',
@@ -46,7 +40,7 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitDictAssign(ctx: ANTLR.DictAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log('AssignLHS: ' + lhs.join('/'))
         //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
         function merge(o: any) {
             /*
@@ -63,6 +57,54 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
             }
         }
         return rhs.map(merge)
+    }
+    visitDictScope(ctx: ANTLR.DictScopeContext) {
+        const lhs: any = this.visit(ctx._header)
+        let tasks: object[] = []
+        for (let i = 3; i < ctx.childCount; i++) {
+            tasks = tasks.concat(this.visit(ctx.getChild(i)))
+        }
+        function merge(o: any) {
+            /*
+            switch (o.type) {
+                case 'empty': return
+                case 'value':
+                case 'record':
+            }
+            */
+            return {
+                type: 'record',
+                path: lhs.concat(o.path),
+                data: o.data
+            }
+        }
+        //console.log('AssignLHS: ' + lhs.join('/'))
+        //console.log(`AssignRHS: ${JSON.stringify(tasks, null, 4)}`)
+        return tasks.map(merge)
+    }
+    visitDictInherit(ctx: ANTLR.DictInheritContext) {
+        const lhs: any = this.visit(ctx._header)
+        let tasks: object[] = []
+        for (let i = 4; i < ctx.childCount; i++) {
+            tasks = tasks.concat(this.visit(ctx.getChild(i)))
+        }
+        function merge(o: any) {
+            /*
+            switch (o.type) {
+                case 'empty': return
+                case 'value':
+                case 'record':
+            }
+            */
+            return {
+                type: 'record',
+                path: lhs.concat(o.path),
+                data: o.data
+            }
+        }
+        //console.log('AssignLHS: ' + lhs.join('/'))
+        //console.log(`AssignRHS: ${JSON.stringify(tasks, null, 4)}`)
+        return tasks.map(merge)
     }
     visitDictStatement(ctx: ANTLR.DictStatementContext) {
         let element: object[] = []
@@ -84,7 +126,7 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitListAssign(ctx: ANTLR.ListAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log('AssignLHS: ' + lhs.join('/'))
         //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
         function merge(o: any) {
             /*
