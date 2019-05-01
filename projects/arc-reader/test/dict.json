@@ -1,0 +1,63 @@
+[
+    {
+        "task": "insert",
+        "path": [
+            "t1"
+        ],
+        "data": {}
+    },
+    {
+        "task": "insert",
+        "path": [
+            "t2",
+            "a"
+        ],
+        "data": {}
+    },
+    {
+        "task": "insert",
+        "path": [
+            "t3",
+            "a"
+        ],
+        "data": {
+            "value": "1"
+        }
+    },
+    {
+        "task": "insert",
+        "path": [
+            "t3",
+            "b"
+        ],
+        "data": {
+            "value": "2"
+        }
+    },
+    {
+        "task": "insert",
+        "path": [
+            "t3",
+            "c",
+            "d",
+            "e"
+        ],
+        "data": true
+    },
+    {
+        "task": "insert",
+        "path": [
+            "t4",
+            "a"
+        ],
+        "data": []
+    },
+    {
+        "task": "insert",
+        "path": [
+            "t4",
+            "b"
+        ],
+        "data": {}
+    }
+]
