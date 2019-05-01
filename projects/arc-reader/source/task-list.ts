@@ -1,16 +1,18 @@
-import { ARCVisitor, RecordEOSContext } from './antlr'
+import { ARCVisitor } from './antlr'
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import * as ANTLR from './antlr'
 import bigDecimal from 'js-big-decimal'
-
-
+import allPass from 'ramda/es/allPass';
 export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
     private atom(_: any) {
-        return [{ task: 'value', data: _ }]
+        return { task: 'value', data: _ }
+    }
+    private stack(_: any) {
+        return { task: 'stack', data: _ }
     }
     defaultResult() {
         //console.warn('⚠️  Unreachable!')
-        return {}
+        return { task: 'error' }
     }
     visitProgram(ctx: ANTLR.ProgramContext) {
         let tasks: object[] = []
@@ -83,13 +85,18 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitListAssign(ctx: ANTLR.ListAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        //console.log('AssignLHS: ' + lhs.join('.'))
-        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
-        function merge(o: any, idx: number) {
+        console.log('AssignLHS: ' + lhs.join('.'))
+        console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        function merge(o: any) {
             switch (o.task) {
                 case 'empty': {
+                    return
+                }
+                case 'value': {
                     return {
-                        task: 'empty'
+                        task: 'insert',
+                        path: lhs.concat(o.path),
+                        data: o.data
                     }
                 }
                 case 'insert': {
@@ -101,7 +108,28 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
                 }
             }
         }
-        return rhs.data.map(merge)
+        switch (true) {
+            case JSON.stringify(rhs.data) == '[]':
+                return {
+                    task: 'insert',
+                    path: lhs,
+                    data: []
+                }
+            case !Array.isArray(rhs.data):
+                return {
+                    task: 'insert',
+                    path: lhs,
+                    data: rhs.data
+                }
+            case rhs.data[0].task == undefined:
+                return {
+                    task: 'insert',
+                    path: lhs,
+                    data: rhs.data
+                }
+            default:
+                return rhs.data.map(merge)
+        }
     }
     visitDictAssign(ctx: ANTLR.DictAssignContext) {
         const lhs: any = this.visit(ctx._left)
@@ -154,23 +182,51 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     /* DataType: List */
     visitEmptyList(ctx: ANTLR.EmptyListContext) {
         //console.log('Empty: EmptyList!')
-        return {
-            task: 'value',
-            data: []
-        }
+        return this.atom([])
     }
     visitFilledList(ctx: ANTLR.FilledListContext) {
-        let element: object[] = []
+        let element: any = []
+        function merge(o: any, idx: number) {
+            let path = [idx + 1]
+            if (Array.isArray(o.path)) {
+                path = path.concat(o.path)
+            }
+            function link(_: any) {
+                _.path = path.concat(_.path)
+                return _
+            }
+            if (Array.isArray(o.data)) {
+                return o.data.map(link)
+            }
+            switch (o.task) {
+                case 'value': {
+                    return {
+                        task: 'insert',
+                        path: path,
+                        data: o.data
+                    }
+                }
+                case 'insert': {
+                    return {
+                        task: 'insert',
+                        path: path,
+                        data: o.data
+                    }
+                }
+                case 'stack': {
+                    return o.data
+                }
+            }
+        }
         for (let i = 0; i < ctx.data().length; i++) {
-            const v: any = this.visit(ctx.data(i))
-            //console.log(`Data: ${JSON.stringify(v.data, null, 4)}`)
+            let v: any = this.visit(ctx.data(i))
             console.log(`Data: ${JSON.stringify(v, null, 4)}`)
-            element = element.concat([v.map])
+            element = element.concat(v)
         }
         console.log(`List: ${JSON.stringify(element, null, 4)}`)
         return {
             task: 'value',
-            data: element
+            data: element.map(merge)
         }
     }
 
