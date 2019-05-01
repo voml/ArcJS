@@ -19,12 +19,15 @@ function testFile(name: string) {
 
 
 testString(`
-d={;}
+d=[
+    [{a:4}]
+    [1,2]
+    [{b:3}]
+]
 `)
 
 
 
-/*
+
 
 files.map(testFile)
-  */

@@ -47,8 +47,8 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitDictAssign(ctx: ANTLR.DictAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        console.log('AssignLHS: ' + lhs.join('.'))
-        console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
         function merge(o: any) {
             /*
             switch (o.type) {
@@ -63,23 +63,78 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
                 data: o.data
             }
         }
-        return rhs.filter((o: any) => o.type != 'empty').map(merge)
+        return rhs.map(merge)
     }
-
-
     visitDictStatement(ctx: ANTLR.DictStatementContext) {
         let element: object[] = []
-        const count = ctx.statement().length
-        if (count == 0) {
-            return [this.atom(element)]
-        }
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < ctx.statement().length; i++) {
             const v: any = this.visit(ctx.statement(i))
             //console.log(`Record: ${JSON.stringify(v, null, 4)}`)
             element = element.concat(v)
         }
         //console.log(`Dict: ${JSON.stringify(element, null, 4)}`)
-        return element
+        return element.filter((o: any) => o.type != 'empty')
+    }
+    visitDictEmpty(ctx: ANTLR.DictEmptyContext) {
+        return [this.atom({})]
+    }
+
+
+
+
+    visitListAssign(ctx: ANTLR.ListAssignContext) {
+        const lhs: any = this.visit(ctx._left)
+        const rhs: any = this.visit(ctx._right)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        function merge(o: any) {
+            /*
+            switch (o.type) {
+                case 'empty': return
+                case 'value':
+                case 'record':
+            }
+            */
+            return {
+                type: 'record',
+                path: lhs.concat(o.path),
+                data: o.data
+            }
+        }
+        return rhs.map(merge)
+    }
+    visitListStatement(ctx: ANTLR.ListStatementContext) {
+        let element: object[] = []
+        let container: object[] = []
+        function merge(o: any, idx: number) {
+            /*
+            switch (o.type) {
+                case 'empty': return
+                case 'value':
+                case 'record':
+            }
+            */
+            return {
+                type: 'record',
+                path: [idx + 1].concat(o.path),
+                data: o.data
+            }
+        }
+        function traversing(o: any, idx: number) {
+            container = container.concat(o.map((_: any) => merge(_, idx)))
+        }
+        for (let i = 0; i < ctx.data().length; i++) {
+            let v: any = this.visit(ctx.data(i))
+            if (!Array.isArray(v)) { v = [v] }
+            //console.log(`Record: ${JSON.stringify(v, null, 4)}`)
+            element = element.concat([v])
+        }
+        //console.log(`List: ${JSON.stringify(element, null, 4)}`)
+        element.map(traversing)
+        return container.filter((o: any) => o.type != 'empty')
+    }
+    visitListEmpty(ctx: ANTLR.ListEmptyContext) {
+        return [this.atom([])]
     }
 
 

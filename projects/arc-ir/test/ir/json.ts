@@ -1,34 +1,34 @@
 module.exports = [
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'name'
         ],
         data: '@nyar/arc-reader'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'version'
         ],
         data: '0.1.0'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'main'
         ],
         data: 'source/index.ts'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'license'
         ],
         data: 'MPL-2.0'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'scripts',
             'antlr'
@@ -36,7 +36,7 @@ module.exports = [
         data: 'antlr4ts -visitor ../../node_modules/@nyar/arc-antlr/ARC.g4 -o ./source/antlr'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'scripts',
             'test'
@@ -44,7 +44,7 @@ module.exports = [
         data: 'ts-node ./test/test.ts'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'scripts',
             'build'
@@ -52,7 +52,7 @@ module.exports = [
         data: 'yarn install && yarn antlr && tsc -b'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'scripts',
             'upload'
@@ -60,7 +60,7 @@ module.exports = [
         data: 'yarn build && npm publish --access public'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'dependencies',
             '@nyar/arc-antlr'
@@ -68,7 +68,7 @@ module.exports = [
         data: '^1.0.12'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'dependencies',
             'antlr4ts'
@@ -76,7 +76,7 @@ module.exports = [
         data: '^0.5.0-alpha.3'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'dependencies',
             'js-big-decimal'
@@ -84,7 +84,7 @@ module.exports = [
         data: '^1.2.1'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'dependencies',
             'ramda'
@@ -92,7 +92,7 @@ module.exports = [
         data: '^0.26.1'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             'devDependencies',
             '@types/ramda'

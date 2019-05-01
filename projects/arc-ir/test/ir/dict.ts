@@ -1,13 +1,13 @@
 module.exports = [
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't1'
         ],
         data: {}
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't2',
             'a'
@@ -15,27 +15,23 @@ module.exports = [
         data: {}
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't3',
             'a'
         ],
-        data: {
-            value: '1'
-        }
+        data: 1
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't3',
             'b'
         ],
-        data: {
-            value: '2'
-        }
+        data: 2
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't4',
             'a'
@@ -43,7 +39,7 @@ module.exports = [
         data: []
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't4',
             'b'
@@ -51,7 +47,7 @@ module.exports = [
         data: {}
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't5',
             'a',
@@ -60,7 +56,7 @@ module.exports = [
         data: {}
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't6',
             'a',
@@ -70,19 +66,17 @@ module.exports = [
         data: true
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't6',
             'a',
             'b',
             2
         ],
-        data: {
-            value: '123'
-        }
+        data: 123
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't6',
             'a',
@@ -91,7 +85,7 @@ module.exports = [
         data: 'gg'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't6',
             'a',
@@ -102,7 +96,7 @@ module.exports = [
         data: false
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't7',
             'a',
@@ -112,7 +106,7 @@ module.exports = [
         data: 'ows'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't7',
             'a',
@@ -122,7 +116,7 @@ module.exports = [
         data: null
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't7',
             'a',
@@ -132,7 +126,7 @@ module.exports = [
         data: 'gg'
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't7',
             'a',
@@ -143,7 +137,7 @@ module.exports = [
         data: null
     },
     {
-        task: 'insert',
+        type: 'record',
         path: [
             't8',
             1,
