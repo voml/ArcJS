@@ -5,7 +5,7 @@ import bigDecimal from 'js-big-decimal'
 import allPass from 'ramda/es/allPass';
 export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements ARCVisitor<object> {
     private atom(_: any) {
-        return { task: 'value', data: _ }
+        return { task: 'value', path: [], data: _ }
     }
     private stack(_: any) {
         return { task: 'stack', data: _ }
@@ -85,8 +85,8 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitListAssign(ctx: ANTLR.ListAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
-        console.log('AssignLHS: ' + lhs.join('.'))
-        console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
+        //console.log('AssignLHS: ' + lhs.join('.'))
+        //console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
         function merge(o: any) {
             switch (o.task) {
                 case 'empty': {
@@ -134,6 +134,8 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     visitDictAssign(ctx: ANTLR.DictAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)
+        console.log('AssignLHS: ' + lhs.join('.'))
+        console.log(`AssignRHS: ${JSON.stringify(rhs, null, 4)}`)
         function merge(o: any) {
             switch (o.task) {
                 case 'empty': {
@@ -148,9 +150,16 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
                         data: o.data
                     }
                 }
+                case 'value': {
+                    return {
+                        task: 'insert',
+                        path: lhs.concat(o.path),
+                        data: o.data
+                    }
+                }
             }
         }
-        return rhs.data.map(merge)
+        return rhs.map(merge)
     }
 
 
@@ -198,32 +207,13 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
             if (Array.isArray(o.data)) {
                 return o.data.map(link)
             }
-            switch (o.task) {
-                case 'value': {
-                    return {
-                        task: 'insert',
-                        path: path,
-                        data: o.data
-                    }
-                }
-                case 'insert': {
-                    return {
-                        task: 'insert',
-                        path: path,
-                        data: o.data
-                    }
-                }
-                case 'stack': {
-                    return o.data
-                }
-            }
         }
         for (let i = 0; i < ctx.data().length; i++) {
             let v: any = this.visit(ctx.data(i))
-            console.log(`Data: ${JSON.stringify(v, null, 4)}`)
+            //console.log(`Data: ${JSON.stringify(v, null, 4)}`)
             element = element.concat(v)
         }
-        console.log(`List: ${JSON.stringify(element, null, 4)}`)
+        //console.log(`List: ${JSON.stringify(element, null, 4)}`)
         return {
             task: 'value',
             data: element.map(merge)
@@ -234,7 +224,7 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     /* DataType: Dict */
     visitEmptyDict(ctx: ANTLR.EmptyDictContext) {
         //console.log('Empty: EmptyDict!')
-        return this.atom({})
+        return [this.atom({})]
     }
     visitFilledDict(ctx: ANTLR.FilledDictContext) {
         let element: object[] = []
