@@ -1,10 +1,10 @@
 import { ArcParser } from '../dist'
 
 const ans = ArcParser(`
-d=[
-    [{a:4}]
-    [1,2]
-    [{b:3}]
-]
+(a)
+b = null
+(/c)
+d = true
+e/f = false
 `)
 console.log(JSON.stringify(ans, null, 4))

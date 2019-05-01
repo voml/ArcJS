@@ -121,8 +121,6 @@ export class TaskListVisitor extends AbstractParseTreeVisitor<object> implements
     }
 
 
-
-
     visitListAssign(ctx: ANTLR.ListAssignContext) {
         const lhs: any = this.visit(ctx._left)
         const rhs: any = this.visit(ctx._right)

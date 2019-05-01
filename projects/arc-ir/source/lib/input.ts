@@ -1,5 +1,5 @@
 import { ARCLexer, ARCParser } from '../antlr'
-import { ANTLRInputStream, CommonTokenStream,CharStreams } from 'antlr4ts'
+import { ANTLRInputStream, CommonTokenStream, CharStreams } from 'antlr4ts'
 
 export function ArcInputStream(_: string) {
     let inputStream = new ANTLRInputStream(_)

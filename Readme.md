@@ -1,2 +1,41 @@
-# Nyaruko
-[![Netlify Status](https://api.netlify.com/api/v1/badges/a53c7f5b-7a41-4d3c-adbd-02751ee38243/deploy-status)](https://app.netlify.com/sites/nyar/deploys)
+Arc Hive
+========
+
+Arc Language: https://github.com/Moe-Net/Arc-Language
+
+## Install
+
+```sh
+yarn add @nyar/arc-ir
+npm install @nyar/arc-ir
+```
+
+## Start
+
+```ts
+import { ArcParser } from '@nyar/arc-ir'
+const ans = ArcParser(`
+(a)
+b = null
+(/c)
+d = true
+e/f = false
+`)
+console.log(JSON.stringify(ans, null, 4))
+```
+
+
+
+```json
+{
+    "a": {
+        "b": null,
+        "c": {
+            "d": true,
+            "e": {
+                "f": false
+            }
+        }
+    }
+}
+```
