@@ -1,5 +1,5 @@
 {
-    "name": "@nyar/arc-reader",
+    "name": "@nyar/arc-ir",
     "version": "0.1.0",
     "main": "source/index.ts",
     "license": "MPL-2.0",
@@ -10,7 +10,7 @@
         "upload": "yarn build && npm publish --access public"
     },
     "dependencies": {
-        "@nyar/arc-antlr": "^1.0.10",
+        "@nyar/arc-antlr": "^1.0.12",
         "antlr4ts": "^0.5.0-alpha.3",
         "js-big-decimal": "^1.2.1",
         "ramda": "^0.26.1"
