@@ -22,7 +22,7 @@ testString(`
 (a)
 (/b)
 c = true
-d= false
+d = false
 `)
 
 
