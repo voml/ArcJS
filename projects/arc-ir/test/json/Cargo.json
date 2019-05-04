@@ -1,0 +1,75 @@
+{
+    "workspace": {
+        "members": [
+            "src/bootstrap",
+            "src/rustc",
+            "src/libstd",
+            "src/libtest",
+            "src/librustc_codegen_llvm",
+            "src/tools/cargotest",
+            "src/tools/clippy",
+            "src/tools/compiletest",
+            "src/tools/error_index_generator",
+            "src/tools/linkchecker",
+            "src/tools/rustbook",
+            "src/tools/unstable-book-gen",
+            "src/tools/tidy",
+            "src/tools/build-manifest",
+            "src/tools/remote-test-client",
+            "src/tools/remote-test-server",
+            "src/tools/rust-installer",
+            "src/tools/cargo",
+            "src/tools/rustdoc",
+            "src/tools/rls",
+            "src/tools/rustfmt",
+            "src/tools/miri",
+            "src/tools/rustdoc-themes"
+        ],
+        "exclude": [
+            "build",
+            "obj"
+        ]
+    },
+    "profile": {
+        "release": {
+            "opt-level": 2
+        },
+        "bench": {
+            "opt-level": 2
+        },
+        "dev": {
+            "debug": false,
+            "debug-assertions": false
+        },
+        "test": {
+            "debug": false,
+            "debug-assertions": false
+        }
+    },
+    "patch": {
+        "https://github.com/rust-lang/cargo": {
+            "cargo": {
+                "path": "src/tools/cargo"
+            }
+        },
+        "crates-io": {
+            "rustfmt-nightly": {
+                "path": "src/tools/rustfmt"
+            },
+            "rustc-workspace-hack": {
+                "path": "src/tools/rustc-workspace-hack"
+            },
+            "rustc-std-workspace-core": {
+                "path": "src/tools/rustc-std-workspace-core"
+            },
+            "rustc-std-workspace-alloc": {
+                "path": "src/tools/rustc-std-workspace-alloc"
+            }
+        },
+        "https://github.com/rust-lang/rust-clippy": {
+            "clippy_lints": {
+                "path": "src/tools/clippy/clippy_lints"
+            }
+        }
+    }
+}

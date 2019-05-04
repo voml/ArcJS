@@ -1,10 +1,10 @@
 import { ArcParser } from '../dist'
 
 const ans = ArcParser(`
-(a)
-b = null
-(/c)
-d = true
-e/f = false
+(profile)
+  (/release)
+  opt-level = 2
+  (/bench)
+  opt-level = 2
 `)
 console.log(JSON.stringify(ans, null, 4))

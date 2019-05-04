@@ -2,7 +2,7 @@ import { TaskListVisitor } from '../source/main'
 import { ArcInputStream } from '../source/lib'
 import { readFileSync, writeFileSync } from 'fs'
 const Visitor = new TaskListVisitor()
-const files = ['list', 'dict', 'json', 'bugs']
+export const files = ['list', 'dict', 'json', 'bugs', 'Cargo']
 function testString(raw: string) {
     const tree = ArcInputStream(raw)
     const ans = Visitor.visitProgram(tree)
@@ -17,15 +17,14 @@ function testFile(name: string) {
 }
 
 
-
+/*
 testString(`
 (a)
 (/b)
 c = true
 d = false
 `)
-
-
+*/
 
 
 

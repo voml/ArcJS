@@ -1,5 +1,6 @@
 import R from 'ramda'
 import { writeFileSync } from 'fs'
+import { files } from './arc-ir'
 // tslint:disable-next-line: no-var-requires
 interface record {
     'type': 'record',
@@ -23,6 +24,4 @@ function testFile(name: string) {
     const json = JSON.stringify(tasks.reduce(addNode, {}), null, 4)
     writeFileSync(`${__dirname}/json/${name}.json`, json)
 }
-
-const files = ['list', 'dict', 'json', 'bugs']
 files.map(testFile)

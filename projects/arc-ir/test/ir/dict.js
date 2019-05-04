@@ -78,5 +78,15 @@ module.exports = [
         type: 'record',
         path: ['t8', 1, 'a'],
         data: null
+    },
+    {
+        type: 'record',
+        path: ['t9', 'a', 'b', 1],
+        data: true
+    },
+    {
+        type: 'record',
+        path: ['t10', 'a', 'b', 1],
+        data: true
     }
 ];

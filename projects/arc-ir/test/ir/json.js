@@ -7,12 +7,12 @@ module.exports = [
     {
         type: 'record',
         path: ['version'],
-        data: '0.1.0'
+        data: '0.2.4'
     },
     {
         type: 'record',
         path: ['main'],
-        data: 'source/index.ts'
+        data: 'dist/index.js'
     },
     {
         type: 'record',
@@ -26,13 +26,18 @@ module.exports = [
     },
     {
         type: 'record',
+        path: ['scripts', 'lint'],
+        data: 'eslint test/**/*.js --fix'
+    },
+    {
+        type: 'record',
         path: ['scripts', 'ir'],
         data: 'ts-node ./test/arc-ir.ts'
     },
     {
         type: 'record',
         path: ['scripts', 'json'],
-        data: 'ts-node ./test/ir-json.ts'
+        data: 'ts-node ./test/ir-json.ts && yarn lint'
     },
     {
         type: 'record',
@@ -43,11 +48,6 @@ module.exports = [
         type: 'record',
         path: ['scripts', 'upload'],
         data: 'yarn build && npm publish --access public'
-    },
-    {
-        type: 'record',
-        path: ['dependencies', '@nyar/arc-antlr'],
-        data: '^1.0.16'
     },
     {
         type: 'record',
@@ -66,7 +66,22 @@ module.exports = [
     },
     {
         type: 'record',
+        path: ['devDependencies', '@nyar/arc-antlr'],
+        data: '^1.0.22'
+    },
+    {
+        type: 'record',
         path: ['devDependencies', '@types/ramda'],
         data: '^0.26.8'
+    },
+    {
+        type: 'record',
+        path: ['devDependencies', 'eslint'],
+        data: '^5.16.0'
+    },
+    {
+        type: 'record',
+        path: ['devDependencies', 'eslint-plugin-json'],
+        data: '^1.4.0'
     }
 ];
