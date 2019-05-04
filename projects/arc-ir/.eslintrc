@@ -1,0 +1,36 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+    "env": {
+        "es6": true
+    },
+    "rules": {
+        "semi": [
+            "error",
+            "always"
+        ],
+        "array-element-newline": [
+            "error",
+            {
+                "multiline": true,
+                "minItems": 9
+            }
+        ],
+        "array-bracket-newline": [
+            "error",
+            {
+                "multiline": true,
+                "minItems": 9
+            }
+        ]
+    },
+    "overrides": [
+        {
+            "files": [
+                "test/**/*.js"
+            ],
+            "excludedFiles": "**/dist/**"
+        }
+    ]
+}

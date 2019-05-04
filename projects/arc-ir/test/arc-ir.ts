@@ -13,7 +13,7 @@ function testFile(name: string) {
     const tree = ArcInputStream(`${file.toString()}`)
     const ans = Visitor.visitProgram(tree)
     const json = 'module.exports = ' + JSON.stringify(ans, null, 4)
-    writeFileSync(`${__dirname}/ir/${name}.ts`, json)
+    writeFileSync(`${__dirname}/ir/${name}.js`, json)
 }
 
 
