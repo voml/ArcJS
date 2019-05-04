@@ -10,6 +10,17 @@
             "error",
             "always"
         ],
+        "quote-props": [
+            "error",
+            "as-needed"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
         "array-element-newline": [
             "error",
             {
@@ -28,7 +39,8 @@
     "overrides": [
         {
             "files": [
-                "test/**/*.js"
+                "test/**/*.js",
+                "test/**/*.json"
             ],
             "excludedFiles": "**/dist/**"
         }
